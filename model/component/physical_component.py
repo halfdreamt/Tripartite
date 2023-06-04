@@ -1,7 +1,7 @@
 from model.system.physical_system import physical_system
 
 class physical_component:
-    def __init__(self, sprite, x, y, entity, type):
+    def __init__(self, sprite, x, y, entity, alive, health, thirst):
 
         # set local data and references - in this case, the physical component is aware of the entity it belongs to and its location, and the sprite it should be drawn with
         self.xcoord = x
@@ -9,17 +9,13 @@ class physical_component:
         self.sprite = sprite
         self.entity = entity
         self.map = entity.world.map
-        self.alive = False        
+        self.alive = alive        
         self.moveVectorStack = []
-        self.health = 20
-        self.thirst = 100
+        self.health = health
+        self.thirst = thirst
     
         # initialize physical system; behavior
         self.physical_system = physical_system(self)
-
-        # Set certain properties based on type - TODO: this should be dynamic, not hard coded
-        if type == "agent":
-            self.alive = True
 
      # sets relative movement direction
     def pushMoveVector(self, x, y):

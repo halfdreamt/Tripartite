@@ -1,0 +1,22 @@
+{
+    "2225": {
+        "name": "agent",
+        "type": "spiritual",
+        "alive": true,
+        "health": 20,
+        "thirst": 100
+    },
+    "2221": {
+        "name": "agent",
+        "type": "spiritual",
+        "alive": true,
+        "health": 20,
+        "thirst": 100
+    },
+    "2572": {
+        "name": "water",
+        "type": "physical",
+        "alive": false,
+        "health": 20
+    }
+}

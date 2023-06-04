@@ -1,11 +1,12 @@
-from pathfinding.core.grid import Grid
-from pathfinding.finder.a_star import AStarFinder
-
 class Map:
     def __init__(self, map_data):
+        # Initialize the map layers
         self.layers = {}
+
+        #set map data
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
 
+        # Load the layers from the map data
         for layer in map_data['layers']:
             layer_data = layer['data']
             # Convert the 1D array into a 2D array
@@ -67,5 +68,6 @@ class Map:
         for entity in entities:
             self.setLayerId('sprites', entity.physical.xcoord, entity.physical.ycoord, entity.physical.sprite)
 
+    # iterates through all entities and updates them, equal to one step through the game loop
     def updateMap(self, entities):
         self.updateEntities(entities)

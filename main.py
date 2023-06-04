@@ -7,12 +7,12 @@ from view.PGDisplay import PGDisplay
 # Initialize pygame
 pygame.init()
 
-# Read the JSON file
+# Read the config file
 file_path = "rec/config.json"
 with open(file_path, "r") as json_file:
     data = json.load(json_file)
 
-# Import the variables
+# Import the config data
 SCREENWIDTH = data["SCREENWIDTH"]
 SCREENHEIGHT = data["SCREENHEIGHT"]
 FRAMERATE = data["FRAMERATE"]

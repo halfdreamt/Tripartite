@@ -2,18 +2,14 @@ from model.system.mental_system import mental_system
 
 class mental_component:
     def __init__(self, entity, type):
+        # set local data and references
         self.entity = entity
-        self.health = 20
         self.type = type
-        self.moveDirection = None
-        self.willWander = True
-        self.pendingMove = False
-        self.mental_system = mental_system(self)
+        self.map = entity.world.map
 
-    def setMoveDirection(self, x, y):
-        if not self.entity.world.map.hasCollision(self.entity.physical.xcoord + x, self.entity.physical.ycoord + y):
-            self.moveDirection = (x, y)
-            self.pendingMove = True
-            return True
-        else:
-            return False
+        # TODO: this should be more dynamic, hard coding health and willWander is bad
+        self.health = 20
+        self.willWander = True
+
+        # initialize mental system; behavior
+        self.mental_system = mental_system(self)

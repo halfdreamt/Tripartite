@@ -13,10 +13,10 @@ class mental_system:
                 coords_list = random.choice(valid_directions).split(",")
                 xcoord = int(coords_list[0])
                 ycoord = int(coords_list[1])
-                self.mental.setMoveDirection(xcoord, ycoord)
+                self.entity.physical.setMoveDirection(xcoord, ycoord)
 
             self.entity.physical.physical_system.move()
 
     def update(self):
-        if self.mental.willWander and not self.mental.pendingMove:
+        if self.mental.willWander and not self.entity.physical.pendingMove:
                 self.wander()

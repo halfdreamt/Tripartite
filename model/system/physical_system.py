@@ -8,14 +8,13 @@ class physical_system:
     # perform checks and such
     def update(self):
         if self.entity.physical.alive:
-            life = self.physical.life
-            if life.health <= 0:
+            if self.physical.health <= 0:
                 self.die()
 
             self.manageWater()
                 
-            if life.moveVectorStack:
-                dx, dy = life.moveVectorStack.pop()
+            if self.physical.moveVectorStack:
+                dx, dy = self.physical.moveVectorStack.pop()
                 self.physical.setLocation(self.physical.xcoord + dx, self.physical.ycoord + dy)
     
     def die(self):
@@ -23,9 +22,9 @@ class physical_system:
 
     def manageWater(self):
         if self.world.isAdjacentToItem(self.physical.xcoord, self.physical.ycoord, "water"):
-            self.physical.life.thirst = 100
-        elif self.physical.life.thirst > 0:
-            self.physical.life.thirst -= 1
+            self.physical.thirst = 100
+        elif self.physical.thirst > 0:
+            self.physical.thirst -= 1
 
-        if self.physical.life.thirst <= 0 and self.physical.life.health > 0:
-            self.physical.life.health -= 1
+        if self.physical.thirst <= 0 and self.physical.health > 0:
+            self.physical.health -= 1

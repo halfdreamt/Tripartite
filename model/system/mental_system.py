@@ -8,7 +8,6 @@ class mental_system:
         self.world = mental_component.entity.world
         self.entity = mental_component.entity
         self.physical = mental_component.entity.physical
-        self.life = mental_component.entity.physical.life
 
     # Sets a valid random move direction
     def wander(self): 
@@ -18,7 +17,7 @@ class mental_system:
             coords_list = random.choice(valid_directions).split(",")
             xcoord = int(coords_list[0])
             ycoord = int(coords_list[1])
-            self.life.pushMoveVector(xcoord, ycoord)
+            self.physical.pushMoveVector(xcoord, ycoord)
 
     # Update the mental system
     def update(self):

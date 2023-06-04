@@ -1,5 +1,4 @@
 from model.system.physical_system import physical_system
-from model.component.life import life
 
 class physical_component:
     def __init__(self, sprite, x, y, entity, type):
@@ -10,15 +9,25 @@ class physical_component:
         self.sprite = sprite
         self.entity = entity
         self.map = entity.world.map
-        self.alive = False
-
+        self.alive = False        
+        self.moveVectorStack = []
+        self.health = 20
+        self.thirst = 100
+    
         # initialize physical system; behavior
         self.physical_system = physical_system(self)
 
         # Set certain properties based on type - TODO: this should be dynamic, not hard coded
         if type == "agent":
-            self.life = life(self, 20, 100)
             self.alive = True
+
+     # sets relative movement direction
+    def pushMoveVector(self, x, y):
+        if not self.map.hasCollision(self.xcoord + x, self.ycoord + y):
+            self.moveVectorStack.append((x, y))
+            return True
+        else:
+            return False
         
     # sets absolute location
     def setLocation(self, x, y):

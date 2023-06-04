@@ -6,12 +6,11 @@ class physical_component:
         # set local data and references - in this case, the physical component is aware of the entity it belongs to and its location, and the sprite it should be drawn with
         self.xcoord = x
         self.ycoord = y
-        self.alive = True
         self.sprite = sprite
         self.entity = entity
-        self.moveDirection = None
-        self.pendingMove = False
         self.map = entity.world.map
+        
+        self.alive = True
 
         # Set health - TODO: this should be dynamic, not hard coded
         self.health = 20
@@ -23,10 +22,19 @@ class physical_component:
         if type == "item":
             self.alive = False
 
-    def setMoveDirection(self, x, y):
+    # sets relative movement direction
+    def setMoveVector(self, x, y):
         if not self.map.hasCollision(self.xcoord + x, self.ycoord + y):
-            self.moveDirection = (x, y)
-            self.pendingMove = True
+            self.xcoord += x
+            self.ycoord += y
+        else:
+            return False
+        
+    # sets absolute location
+    def setLocation(self, x, y):
+        if not self.map.hasCollision(x, y):
+            self.xcoord = x
+            self.ycoord = y
             return True
         else:
             return False

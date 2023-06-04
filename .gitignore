@@ -7,3 +7,4 @@ model/component/__pycache__/mental_component.cpython-311.pyc
 model/system/__pycache__/physical_system.cpython-311.pyc
 model/system/__pycache__/mental_system.cpython-311.pyc
 model/entity/__pycache__/map.cpython-311.pyc
+model/component/__pycache__/physical_component.cpython-311.pyc

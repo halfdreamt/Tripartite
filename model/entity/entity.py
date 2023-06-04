@@ -10,13 +10,17 @@ class Entity:
             settings = json.load(file)
 
         strSprite = str(sprite)
+        entity_settings = None
+        # Find the correct settings by looking at each sprite id list
+        for entry in settings:
+            if strSprite in entry["sprite_ids"]:
+                entity_settings = entry["settings"]
+                break
 
-        if strSprite not in settings:
+        if not entity_settings:
             raise Exception(f"No settings found for sprite {strSprite}")
 
-        entity_settings = settings[strSprite]
-
-        # set local data and references 
+        # set local data and references
         self.world = world
         self.type = entity_settings["type"]
         self.name = entity_settings["name"]

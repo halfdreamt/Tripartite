@@ -24,5 +24,3 @@ class mental_system:
     def update(self):
         if self.mental.willWander:
             self.wander()
-        
-        

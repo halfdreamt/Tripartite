@@ -85,7 +85,6 @@ class PGDisplay:
                                     self.screen.blit(tile_image, (tile_screen_x, tile_screen_y))
                                     break
 
-
     def draw_screen(self):
 
         # Fill screen with black
@@ -102,7 +101,6 @@ class PGDisplay:
         time_text = self.font.render(f"Days: {days} Hours: {hours} Minutes: {minutes}", True, (255, 255, 255))
         self.screen.blit(time_text, (10, 10))
 
-
         # Draw entity info panel
         if self.displayInfo:
             # Draw name
@@ -113,7 +111,5 @@ class PGDisplay:
             if self.entityInfo.type == "agent":
                 entity_stats = self.font.render(f'Physical Health: {self.entityInfo.physical.life.health} Thirst: {self.entityInfo.physical.life.thirst}', True, (255, 255, 255))
                 self.screen.blit(entity_stats, (10, 80))
-
-
 
         pygame.display.flip()

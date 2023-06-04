@@ -17,9 +17,11 @@ class mental_system:
             coords_list = random.choice(valid_directions).split(",")
             xcoord = int(coords_list[0])
             ycoord = int(coords_list[1])
-            self.physical.setMoveVector(xcoord, ycoord)
+            self.physical.pushMoveVector(xcoord, ycoord)
 
     # Update the mental system
     def update(self):
         if self.mental.willWander:
             self.wander()
+        
+        

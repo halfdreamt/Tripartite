@@ -9,6 +9,9 @@ class physical_system:
     def update(self):
         if self.physical.health <= 0:
             self.die()
+        if self.physical.moveVectorStack:
+            dx, dy = self.physical.moveVectorStack.pop()
+            self.physical.setLocation(self.physical.xcoord + dx, self.physical.ycoord + dy)
     
     def die(self):
         self.health = 0

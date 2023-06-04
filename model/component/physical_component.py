@@ -9,6 +9,7 @@ class physical_component:
         self.sprite = sprite
         self.entity = entity
         self.map = entity.world.map
+        self.moveVectorStack = []
         
         self.alive = True
 
@@ -23,10 +24,10 @@ class physical_component:
             self.alive = False
 
     # sets relative movement direction
-    def setMoveVector(self, x, y):
+    def pushMoveVector(self, x, y):
         if not self.map.hasCollision(self.xcoord + x, self.ycoord + y):
-            self.xcoord += x
-            self.ycoord += y
+            self.moveVectorStack.append((x, y))
+            return True
         else:
             return False
         

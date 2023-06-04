@@ -19,14 +19,7 @@ class Map:
         if layer_data and 0 <= x < self.MAPWIDTH and 0 <= y < self.MAPHEIGHT:
             return layer_data[y][x]
         return 0
-    
-    # Returns the number of non-zero tiles in the layer
-    def getLayerCount(self, layerName): 
-        layer_data = self.layers.get(layerName, [])
-        if layer_data:
-            return sum([sum([1 for tile in row if tile]) for row in layer_data])
-        return 0
-    
+
     # Sets the value of the tile at the given location
     def setLayerId(self, layerName, x, y, value): 
         layer_data = self.layers.get(layerName, [])
@@ -60,7 +53,7 @@ class Map:
         return None
 
     #Retrieves entity locations and updates the sprites layer
-    def updateEntities(self, entities):
+    def updateEntitySprites(self, entities):
         #clear sprites layer
         for y in range(self.MAPHEIGHT):
             for x in range(self.MAPWIDTH):
@@ -70,4 +63,4 @@ class Map:
 
     # iterates through all entities and updates them, equal to one step through the game loop
     def updateMap(self, entities):
-        self.updateEntities(entities)
+        self.updateEntitySprites(entities)

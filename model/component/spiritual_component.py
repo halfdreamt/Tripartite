@@ -1,7 +1,6 @@
 class spiritual_component:
-    def __init__(self, entity, type):
+    def __init__(self, entity):
         self.entity = entity
-        self.type = type
         self.health = 20
 
     def update(self):

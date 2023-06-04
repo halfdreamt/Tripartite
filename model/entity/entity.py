@@ -16,7 +16,7 @@ class Entity:
 
         entity_settings = settings[strSprite]
 
-        # set local data and references
+        # set local data and references 
         self.world = world
         self.type = entity_settings["type"]
         self.name = entity_settings["name"]
@@ -24,18 +24,17 @@ class Entity:
         health = entity_settings["health"]
         thirst = entity_settings.get("thirst")
 
-        # Initialize physical component
-        self.physical = physical_component(sprite, x, y, self, alive, health, thirst)
-
-        # Initialize mental and spiritual components if not an item
-        if self.type == "spiritual":
-            self.mental = mental_component(self, type)
-            self.spiritual = spiritual_component(self, type)
+        if self.type == "spiritual" or self.type == "mental" or self.type == "physical":
+            self.physical = physical_component(sprite, x, y, self, alive, health, thirst)
+            if self.type == "mental" or self.type == "spiritual":
+                self.mental = mental_component(self)
+                if self.type == "spiritual":
+                    self.spiritual = spiritual_component(self)
 
     # Iterates through all components and updates them, equal to one step through the game loop
     def update(self):
-        self.physical.physical_system.update()
-
-        if self.type == "spiritual":
-            self.mental.mental_system.update()
-            self.spiritual.update()
+        if self.type == "spiritual" or self.type == "mental" or self.type == "physical":
+            self.physical.physical_system.update()
+            if self.type == "mental" or self.type == "spiritual":
+                self.mental.mental_system.update()
+                

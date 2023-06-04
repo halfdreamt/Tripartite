@@ -1,10 +1,9 @@
 from model.system.mental_system import mental_system
 
 class mental_component:
-    def __init__(self, entity, type):
+    def __init__(self, entity):
         # set local data and references
         self.entity = entity
-        self.type = type
         self.map = entity.world.map
 
         # TODO: this should be more dynamic, hard coding health and willWander is bad

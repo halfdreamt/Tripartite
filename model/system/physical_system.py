@@ -23,7 +23,7 @@ class physical_system:
 
     def manageWater(self):
         if self.world.isAdjacentToItem(self.physical.xcoord, self.physical.ycoord, "water"):
-            self.physical.thirst = 100
+            self.physical.life.thirst = 100
         elif self.physical.life.thirst > 0:
             self.physical.life.thirst -= 1
 

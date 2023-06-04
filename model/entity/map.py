@@ -1,3 +1,6 @@
+from pathfinding.core.grid import Grid
+from pathfinding.finder.a_star import AStarFinder
+
 class Map:
     def __init__(self, map_data):
         # Initialize the map layers
@@ -19,6 +22,33 @@ class Map:
         if layer_data and 0 <= x < self.MAPWIDTH and 0 <= y < self.MAPHEIGHT:
             return layer_data[y][x]
         return 0
+
+    #returns the collision layer where all 0 values are 1, and all non-zero values are 0
+    def getCollisionLayer(self):
+        collision_layer = []
+        for y in range(self.MAPHEIGHT):
+            collision_layer.append([])
+            for x in range(self.MAPWIDTH):
+                collision_layer[y].append(0 if self.getLayerId('collision', x, y) == 0 else 1)
+        return collision_layer
+    
+    # converts a path of nodes to a list of move directions
+    def pathToDirections(self, path):
+        directions = []
+        for i in range(len(path) - 1):
+            x1, y1 = path[i]
+            x2, y2 = path[i + 1]
+            directions.append(str(x2 - x1) + " , " + str(y2 - y1))
+        return directions
+    
+    #returns an array of move directions which represent a path from the start to the end
+    def getPath(self, start, end):
+        grid = Grid(matrix=self.getCollisionLayer())
+        start = grid.node(start[0], start[1])
+        end = grid.node(end[0], end[1])
+        finder = AStarFinder()
+        path, runs = finder.find_path(start, end, grid)
+        return path
 
     # Sets the value of the tile at the given location
     def setLayerId(self, layerName, x, y, value): 
@@ -46,7 +76,7 @@ class Map:
     
     #returns the location of the nearest item of the given type
     def findNearestItem(self, x, y, itemName):
-        items = self.findItems(itemName)
+        items = self.world.getEntityByName(itemName)
         if items:
             item = min(items, key=lambda item: abs(item.physical.xcoord - x) + abs(item.physical.ycoord - y))
             return (item.physical.xcoord, item.physical.ycoord)

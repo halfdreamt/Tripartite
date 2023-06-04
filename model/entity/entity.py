@@ -26,15 +26,15 @@ class Entity:
 
         if self.type == "spiritual" or self.type == "mental" or self.type == "physical":
             self.physical = physical_component(sprite, x, y, self, alive, health, thirst)
-            if self.type == "mental" or self.type == "spiritual":
-                self.mental = mental_component(self)
-                if self.type == "spiritual":
-                    self.spiritual = spiritual_component(self)
+        if self.type == "mental" or self.type == "spiritual":
+            self.mental = mental_component(self)
+        if self.type == "spiritual":
+            self.spiritual = spiritual_component(self)
 
     # Iterates through all components and updates them, equal to one step through the game loop
     def update(self):
         if self.type == "spiritual" or self.type == "mental" or self.type == "physical":
             self.physical.physical_system.update()
-            if self.type == "mental" or self.type == "spiritual":
-                self.mental.mental_system.update()
+        if self.type == "mental" or self.type == "spiritual":
+            self.mental.mental_system.update()
                 

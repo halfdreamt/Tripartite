@@ -1,0 +1,7 @@
+{
+    "SCREENWIDTH": 1200,
+    "SCREENHEIGHT": 800,
+    "FRAMERATE": 60,
+    "MAPFILE": "./rec/mapfiles/map.json"
+}
+  

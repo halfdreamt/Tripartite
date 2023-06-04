@@ -7,7 +7,7 @@ class Entity:
         # set local data and references
         self.world = world
         self.type = type
-        self.name = "TestName"
+        self.name = "water"
 
         # Initialize physical component
         self.physical = physical_component(sprite, x, y, self, type)
@@ -17,6 +17,7 @@ class Entity:
         if type == "agent":
             self.mental = mental_component(self, type)
             self.spiritual = spiritual_component(self, type)
+            self.name = "agent"
 
     # Iterates through all components and updates them, equal to one step through the game loop
     def update(self):

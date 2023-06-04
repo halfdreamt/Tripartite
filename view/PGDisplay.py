@@ -110,7 +110,9 @@ class PGDisplay:
             self.screen.blit(entity_name, (10, 50))
 
             # Draw entity stats
-            entity_stats = self.font.render(f'Physical Health: {self.entityInfo.physical.health}', True, (255, 255, 255))
+            entity_stats = self.font.render(f'Physical Health: {self.entityInfo.physical.health} Thirst: {self.entityInfo.physical.thirst}', True, (255, 255, 255))
             self.screen.blit(entity_stats, (10, 80))
+
+
 
         pygame.display.flip()

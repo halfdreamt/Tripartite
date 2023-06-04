@@ -15,6 +15,7 @@ class physical_component:
 
         # Set health - TODO: this should be dynamic, not hard coded
         self.health = 20
+        self.thirst = 100
 
         # initialize physical system; behavior
         self.physical_system = physical_system(self)

@@ -41,11 +41,27 @@ class World:
             if entity.physical.xcoord == x and entity.physical.ycoord == y:
                 return entity
         return None
+    
+    def isAdjacentToItem(self, x, y, itemName):
+        items = self.getEntityByName(itemName)
+        if items:
+            for item in items:
+                if abs(item.physical.xcoord - x) + abs(item.physical.ycoord - y) == 1:
+                    return True
+        return False
+    
+    # Returns all entities of the given name
+    def getEntityByName(self, name):
+        entities = []
+        for entity in self.entities:
+            if entity.name == name:
+                entities.append(entity)
+        return entities
 
     # Iterates through all entities and updates them, equal to one step through the game loop
     def tick(self):
-        for entitiy in self.entities:
-            entitiy.update()
+        for entity in self.entities:
+            entity.update()
         self.incrementTime()
         self.map.updateMap(self.entities)
 

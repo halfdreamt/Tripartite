@@ -4,13 +4,14 @@ from model.component.mental_component import mental_component
 from model.component.spiritual_component import spiritual_component
 
 class Entity:
-    def __init__(self, sprite, x, y, world, type):
+    def __init__(self, sprite, x, y, world):
         # load settings from JSON file
         with open('rec/entity_settings.json', 'r') as file:
             settings = json.load(file)
 
         strSprite = str(sprite)
         entity_settings = None
+
         # Find the correct settings by looking at each sprite id list
         for entry in settings:
             if strSprite in entry["sprite_ids"]:

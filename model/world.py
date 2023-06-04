@@ -23,7 +23,7 @@ class World:
                     for x in range(self.map.MAPWIDTH):
                         sprite = sprites[y * self.map.MAPWIDTH + x]
                         if sprite != 0:
-                            entity = Entity(sprite, x, y, self, "agent")
+                            entity = Entity(sprite, x, y, self)
                             entities.append(entity)
             if layer['name'] == 'items':
                 sprites = layer['data']
@@ -31,7 +31,7 @@ class World:
                     for x in range(self.map.MAPWIDTH):
                         sprite = sprites[y * self.map.MAPWIDTH + x]
                         if sprite != 0:
-                            entity = Entity(sprite, x, y, self, "item")
+                            entity = Entity(sprite, x, y, self)
                             entities.append(entity)
         return entities
 

@@ -33,20 +33,20 @@ class Map:
             layer_data[y][x] = value
 
     #returns true if there is a collision at the given location
-    def checkCollision(self, x, y): 
+    def hasCollision(self, x, y): 
         collision_id = self.getLayerId('collision', x, y)
         return collision_id != 0
     
     #returns a list of valid directions to move in
     def getValidMoves(self, x, y): 
         valid_directions = []
-        if y > 0 and not self.checkCollision(x, y - 1):
+        if y > 0 and not self.hasCollision(x, y - 1):
             valid_directions.append("0 , -1")
-        if y < self.MAPHEIGHT - 1 and not self.checkCollision(x, y + 1):
+        if y < self.MAPHEIGHT - 1 and not self.hasCollision(x, y + 1):
             valid_directions.append("0 , 1")
-        if x > 0 and not self.checkCollision(x - 1, y):
+        if x > 0 and not self.hasCollision(x - 1, y):
             valid_directions.append("-1 , 0")
-        if x < self.MAPWIDTH - 1 and not self.checkCollision(x + 1, y):
+        if x < self.MAPWIDTH - 1 and not self.hasCollision(x + 1, y):
             valid_directions.append("1 , 0")
         return valid_directions
     

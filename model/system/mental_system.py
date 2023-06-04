@@ -13,8 +13,7 @@ class mental_system:
                 coords_list = random.choice(valid_directions).split(",")
                 xcoord = int(coords_list[0])
                 ycoord = int(coords_list[1])
-                self.mental.moveDirection = (xcoord, ycoord)
-                self.mental.pendingMove = True
+                self.mental.setMoveDirection(xcoord, ycoord)
 
             self.entity.physical.physical_system.move()
 

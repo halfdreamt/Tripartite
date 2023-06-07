@@ -8,3 +8,13 @@ model/system/__pycache__/physical_system.cpython-311.pyc
 model/system/__pycache__/mental_system.cpython-311.pyc
 model/entity/__pycache__/map.cpython-311.pyc
 model/component/__pycache__/physical_component.cpython-311.pyc
+controller/__pycache__/PGEvents.cpython-311.pyc
+model/__pycache__/world.cpython-311.pyc
+model/component/__pycache__/mental_component.cpython-311.pyc
+model/component/__pycache__/physical_component.cpython-311.pyc
+model/component/__pycache__/spiritual_component.cpython-311.pyc
+model/entity/__pycache__/entity.cpython-311.pyc
+model/entity/__pycache__/map.cpython-311.pyc
+model/system/__pycache__/mental_system.cpython-311.pyc
+model/system/__pycache__/physical_system.cpython-311.pyc
+view/__pycache__/PGDisplay.cpython-311.pyc

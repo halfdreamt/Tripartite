@@ -17,19 +17,30 @@ SCREENWIDTH = data["SCREENWIDTH"]
 SCREENHEIGHT = data["SCREENHEIGHT"]
 FRAMERATE = data["FRAMERATE"]
 MAPFILE = data["MAPFILE"]
-
-# Initialize clock for FPS control
-clock = pygame.time.Clock()
+ENTITYFILE = data["ENTITYFILE"]
+COMPONENTFILE = data["COMPONENTFILE"]
 
 # Load map data
 with open(MAPFILE, 'r') as f:
     map_data = json.load(f)
 
+# Load entity data
+with open(ENTITYFILE, 'r') as f:
+    entity_data = json.load(f)
+
+# Load component data
+with open(COMPONENTFILE, 'r') as f:
+    component_data = json.load(f)
+
 # Initialize world
-world = World(map_data)
+world = World(map_data, entity_data, component_data)
 
 # Initialize display
 pgdisplay = PGDisplay(map_data, pygame, world, SCREENWIDTH, SCREENHEIGHT)
+
+
+# Initialize clock for FPS control
+clock = pygame.time.Clock()
 
 # Main game loop
 running = True

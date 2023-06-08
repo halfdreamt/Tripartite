@@ -1,0 +1,36 @@
+{
+    "components": [
+        {
+            "id": "C001",
+            "name": "health",
+            "data": {
+                "current": 100,
+                "max": 100
+            }
+        },
+        {
+            "id": "C002",
+            "name": "thirst",
+            "data": {
+                "current": 100,
+                "max": 100
+            }
+        },
+        {
+            "id": "C003",
+            "name": "position",
+            "data": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "id": "C004",
+            "name": "render",
+            "data": {
+                "spriteID": 0
+            }
+        }
+        
+    ]
+}

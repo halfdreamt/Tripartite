@@ -6,6 +6,7 @@ class Component:
         self.name = name
         self.systems = systems
         self.data = data
+        self.notify_systems()
 
     def update_data(self, key, new_value):
         if key in self.data:
@@ -26,17 +27,12 @@ class Component:
             
 
 class ComponentManager:
-    def __init__(self, filename, systems):
-        self.component_types = self.load_component_types(filename)
+    def __init__(self, component_data, systems):
+        self.component_types = component_data['components']
         self.systems = systems
-
-    def load_component_types(self, filename):
-        with open(filename, 'r') as f:
-            data = json.load(f)
-            return data['components']
-
-    def create_component(self, entity, id, data=None):
-        component_type = next((c for c in self.component_types if c['id'] == id), None)
+        
+    def create_component(self, entity, name, data=None):
+        component_type = next((c for c in self.component_types if c['name'] == name), None)
         if component_type is not None:
             if data is None:
                 data = component_type['data']

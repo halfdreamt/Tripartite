@@ -16,12 +16,15 @@ class Map:
             layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
             self.layers[layer['name']] = layer_data_2D
 
-    #returns all non-zero tile ids in the given layer
+    #returns all non-zero tile ids in the given layer, along with their locations
     def getLayerIds(self, layerName):
         layer_data = self.layers.get(layerName, [])
-        if layer_data:
-            return [tile_id for row in layer_data for tile_id in row if tile_id != 0]
-        return []
+        ids = []
+        for y in range(self.MAPHEIGHT):
+            for x in range(self.MAPWIDTH):
+                if layer_data[y][x] != 0:
+                    ids.append((layer_data[y][x], x, y))
+        return ids
             
     #returns the tile id at the given location
     def getLayerId(self, layerName, x, y): 

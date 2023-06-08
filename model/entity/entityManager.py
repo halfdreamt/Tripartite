@@ -1,5 +1,3 @@
-import json
-
 class Entity:
     def __init__(self, id):
         self.id = id
@@ -18,22 +16,26 @@ class Entity:
 
 
 class EntityManager:
-    def __init__(self, filename, component_manager):
+    def __init__(self, entity_data, component_manager):
         self.entities = []
-        self.archetypes = self.load_archetypes(filename)
+        self.archetypes = entity_data['archetypes']
         self.component_manager = component_manager
 
-    def load_archetypes(self, filename):
-        with open(filename, 'r') as f:
-            data = json.load(f)
-            return data['entities']
-
-    def create_entity(self, archetype_name):
-        archetype = next((a for a in self.archetypes if a['type'] == archetype_name), None)
+    #TODO: find a better way to overrride, less hardcoded
+    # Creates an entity from an archetype
+    def create_entity(self, archetype_name, spriteID, x, y):
+        archetype = next((a for a in self.archetypes if a['name'] == archetype_name), None)
         if archetype is not None:
             entity = Entity(len(self.entities))
-            for component_id in archetype['components']:
-                component = self.component_manager.create_component(entity, component_id)
+            for component in archetype['components']:
+                component_name = component['name']
+                component_data = component['data']
+                if component_name == 'position':
+                    component_data['x'] = x
+                    component_data['y'] = y
+                elif component_name == 'render':
+                    component_data['spriteID'] = spriteID
+                component = self.component_manager.create_component(entity, component_name, component_data)
                 entity.add_component(component)
             self.entities.append(entity)
             return entity

@@ -1,67 +1,35 @@
-from model.entity.map import Map
-from model.entity.entity import Entity
+from model.map import Map
+from model.entity.entityManager import EntityManager
+from model.component.componentManager import ComponentManager
+from model.system.systemManager import SystemManager
 
 # The World class is another name for gamestate. It contains the map, the time, and the entities.
 class World:
-    def __init__(self, map_data):
+    def __init__(self, map_data, entity_data, component_data):
         # Initialize the map
         self.map = Map(map_data)
 
         # Initialize the time
         self.time = 0
 
-        # Initialize the entities
-        self.entities = self.create_entities(map_data)
+        #initialize the systems manager
+        self.system_manager = SystemManager()
 
-    # Creates entities from the map data
-    def create_entities(self, map_data):
-        entities = []
-        for layer in map_data['layers']:
-            if layer['name'] == 'sprites':
-                sprites = layer['data']
-                for y in range(self.map.MAPHEIGHT):
-                    for x in range(self.map.MAPWIDTH):
-                        sprite = sprites[y * self.map.MAPWIDTH + x]
-                        if sprite != 0:
-                            entity = Entity(sprite, x, y, self)
-                            entities.append(entity)
-            if layer['name'] == 'items':
-                sprites = layer['data']
-                for y in range(self.map.MAPHEIGHT):
-                    for x in range(self.map.MAPWIDTH):
-                        sprite = sprites[y * self.map.MAPWIDTH + x]
-                        if sprite != 0:
-                            entity = Entity(sprite, x, y, self)
-                            entities.append(entity)
-        return entities
+        # Initialize the component manager
+        self.component_manager = ComponentManager(component_data, self.system_manager.return_systems())
 
-    # Returns the entity at the given location
-    def getEntityInfo(self, x, y):
-        for entity in self.entities:
-            if entity.physical.xcoord == x and entity.physical.ycoord == y:
-                return entity
-        return None
-    
-    def isAdjacentToItem(self, x, y, itemName):
-        items = self.getEntityByName(itemName)
-        if items:
-            for item in items:
-                if abs(item.physical.xcoord - x) + abs(item.physical.ycoord - y) == 1:
-                    return True
-        return False
-    
-    # Returns all entities of the given name
-    def getEntityByName(self, name):
-        entities = []
-        for entity in self.entities:
-            if entity.name == name:
-                entities.append(entity)
-        return entities
+        # Initialize the entity manager
+        self.entity_manager = EntityManager(entity_data, self.component_manager)
 
-    # Iterates through all entities and updates them, equal to one step through the game loop
+        # TODO: don't hardcode this
+        # Initialize the entities from map data
+        spriteData = self.map.getLayerIds('sprites')
+        for sprite in spriteData:
+            self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+
+    # Iterates through all systems and updates them, equal to one step through the game loop
     def tick(self):
-        for entity in self.entities:
-            entity.update()
+        self.system_manager.update_systems()
         self.incrementTime()
         self.map.updateMap(self.entities)
 

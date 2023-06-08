@@ -2,6 +2,8 @@
     "SCREENWIDTH": 1200,
     "SCREENHEIGHT": 800,
     "FRAMERATE": 60,
-    "MAPFILE": "./rec/mapfiles/map.json"
+    "MAPFILE": "./rec/mapfiles/map.json",
+    "ENTITYFILE": "./rec/entity_settings.json",
+    "COMPONENTFILE": "./rec/components.json"
 }
   

@@ -1,21 +1,78 @@
-[
-    {
-        "sprite_ids": ["2225", "2221"],
-        "settings": {
-            "name": "agent",
-            "type": "spiritual",
-            "alive": true,
-            "health": 20,
-            "thirst": 100
+{
+    "archetypes": [
+        {
+            "id": "E001",
+            "name": "Village Elder",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "health",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C002",
+                    "name": "thirst",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "data": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "data": {
+                        "spriteID": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "E002",
+            "name": "Farmer",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "health",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C002",
+                    "name": "thirst",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "data": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "data": {
+                        "spriteID": 0
+                    }
+                }
+            ]
         }
-    },
-    {
-        "sprite_ids": ["2572"],
-        "settings": {
-            "name": "water",
-            "type": "physical",
-            "alive": false,
-            "health": 20
-        }
-    }
-]
+    ]
+}

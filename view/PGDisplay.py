@@ -43,10 +43,20 @@ class PGDisplay:
             self.tileset_firstgids.append(tileset['firstgid'])
 
     # Enables and draws an entity information panel
-    def enableEntityInfoDisplay(self, entityInfo):
-        self.displayInfo = True
-        self.entityInfo = entityInfo
-        self.draw_screen()
+    def handleEntityInfoDisplay(self, entity):
+        if entity:
+            self.displayInfo = True
+            self.entityInfo = entity
+            self.draw_screen()
+        else:
+            self.displayInfo = False
+            self.draw_screen()
+
+    # adjusts x and y values based on camera position, zoom level and tile size
+    def returnMapPos(self, x, y):
+        tile_x = (x // self.zoom_level + self.camera_x) // self.TILESIZE
+        tile_y = (y // self.zoom_level + self.camera_y) // self.TILESIZE
+        return tile_x, tile_y
 
     def draw_tiles(self):
         # Calculate darkness based on time of day
@@ -104,12 +114,11 @@ class PGDisplay:
         # Draw entity info panel
         if self.displayInfo:
             # Draw name
-            entity_name = self.font.render(self.entityInfo.name, True, (255, 255, 255))
+            entity_name = self.font.render(self.entityInfo.get_component_data("name", "name"), True, (255, 255, 255))
             self.screen.blit(entity_name, (10, 50))
 
             # Draw entity stats
-            if self.entityInfo.physical.alive:
-                entity_stats = self.font.render(f'Physical Health: {self.entityInfo.physical.health} Thirst: {self.entityInfo.physical.thirst}', True, (255, 255, 255))
-                self.screen.blit(entity_stats, (10, 80))
+            entity_stats = self.font.render(f'Physical Health: {self.entityInfo.get_component_data("health", "current")} Thirst: {self.entityInfo.get_component_data("thirst", "current")}', True, (255, 255, 255))
+            self.screen.blit(entity_stats, (10, 80))
 
         pygame.display.flip()

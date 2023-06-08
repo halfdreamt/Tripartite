@@ -30,6 +30,13 @@
             "data": {
                 "spriteID": 0
             }
+        },
+        {
+            "id": "C005",
+            "name": "name",
+            "data": {
+                "name": "farmer"
+            }
         }
         
     ]

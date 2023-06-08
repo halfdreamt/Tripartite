@@ -56,13 +56,6 @@ class PGEvents:
                 self.pgdisplay.pan_start_x, self.pgdisplay.pan_start_y = x, y
 
     def handleMouseClick(self, x, y):
-        if self.pgdisplay.displayInfo:
-            self.pgdisplay.displayInfo = False
-        else:
-            tile_x = (x // self.pgdisplay.zoom_level + self.pgdisplay.camera_x) // self.pgdisplay.TILESIZE
-            tile_y = (y // self.pgdisplay.zoom_level + self.pgdisplay.camera_y) // self.pgdisplay.TILESIZE
-            for entity in self.world.entities:
-                if entity.physical.xcoord == tile_x and entity.physical.ycoord == tile_y:
-                    self.pgdisplay.displayInfo = True
-                    self.pgdisplay.enableEntityInfoDisplay(self.world.getEntityInfo(tile_x, tile_y))
-                
+        new_x, new_y = self.pgdisplay.returnMapPos(x, y)
+        self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
+            

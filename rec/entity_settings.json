@@ -34,6 +34,13 @@
                     "data": {
                         "spriteID": 0
                     }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "data": {
+                        "name": "farmer"
+                    }
                 }
             ]
         },
@@ -70,6 +77,13 @@
                     "name": "render",
                     "data": {
                         "spriteID": 0
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "data": {
+                        "name": "farmer"
                     }
                 }
             ]

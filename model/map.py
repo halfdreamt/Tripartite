@@ -92,15 +92,15 @@ class Map:
             return (item.physical.xcoord, item.physical.ycoord)
         return None
 
-    #Retrieves entity locations and updates the sprites layer
-    def updateEntitySprites(self, entities):
-        #clear sprites layer
-        for y in range(self.MAPHEIGHT):
-            for x in range(self.MAPWIDTH):
-                self.setLayerId('sprites', x, y, 0)
-        for entity in entities:
-            self.setLayerId('sprites', entity.physical.xcoord, entity.physical.ycoord, entity.physical.sprite)
-
     # iterates through all entities and updates them, equal to one step through the game loop
     def updateMap(self, entities):
-        self.updateEntitySprites(entities)
+        self.updateLayer("sprites", entities)
+
+    # updates the given layer with the given values and positions
+    def updateLayer(self, layerName, entities):
+        #clear layer
+        for y in range(self.MAPHEIGHT):
+            for x in range(self.MAPWIDTH):
+                self.setLayerId(layerName, x, y, 0)
+        for entity in entities:
+            self.setLayerId('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))

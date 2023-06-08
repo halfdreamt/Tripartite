@@ -9,6 +9,7 @@ class Entity:
 
     def remove_component(self, component_name):
         if component_name in self.components:
+            self.components[component_name].notify_systems("delete")
             del self.components[component_name]
 
     def update_component_data(self, component_name, key, new_value):

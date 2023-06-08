@@ -39,7 +39,15 @@
                     "id": "C005",
                     "name": "name",
                     "data": {
-                        "name": "farmer"
+                        "name": "Village Elder"
+                    }
+                },
+                {
+                    "id": "C006",
+                    "name": "movement",
+                    "data": {
+                        "x": 0,
+                        "y": 0
                     }
                 }
             ]
@@ -84,6 +92,14 @@
                     "name": "name",
                     "data": {
                         "name": "farmer"
+                    }
+                },
+                {
+                    "id": "C006",
+                    "name": "movement",
+                    "data": {
+                        "x": 0,
+                        "y": 0
                     }
                 }
             ]

@@ -19,7 +19,7 @@ class World:
         self.component_manager = ComponentManager(component_data, self.system_manager)
 
         # Initialize the entity manager
-        self.entity_manager = EntityManager(entity_data, self.component_manager)
+        self.entity_manager = EntityManager(entity_data, self.component_manager, self)
 
         # TODO: don't hardcode this
         # Initialize the entities from map data

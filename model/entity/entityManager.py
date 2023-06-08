@@ -1,7 +1,8 @@
 class Entity:
-    def __init__(self, id):
+    def __init__(self, id, world):
         self.id = id
         self.components = {}
+        self.world = world
 
     def add_component(self, component):
         component_name = component.get_name()
@@ -19,19 +20,23 @@ class Entity:
     def get_component_data(self, component_name, key):
         if component_name in self.components:
             return self.components[component_name].get_data(key)
+        
+    def get_world(self):
+        return self.world
 
 class EntityManager:
-    def __init__(self, entity_data, component_manager):
+    def __init__(self, entity_data, component_manager, world):
         self.entities = []
         self.archetypes = entity_data['archetypes']
         self.component_manager = component_manager
+        self.world = world
 
     #TODO: find a better way to overrride, less hardcoded
     # Creates an entity from an archetype
     def create_entity(self, archetype_name, spriteID, x, y):
         archetype = next((a for a in self.archetypes if a['name'] == archetype_name), None)
         if archetype is not None:
-            entity = Entity(len(self.entities))
+            entity = Entity(len(self.entities), self.world)
             for component in archetype['components']:
                 component_name = component['name']
                 component_data = component['data'].copy()  # create a copy here

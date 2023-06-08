@@ -42,8 +42,16 @@
             "id": "C006",
             "name": "movement",
             "data": {
-                "x": 0,
-                "y": 0
+                "xVel": 0,
+                "yVel": 0,
+                "state": "idle"
+            }
+        },
+        {
+            "id": "C007",
+            "name": "wander",
+            "data": {
+                "active": false
             }
         }
     ]

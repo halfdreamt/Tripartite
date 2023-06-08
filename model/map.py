@@ -83,14 +83,6 @@ class Map:
         if x < self.MAPWIDTH - 1 and not self.hasCollision(x + 1, y):
             valid_directions.append("1 , 0")
         return valid_directions
-    
-    #returns the location of the nearest item of the given type
-    def findNearestItem(self, x, y, itemName):
-        items = self.world.getEntityByName(itemName)
-        if items:
-            item = min(items, key=lambda item: abs(item.physical.xcoord - x) + abs(item.physical.ycoord - y))
-            return (item.physical.xcoord, item.physical.ycoord)
-        return None
 
     # iterates through all entities and updates them, equal to one step through the game loop
     def updateMap(self, entities):

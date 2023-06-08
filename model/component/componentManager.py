@@ -1,5 +1,3 @@
-import json
-
 class Component:
     def __init__(self, entity, name, data, system_manager):
         self.entity = entity

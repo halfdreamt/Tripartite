@@ -27,6 +27,10 @@ class World:
         for sprite in spriteData:
             self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
 
+        itemData = self.map.getLayerIds('items')
+        for item in itemData:
+            self.entity_manager.create_entity('Water Pot',  item[0], item[1], item[2])
+
     # Iterates through all systems and updates them, equal to one step through the game loop
     def tick(self):
         self.incrementTime()

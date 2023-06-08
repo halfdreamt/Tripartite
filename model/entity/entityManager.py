@@ -21,6 +21,12 @@ class Entity:
         if component_name in self.components:
             return self.components[component_name].get_data(key)
         
+    def has_component(self, component_name):
+        if component_name in self.components:
+            return True
+        else:
+            return False
+        
     def get_world(self):
         return self.world
 

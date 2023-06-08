@@ -99,7 +99,7 @@
                     "id": "C005",
                     "name": "name",
                     "data": {
-                        "name": "farmer"
+                        "name": "Farmer"
                     }
                 },
                 {
@@ -116,6 +116,42 @@
                     "name": "wander",
                     "data": {
                         "active": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "E003",
+            "name": "Water Pot",
+            "components": [
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "data": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "data": {
+                        "spriteID": 0
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "data": {
+                        "name": "Water Pot"
+                    }
+                },
+                {
+                    "id": "C008",
+                    "name": "drinkable",
+                    "data": {
+                        "current": -1,
+                        "max": -1
                     }
                 }
             ]

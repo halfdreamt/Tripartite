@@ -26,3 +26,4 @@ model/system/__pycache__/movementSystem.cpython-311.pyc
 model/system/__pycache__/systemManager.cpython-311.pyc
 model/system/__pycache__/wanderSystem.cpython-311.pyc
 view/__pycache__/PGDisplay.cpython-311.pyc
+model/system/__pycache__/movementSystem.cpython-311.pyc

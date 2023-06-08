@@ -14,3 +14,4 @@ class movementSystem:
     def move(self, entity):
         entity.update_component_data("position", "x", entity.get_component_data("position", "x") + entity.get_component_data("movement", "xVel"))
         entity.update_component_data("position", "y", entity.get_component_data("position", "y") + entity.get_component_data("movement", "yVel"))
+        entity.update_component_data("movement", "state", "idle")

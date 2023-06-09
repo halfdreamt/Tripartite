@@ -10,7 +10,7 @@ class movementSystem:
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
-                print(self.name + " for " + str(component.entity.id) + " updated at key: " + key + " with value: " + str(value))
+                pass
             elif updateType == "delete":
                 self.entities.remove(component.entity)
 

@@ -53,8 +53,6 @@ class Map:
     #returns an array of move directions which represent a path from the start to the end
     def get_path(self, start, end):
         grid = Grid(matrix=self.getCollisionLayer())
-        #print grid to log
-        print(grid.grid_str())
         start = grid.node(start[0], start[1])
         end = grid.node(end[0], end[1])
         finder = AStarFinder()

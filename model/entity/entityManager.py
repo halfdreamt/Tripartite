@@ -41,7 +41,7 @@ class EntityManager:
     # Creates an entity from an archetype
     def create_entity(self, archetype_name, spriteID, x, y):
         archetype = next((a for a in self.archetypes if a['name'] == archetype_name), None)
-        if archetype is not None:
+        if archetype != None:
             entity = Entity(len(self.entities), self.world)
             for component in archetype['components']:
                 component_name = component['name']

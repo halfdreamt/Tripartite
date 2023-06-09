@@ -1,11 +1,11 @@
-from model.system.wanderSystem import wanderSystem
-from model.system.movementSystem import movementSystem
-from model.system.thirstSystem import thirstSystem
-from model.system.healthSystem import healthSystem
-from model.system.collisionSystem import collisionSystem
-from model.system.pathfindingSystem import pathfindingSystem
-from model.system.positionSystem import positionSystem
-from model.system.needsSystem import needsSystem
+from model.system.systems.wanderSystem import wanderSystem
+from model.system.systems.movementSystem import movementSystem
+from model.system.systems.thirstSystem import thirstSystem
+from model.system.systems.healthSystem import healthSystem
+from model.system.systems.collisionSystem import collisionSystem
+from model.system.systems.pathfindingSystem import pathfindingSystem
+from model.system.systems.positionSystem import positionSystem
+from model.system.systems.needsSystem import needsSystem
 
 class SystemManager:
     def __init__(self):

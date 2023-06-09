@@ -30,7 +30,7 @@ class ComponentManager:
         
     def create_component(self, entity, name, data=None):
         component_type = next((c for c in self.component_types if c['name'] == name), None)
-        if component_type is not None:
+        if component_type != None:
             if data is None:
                 data = component_type['data']
             component = Component(entity, component_type['name'], data, self.system_manager)

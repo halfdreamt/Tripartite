@@ -46,3 +46,11 @@ model/system/__pycache__/movementSystem.cpython-311.pyc
 model/system/__pycache__/needsSystem.cpython-311.pyc
 model/system/__pycache__/systemManager.cpython-311.pyc
 model/system/__pycache__/thirstSystem.cpython-311.pyc
+model/system/systems/__pycache__/collisionSystem.cpython-311.pyc
+model/system/systems/__pycache__/healthSystem.cpython-311.pyc
+model/system/systems/__pycache__/movementSystem.cpython-311.pyc
+model/system/systems/__pycache__/needsSystem.cpython-311.pyc
+model/system/systems/__pycache__/pathfindingSystem.cpython-311.pyc
+model/system/systems/__pycache__/positionSystem.cpython-311.pyc
+model/system/systems/__pycache__/thirstSystem.cpython-311.pyc
+model/system/systems/__pycache__/wanderSystem.cpython-311.pyc

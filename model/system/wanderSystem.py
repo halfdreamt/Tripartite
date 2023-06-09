@@ -23,15 +23,12 @@ class wanderSystem:
 
     #Queries the entity's world's map for valid tiles to move to and picks a random one to set movement to
     def wander(self, entity):
-        world = entity.get_world()
         x = entity.get_component_data("position", "x")
         y = entity.get_component_data("position", "y")
-        validMoves = world.map.getValidMoves(x, y)
+        system = self.system_manager.get_system("collision")
+        validMoves = system.check_collision(entity)
         if len(validMoves) > 0:
             moves = random.choice(validMoves)
-            movesList = moves.split(",")
-            movex = int(movesList[0])
-            movey = int(movesList[1])
-            entity.update_component_data("movement", "xVel", movex)
-            entity.update_component_data("movement", "yVel", movey)
+            entity.update_component_data("movement", "xVel", moves[0])
+            entity.update_component_data("movement", "yVel", moves[1])
             entity.update_component_data("movement", "state", "moving")

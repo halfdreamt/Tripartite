@@ -1,4 +1,4 @@
-class thirstSystem:
+class pathfindingSystem:
     def __init__(self, ID, name, system_manager):
         self.ID = ID
         self.name = name
@@ -6,7 +6,7 @@ class thirstSystem:
         self.entities = []
 
     def component_updated(self, component, updateType):
-        if component.get_name() == "thirst" or component.get_name() == "drinkable":
+        if component.get_name() == "pathfinding":
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
@@ -16,12 +16,5 @@ class thirstSystem:
 
     def update(self):
         for entity in self.entities:
-            if entity.has_component("thirst"):
-                self.thirst(entity)
-
-    def thirst(self, entity):
-        if entity.get_component_data("thirst", "current") > 0:
-            entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "current") - 1)
-        else:
-            system = self.system_manager.get_system("health")
-            system.damage(entity, 1, self.name, "thirst")
+            if entity.get_component_data("movement", "state") == "idle" and entity.get_component_data("wander", "active"):
+                pass

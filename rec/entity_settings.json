@@ -123,6 +123,7 @@
                     "name": "pathfinding",
                     "data": {
                         "directions": [],
+                        "path": [],
                         "destinationX": -1,
                         "destinationY": -1,
                         "reason": "none"

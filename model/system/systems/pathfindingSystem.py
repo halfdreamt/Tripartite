@@ -23,13 +23,14 @@ class pathfindingSystem:
     def get_path(self, entity, targetX , targetY):
         x = entity.get_component_data("position", "x")
         y = entity.get_component_data("position", "y")
-        world = entity.get_world()
-        path = world.map.get_path((x, y), (targetX, targetY))
-        return world.map.pathToDirections(path)
+        path = entity.world.map.get_path((x, y), (targetX, targetY))
+        return path
     
     def set_path(self, entity, reason, targetX, targetY):
         path = self.get_path(entity, targetX, targetY)
-        entity.update_component_data("pathfinding", "directions", path)
+        directions = entity.world.map.pathToDirections(path)
+        entity.update_component_data("pathfinding", "directions", directions)
+        entity.update_component_data("pathfinding", "path", path)
         entity.update_component_data("pathfinding", "reason", reason)
         entity.update_component_data("pathfinding", "destinationX", targetX)
         entity.update_component_data("pathfinding", "destinationY", targetY)

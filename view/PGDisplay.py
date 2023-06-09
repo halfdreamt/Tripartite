@@ -137,6 +137,12 @@ class PGDisplay:
             entity_wander = self.font.render(f'Wander: {self.entityInfo.get_component_data("wander", "active")}', True, (255, 255, 255))
             self.screen.blit(entity_wander, (10, 200))
 
+            #highlight entity's path
+            path = self.entityInfo.get_component_data("pathfinding", "path")
+            if path:
+                for i in range(len(path) - 1):
+                    pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
+
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
         tile_x, tile_y = self.returnMapPos(mouse_x, mouse_y)

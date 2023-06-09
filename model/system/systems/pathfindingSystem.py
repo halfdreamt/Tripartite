@@ -39,6 +39,7 @@ class pathfindingSystem:
     def clear_path(self, entity):
         entity.update_component_data("pathfinding", "directions", [])
         entity.update_component_data("pathfinding", "reason", "none")
+        entity.update_component_data("pathfinding", "path", [])
         entity.update_component_data("pathfinding", "destinationX", -1)
         entity.update_component_data("pathfinding", "destinationY", -1)
         entity.update_component_data("wander", "active", True)

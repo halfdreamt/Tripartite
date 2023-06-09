@@ -117,31 +117,49 @@ class PGDisplay:
             entity_name = self.font.render(self.entityInfo.get_component_data("name", "name"), True, (255, 255, 255))
             self.screen.blit(entity_name, (10, 50))
 
-            # Draw entity stats
-            entity_stats = self.font.render(f'Physical Health: {self.entityInfo.get_component_data("health", "current")} Thirst: {self.entityInfo.get_component_data("thirst", "current")}', True, (255, 255, 255))
-            self.screen.blit(entity_stats, (10, 80))
-
             # Draw entity position
             entity_position = self.font.render(f'X: {self.entityInfo.get_component_data("position", "x")} Y: {self.entityInfo.get_component_data("position", "y")}', True, (255, 255, 255))
-            self.screen.blit(entity_position, (10, 110))
+            self.screen.blit(entity_position, (10, 80))
 
             #draw entity needs 
             entity_needs = self.font.render(f'Needs: {self.entityInfo.get_component_data("needs", "needs")}', True, (255, 255, 255))
-            self.screen.blit(entity_needs, (10, 140))
+            self.screen.blit(entity_needs, (10, 110))
 
             #draw entity pathfinding directions
             entity_pathfinding = self.font.render(f'Pathfinding: {self.entityInfo.get_component_data("pathfinding", "directions")}', True, (255, 255, 255))
-            self.screen.blit(entity_pathfinding, (10, 170))
+            self.screen.blit(entity_pathfinding, (10, 140))
 
             #drawn wander state
             entity_wander = self.font.render(f'Wander: {self.entityInfo.get_component_data("wander", "active")}', True, (255, 255, 255))
-            self.screen.blit(entity_wander, (10, 200))
+            self.screen.blit(entity_wander, (10, 170))
 
-            #highlight entity's path
-            path = self.entityInfo.get_component_data("pathfinding", "path")
-            if path:
-                for i in range(len(path) - 1):
-                    pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
+
+            if self.entityInfo.get_component_data("name", "name") == "Farmer":
+                #draw bar for entity health with label
+                current_health = self.entityInfo.get_component_data("health", "current")
+                max_health = self.entityInfo.get_component_data("health", "max")
+                health_bar = pygame.Rect(10, 200, 200, 20)
+                pygame.draw.rect(self.screen, (255, 0, 0), health_bar)
+                health_bar = pygame.Rect(10, 200, 200 * (current_health / max_health), 20)
+                pygame.draw.rect(self.screen, (0, 255, 0), health_bar)
+                entity_health = self.font.render(f'Health: {current_health}/{max_health}', True, (255, 255, 255))
+                self.screen.blit(entity_health, (10, 200))
+
+                #draw bar for entity thirst with label
+                current_health = self.entityInfo.get_component_data("thirst", "current")
+                max_health = self.entityInfo.get_component_data("thirst", "max")
+                health_bar = pygame.Rect(10, 230, 200, 20)
+                pygame.draw.rect(self.screen, (255, 0, 0), health_bar)
+                health_bar = pygame.Rect(10, 230, 200 * (current_health / max_health), 20)
+                pygame.draw.rect(self.screen, (0, 0, 255), health_bar)
+                entity_health = self.font.render(f'Thirst: {current_health}/{max_health}', True, (255, 255, 255))
+                self.screen.blit(entity_health, (10, 230))
+
+                #highlight entity's path
+                path = self.entityInfo.get_component_data("pathfinding", "path")
+                if path:
+                    for i in range(len(path) - 1):
+                        pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
 
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()

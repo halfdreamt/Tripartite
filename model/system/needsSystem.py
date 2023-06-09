@@ -18,7 +18,7 @@ class needsSystem:
         entity.update_component_data("needs", "needs", entity.get_component_data("needs", "needs") + [(name, priority)])
 
     def remove_need(self, entity, need):
-        entity.update_component_data("needs", "needs", [x for x in entity.get_component_data("needs", "needs") if x != need])
+        entity.update_component_data("needs", "needs", [n for n in entity.get_component_data("needs", "needs") if n[0] != need])
 
     def get_highest_priority_need(self, entity):
         if len(entity.get_component_data("needs", "needs")) == 0:
@@ -30,14 +30,20 @@ class needsSystem:
         return highest
 
     def has_need(self, entity, need):
-        return need in entity.get_component_data("needs", "needs")
+        for n in entity.get_component_data("needs", "needs"):
+            if n[0] == need:
+                return True
+        return False
 
     def update(self):
         for entity in self.entities:
             highestNeed = self.get_highest_priority_need(entity)
-            if highestNeed != None and highestNeed[0] == "thirst":
-                nearestWater = self.system_manager.get_system("position").get_nearest_entity(entity, "Water Pot")
-                waterX = nearestWater.get_component_data("position", "x")
-                waterY = nearestWater.get_component_data("position", "y")
-                spotNextToWater = entity.world.map.getRandomValidMove(waterX, waterY)
-                self.system_manager.get_system("pathfinding").set_path(entity, spotNextToWater[0] + waterX, spotNextToWater[1] + waterY)
+            if highestNeed != None:
+                if highestNeed[0] == "thirst" and entity.get_component_data("pathfinding", "destination") != "thirst":
+                    nearestWater = self.system_manager.get_system("position").get_nearest_entity(entity, "Water Pot")
+                    waterX = nearestWater.get_component_data("position", "x")
+                    waterY = nearestWater.get_component_data("position", "y")
+                    spotNextToWater = entity.world.map.getRandomValidMove(waterX, waterY)
+                    self.system_manager.get_system("pathfinding").set_path(entity, "thirst", spotNextToWater[0] + waterX, spotNextToWater[1] + waterY)
+            else:
+                entity.update_component_data("pathfinding", "directions", [])

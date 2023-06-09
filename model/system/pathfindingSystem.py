@@ -27,16 +27,25 @@ class pathfindingSystem:
         path = world.map.get_path((x, y), (targetX, targetY))
         return world.map.pathToDirections(path)
     
-    def set_path(self, entity, targetX, targetY):
+    def set_path(self, entity, reason, targetX, targetY):
         path = self.get_path(entity, targetX, targetY)
         entity.update_component_data("pathfinding", "directions", path)
+        entity.update_component_data("pathfinding", "reason", reason)
+        entity.update_component_data("pathfinding", "destinationX", targetX)
+        entity.update_component_data("pathfinding", "destinationY", targetY)
         entity.update_component_data("wander", "active", False)
-        entity.update_component_data("movement", "state", "pathing")
+
+    def clear_path(self, entity):
+        entity.update_component_data("pathfinding", "directions", [])
+        entity.update_component_data("pathfinding", "reason", "none")
+        entity.update_component_data("pathfinding", "destinationX", -1)
+        entity.update_component_data("pathfinding", "destinationY", -1)
+        entity.update_component_data("wander", "active", True)
 
     def update(self):
         for entity in self.entities:
-            if entity.get_component_data("movement", "state") == "pathing":
-                if len(entity.get_component_data("pathfinding", "directions")):
+            if entity.get_component_data("pathfinding", "reason") != "none":
+                if len(entity.get_component_data("pathfinding", "directions")) > 0:
                     self.next_move(entity)
                 else:
-                    entity.update_component_data("movement", "state", "idle")
+                    self.clear_path(entity)

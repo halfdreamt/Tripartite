@@ -18,8 +18,9 @@ class wanderSystem:
 
     def update(self):
         for entity in self.entities:
-            if entity.get_component_data("movement", "state") == "idle" and entity.get_component_data("wander", "active"):
-                self.wander(entity)
+            if entity.get_component_data("movement", "xVel") == 0 and entity.get_component_data("movement", "yVel") == 0:
+                if entity.get_component_data("wander", "active"):
+                    self.wander(entity)
 
     #Queries the entity's world's map for valid tiles to move to and picks a random one to set movement to
     def wander(self, entity):

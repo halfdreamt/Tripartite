@@ -67,7 +67,10 @@
             "id": "C009",
             "name": "pathfinding",
             "data": {
-                "pathDirections": []
+                "directions": [],
+                "destinationX": -1,
+                "destinationY": -1,
+                "reason": "none"
             }
         },
         {

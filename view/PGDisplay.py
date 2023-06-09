@@ -121,4 +121,14 @@ class PGDisplay:
             entity_stats = self.font.render(f'Physical Health: {self.entityInfo.get_component_data("health", "current")} Thirst: {self.entityInfo.get_component_data("thirst", "current")}', True, (255, 255, 255))
             self.screen.blit(entity_stats, (10, 80))
 
+            # Draw entity position
+            entity_position = self.font.render(f'X: {self.entityInfo.get_component_data("position", "x")} Y: {self.entityInfo.get_component_data("position", "y")}', True, (255, 255, 255))
+            self.screen.blit(entity_position, (10, 110))
+
+        #draw cursor position
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        tile_x, tile_y = self.returnMapPos(mouse_x, mouse_y)
+        cursor_position = self.font.render(f'X: {tile_x} Y: {tile_y}', True, (255, 255, 255))
+        self.screen.blit(cursor_position, (10, 140))
+
         pygame.display.flip()

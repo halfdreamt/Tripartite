@@ -7,7 +7,7 @@ class wanderSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType):
+    def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "wander":
             if updateType == "create":
                 self.entities.append(component.entity)
@@ -25,8 +25,6 @@ class wanderSystem:
     def wander(self, entity):
         x = entity.get_component_data("position", "x")
         y = entity.get_component_data("position", "y")
-        system = self.system_manager.get_system("collision")
-        validMoves = system.check_collision(entity)
-        if len(validMoves) > 0:
-            moves = random.choice(validMoves)
-            self.system_manager.get_system("movement").set_movement(entity, moves[0], moves[1])
+        validMove = entity.world.map.getRandomValidMove(x, y)
+        if validMove is not (0, 0):
+            self.system_manager.get_system("movement").set_movement(entity, validMove[0], validMove[1])

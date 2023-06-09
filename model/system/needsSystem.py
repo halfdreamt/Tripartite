@@ -5,7 +5,7 @@ class needsSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType):
+    def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "needs":
             if updateType == "create":
                 self.entities.append(component.entity)
@@ -37,4 +37,7 @@ class needsSystem:
             highestNeed = self.get_highest_priority_need(entity)
             if highestNeed != None and highestNeed[0] == "thirst":
                 nearestWater = self.system_manager.get_system("position").get_nearest_entity(entity, "Water Pot")
-                self.system_manager.get_system("pathfinding").set_path(entity, nearestWater)
+                waterX = nearestWater.get_component_data("position", "x")
+                waterY = nearestWater.get_component_data("position", "y")
+                spotNextToWater = entity.world.map.getRandomValidMove(waterX, waterY)
+                self.system_manager.get_system("pathfinding").set_path(entity, spotNextToWater[0] + waterX, spotNextToWater[1] + waterY)

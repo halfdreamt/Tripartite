@@ -9,7 +9,7 @@ class Component:
     def update_data(self, key, new_value):
         if key in self.data:
             self.data[key] = new_value
-            self.notify_systems("update")
+            self.notify_systems("update", key, new_value)
         else:
             raise KeyError(f"No such key: {key} in data for this component")
 
@@ -19,8 +19,8 @@ class Component:
     def get_name(self):
         return self.name
 
-    def notify_systems(self, updateType):
-        self.system_manager.component_updated(self, updateType)
+    def notify_systems(self, updateType, key=None, value=None):
+        self.system_manager.component_updated(self, updateType, key, value)
             
 
 class ComponentManager:

@@ -1,5 +1,6 @@
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
+import random
 
 class Map:
     def __init__(self, map_data):
@@ -42,18 +43,18 @@ class Map:
                 collision_layer[y].append(0 if self.getLayerId('collision', x, y) == 0 else 1)
         return collision_layer
     
-    # converts a path of nodes to a list of move directions
+    # converts a path of nodes to an array of move directions
     def pathToDirections(self, path):
         directions = []
         for i in range(len(path) - 1):
-            x1, y1 = path[i]
-            x2, y2 = path[i + 1]
-            directions.append(str(x2 - x1) + " , " + str(y2 - y1))
+            directions.append((path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1]))
         return directions
     
     #returns an array of move directions which represent a path from the start to the end
     def get_path(self, start, end):
         grid = Grid(matrix=self.getCollisionLayer())
+        #print grid to log
+        print(grid.grid_str())
         start = grid.node(start[0], start[1])
         end = grid.node(end[0], end[1])
         finder = AStarFinder()
@@ -83,6 +84,12 @@ class Map:
         if x < self.MAPWIDTH - 1 and not self.hasCollision(x + 1, y):
             valid_directions.append((1 , 0))
         return valid_directions
+    
+    def getRandomValidMove(self, x, y):
+        valid_directions = self.getValidMoves(x, y)
+        if len(valid_directions) > 0:
+            return valid_directions[random.randint(0, len(valid_directions) - 1)]
+        return (0, 0)
 
     # iterates through all entities and updates them, equal to one step through the game loop
     def updateMap(self, entities):

@@ -5,7 +5,7 @@ class pathfindingSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType):
+    def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "pathfinding":
             if updateType == "create":
                 self.entities.append(component.entity)
@@ -20,18 +20,17 @@ class pathfindingSystem:
         self.system_manager.get_system("movement").set_movement(entity, curDirections[0][0], curDirections[0][1])
         entity.update_component_data("pathfinding", "directions", curDirections[1:])
 
-    def get_path(self, entity, target):
+    def get_path(self, entity, targetX , targetY):
         x = entity.get_component_data("position", "x")
         y = entity.get_component_data("position", "y")
-        targetX = target.get_component_data("position", "x")
-        targetY = target.get_component_data("position", "y")
         world = entity.get_world()
         path = world.map.get_path((x, y), (targetX, targetY))
         return world.map.pathToDirections(path)
     
-    def set_path(self, entity, target):
-        path = self.get_path(entity, target)
+    def set_path(self, entity, targetX, targetY):
+        path = self.get_path(entity, targetX, targetY)
         entity.update_component_data("pathfinding", "directions", path)
+        entity.update_component_data("wander", "active", False)
         entity.update_component_data("movement", "state", "pathing")
 
     def update(self):

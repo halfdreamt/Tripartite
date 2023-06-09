@@ -5,7 +5,7 @@ class collisionSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType):
+    def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "collision":
             if updateType == "create":
                 self.entities.append(component.entity)

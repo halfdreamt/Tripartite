@@ -5,7 +5,7 @@ class thirstSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType):
+    def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "thirst" or component.get_name() == "drinkable":
             if updateType == "create":
                 self.entities.append(component.entity)

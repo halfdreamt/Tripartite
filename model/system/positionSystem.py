@@ -18,8 +18,8 @@ class positionSystem:
                 self.entities.remove(component.entity)
 
     def get_nearest_entity(self, entity, name):
-        entities = self.system_manager.get_entities(name)
-        if len(entities) == 0:
+        entities = entity.world.entity_manager.get_entities_by_name(name)
+        if not len(entities):
             return None
         nearest = entities[0]
         nearestDist = self.get_distance(entity, nearest)

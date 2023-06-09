@@ -123,7 +123,7 @@
                     "id": "C009",
                     "name": "pathfinding",
                     "data": {
-                        "pathDirections": []
+                        "directions": []
                     }
                 },
                 {
@@ -131,6 +131,13 @@
                     "name": "collision",
                     "data": {
                         "colliding": true
+                    }
+                },
+                {
+                    "id": "C011",
+                    "name": "needs",
+                    "data": {
+                        "needs": []
                     }
                 }
             ]

@@ -70,6 +70,9 @@ class EntityManager:
 
     def return_entities(self):
         return self.entities
+    
+    def get_entities_by_name(self, name):
+        return [entity for entity in self.entities if entity.get_component_data("name", "name") == name]
 
     def remove_entity(self, index):
         del self.entities[index]

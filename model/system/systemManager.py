@@ -5,6 +5,7 @@ from model.system.healthSystem import healthSystem
 from model.system.collisionSystem import collisionSystem
 from model.system.pathfindingSystem import pathfindingSystem
 from model.system.positionSystem import positionSystem
+from model.system.needsSystem import needsSystem
 
 class SystemManager:
     def __init__(self):
@@ -16,6 +17,7 @@ class SystemManager:
         self.add_system(collisionSystem(len(self.systems), "collision", self))
         self.add_system(pathfindingSystem(len(self.systems), "pathfinding", self))
         self.add_system(positionSystem(len(self.systems), "position", self))
+        self.add_system(needsSystem(len(self.systems), "needs", self))
 
     def update_systems(self):
         for system in self.systems:

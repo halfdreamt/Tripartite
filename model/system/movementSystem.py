@@ -16,7 +16,7 @@ class movementSystem:
 
     def update(self):
         for entity in self.entities:
-            if entity.get_component_data("movement", "state") == "moving":
+            if entity.get_component_data("movement", "state") == "moving" or entity.get_component_data("movement", "state") == "pathing":
                 self.move(entity)
 
     def set_movement(self, entity, xVel, yVel):

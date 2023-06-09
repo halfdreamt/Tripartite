@@ -28,6 +28,11 @@ class pathfindingSystem:
         world = entity.get_world()
         path = world.map.get_path((x, y), (targetX, targetY))
         return world.map.pathToDirections(path)
+    
+    def set_path(self, entity, target):
+        path = self.get_path(entity, target)
+        entity.update_component_data("pathfinding", "directions", path)
+        entity.update_component_data("movement", "state", "pathing")
 
     def update(self):
         for entity in self.entities:

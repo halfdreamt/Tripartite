@@ -134,7 +134,7 @@ class PGDisplay:
             self.screen.blit(entity_wander, (10, 170))
 
 
-            if self.entityInfo.get_component_data("name", "name") == "Farmer":
+            if self.entityInfo.has_component("health") and self.entityInfo.has_component("thirst"):
                 #draw bar for entity health with label
                 current_health = self.entityInfo.get_component_data("health", "current")
                 max_health = self.entityInfo.get_component_data("health", "max")

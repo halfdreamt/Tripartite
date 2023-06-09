@@ -14,6 +14,18 @@ class thirstSystem:
             elif updateType == "delete":
                 self.entities.remove(component.entity)
 
+    def isNearWater(self, entity):
+        x = entity.get_component_data("position", "x")
+        y = entity.get_component_data("position", "y")
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                world = entity.get_world()
+                waterEntity = world.entity_manager.get_entity_at(x + i, y + j)
+                if waterEntity:
+                    if waterEntity.has_component("drinkable"):
+                        return True
+        return False
+
     def update(self):
         for entity in self.entities:
             if entity.has_component("thirst"):
@@ -22,6 +34,12 @@ class thirstSystem:
     def thirst(self, entity):
         if entity.get_component_data("thirst", "current") > 0:
             entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "current") - 1)
+            if entity.get_component_data("thirst", "current") < 10:
+                entity.update_component_data("thirst", "state", "thirsty")
         else:
             system = self.system_manager.get_system("health")
             system.damage(entity, 1, self.name, "thirst")
+
+        if self.isNearWater(entity):
+            entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "max"))
+            entity.update_component_data("thirst", "state", "hydrated")

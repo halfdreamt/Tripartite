@@ -13,7 +13,8 @@
             "name": "thirst",
             "data": {
                 "current": 100,
-                "max": 100
+                "max": 100,
+                "state": "hydrated"
             }
         },
         {
@@ -66,8 +67,7 @@
             "id": "C009",
             "name": "pathfinding",
             "data": {
-                "currentPath": 0,
-                "paths": []
+                "pathDirections": []
             }
         },
         {

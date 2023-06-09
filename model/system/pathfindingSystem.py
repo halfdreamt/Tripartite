@@ -14,7 +14,25 @@ class pathfindingSystem:
             elif updateType == "delete":
                 self.entities.remove(component.entity)
 
+    def next_move(self, entity):
+        curDirections = entity.get_component_data("pathfinding", "directions")
+        # TODO: run a collision check here, recalculate path if necessary
+        self.system_manager.get_system("movement").set_movement(entity, curDirections[0][0], curDirections[0][1])
+        entity.update_component_data("pathfinding", "directions", curDirections[1:])
+
+    def get_path(self, entity, target):
+        x = entity.get_component_data("position", "x")
+        y = entity.get_component_data("position", "y")
+        targetX = target.get_component_data("position", "x")
+        targetY = target.get_component_data("position", "y")
+        world = entity.get_world()
+        path = world.map.get_path((x, y), (targetX, targetY))
+        return world.map.pathToDirections(path)
+
     def update(self):
         for entity in self.entities:
-            if entity.get_component_data("movement", "state") == "idle" and entity.get_component_data("wander", "active"):
-                pass
+            if entity.get_component_data("movement", "state") == "pathing":
+                if len(entity.get_component_data("pathfinding", "directions")):
+                    self.next_move(entity)
+                else:
+                    entity.update_component_data("movement", "state", "idle")

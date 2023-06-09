@@ -52,7 +52,7 @@ class Map:
         return directions
     
     #returns an array of move directions which represent a path from the start to the end
-    def getPath(self, start, end):
+    def get_path(self, start, end):
         grid = Grid(matrix=self.getCollisionLayer())
         start = grid.node(start[0], start[1])
         end = grid.node(end[0], end[1])

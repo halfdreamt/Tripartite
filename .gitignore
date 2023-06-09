@@ -36,3 +36,9 @@ model/system/__pycache__/movementSystem.cpython-311.pyc
 model/system/__pycache__/systemManager.cpython-311.pyc
 model/system/__pycache__/thirstSystem.cpython-311.pyc
 model/system/__pycache__/wanderSystem.cpython-311.pyc
+model/system/__pycache__/movementSystem.cpython-311.pyc
+model/system/__pycache__/pathfindingSystem.cpython-311.pyc
+model/system/__pycache__/positionSystem.cpython-311.pyc
+model/system/__pycache__/systemManager.cpython-311.pyc
+model/system/__pycache__/thirstSystem.cpython-311.pyc
+model/system/__pycache__/wanderSystem.cpython-311.pyc

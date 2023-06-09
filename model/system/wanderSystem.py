@@ -29,6 +29,4 @@ class wanderSystem:
         validMoves = system.check_collision(entity)
         if len(validMoves) > 0:
             moves = random.choice(validMoves)
-            entity.update_component_data("movement", "xVel", moves[0])
-            entity.update_component_data("movement", "yVel", moves[1])
-            entity.update_component_data("movement", "state", "moving")
+            self.system_manager.get_system("movement").set_movement(entity, moves[0], moves[1])

@@ -19,6 +19,14 @@ class movementSystem:
             if entity.get_component_data("movement", "state") == "moving":
                 self.move(entity)
 
+    def set_movement(self, entity, xVel, yVel):
+        entity.update_component_data("movement", "xVel", xVel)
+        entity.update_component_data("movement", "yVel", yVel)
+        if xVel == 0 and yVel == 0:
+            entity.update_component_data("movement", "state", "idle")
+        else:
+            entity.update_component_data("movement", "state", "moving")
+
     def move(self, entity):
         entity.update_component_data("position", "x", entity.get_component_data("position", "x") + entity.get_component_data("movement", "xVel"))
         entity.update_component_data("position", "y", entity.get_component_data("position", "y") + entity.get_component_data("movement", "yVel"))

@@ -6,8 +6,13 @@ class movementSystem:
         self.entities = []
 
     def component_updated(self, component, updateType):
-        if component.get_name() == "movement" and updateType == "create":
-            self.entities.append(component.entity)
+        if component.get_name() == "movement":
+            if updateType == "create":
+                self.entities.append(component.entity)
+            elif updateType == "update":
+                pass
+            elif updateType == "delete":
+                self.entities.remove(component.entity)
 
     def update(self):
         for entity in self.entities:

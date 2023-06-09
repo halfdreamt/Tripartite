@@ -6,8 +6,13 @@ class healthSystem:
         self.entities = []
 
     def component_updated(self, component, updateType):
-        if component.get_name() == "health" and updateType == "create":
-            self.entities.append(component.entity)
+        if component.get_name() == "health":
+            if updateType == "create":
+                self.entities.append(component.entity)
+            elif updateType == "update":
+                pass
+            elif updateType == "delete":
+                self.entities.remove(component.entity)
 
     def update(self):
         pass

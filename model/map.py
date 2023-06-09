@@ -40,7 +40,7 @@ class Map:
         for y in range(self.MAPHEIGHT):
             collision_layer.append([])
             for x in range(self.MAPWIDTH):
-                collision_layer[y].append(0 if self.getLayerId('collision', x, y) == 0 else 1)
+                collision_layer[y].append(1 if self.getLayerId('collision', x, y) == 0 else 0)
         return collision_layer
     
     # converts a path of nodes to an array of move directions

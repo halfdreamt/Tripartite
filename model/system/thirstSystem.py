@@ -4,6 +4,7 @@ class thirstSystem:
         self.name = name
         self.system_manager = system_manager
         self.entities = []
+        self.threshhold = 50
 
     def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "thirst" or component.get_name() == "drinkable":
@@ -35,7 +36,7 @@ class thirstSystem:
     def thirst(self, entity):
         if entity.get_component_data("thirst", "current") > 0:
             entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "current") - 1)
-            if entity.get_component_data("thirst", "current") < 10:
+            if entity.get_component_data("thirst", "current") < self.threshhold:
                 if entity.get_component_data("thirst", "state") != "thirsty":
                     entity.update_component_data("thirst", "state", "thirsty")
                     self.system_manager.get_system("needs").add_need(entity, "thirst", 1)

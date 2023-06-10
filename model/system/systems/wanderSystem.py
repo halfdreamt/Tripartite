@@ -28,4 +28,4 @@ class wanderSystem:
         y = entity.get_component_data("position", "y")
         validMove = entity.world.map.getRandomValidMove(x, y)
         if validMove != (0, 0):
-            self.system_manager.get_system("movement").set_movement(entity, validMove[0], validMove[1])
+            self.system_manager.get_system("movement").set_movement(entity, validMove[0], validMove[1], "wanderSystem")

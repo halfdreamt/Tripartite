@@ -6,12 +6,16 @@ from model.system.systems.collisionSystem import collisionSystem
 from model.system.systems.pathfindingSystem import pathfindingSystem
 from model.system.systems.positionSystem import positionSystem
 from model.system.systems.needsSystem import needsSystem
+from model.system.systems.nameSystem import nameSystem
+from model.system.systems.ageSystem import ageSystem
 
 class SystemManager:
     def __init__(self):
         self.systems = []
         self.add_system(thirstSystem(len(self.systems), "thirst", self))
         self.add_system(healthSystem(len(self.systems), "health", self))
+        self.add_system(nameSystem(len(self.systems), "name", self))
+        self.add_system(ageSystem(len(self.systems), "age", self))
         self.add_system(collisionSystem(len(self.systems), "collision", self))
         self.add_system(positionSystem(len(self.systems), "position", self))
         self.add_system(needsSystem(len(self.systems), "needs", self))

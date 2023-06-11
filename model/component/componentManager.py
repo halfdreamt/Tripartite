@@ -18,6 +18,9 @@ class Component:
 
     def get_name(self):
         return self.name
+    
+    def get_all_data(self):
+        return self.data
 
     def notify_systems(self, updateType, key=None, value=None):
         self.system_manager.component_updated(self, updateType, key, value)

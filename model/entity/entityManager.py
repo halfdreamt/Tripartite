@@ -27,8 +27,21 @@ class Entity:
         else:
             return False
         
+    def get_component_names(self):
+        return self.components.keys()
+        
     def get_world(self):
         return self.world
+    
+    def get_id(self):
+        return self.id
+    
+    def get_all_component_data(self):
+        componentNames = self.get_component_names()
+        componentData = {}
+        for componentName in componentNames:
+            componentData[componentName] = self.components[componentName].get_all_data()
+        return componentData
 
 class EntityManager:
     def __init__(self, entity_data, component_manager, world):

@@ -1,4 +1,5 @@
 import pygame
+from controller import editor
 import xml.etree.ElementTree as ET
 
 class PGEvents:
@@ -6,6 +7,7 @@ class PGEvents:
         self.pgdisplay = pgdisplay
         self.world = world
         self.pygame = pygame
+        self.editor = editor.editor(world)
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -45,7 +47,10 @@ class PGEvents:
                 self.pgdisplay.panning = False
             elif event.button == 1:  # Left mouse button
                 x, y = event.pos
-                self.handleMouseClick(x, y)
+                self.handleLeftMouseClick(x, y)
+            elif event.button == 3: # Right mouse button
+                x, y = event.pos
+                self.handleRightMouseClick(x, y)
         elif event.type == pygame.MOUSEMOTION:
             if self.pgdisplay.panning:
                 x, y = event.pos
@@ -55,7 +60,11 @@ class PGEvents:
                 self.pgdisplay.camera_y += dy
                 self.pgdisplay.pan_start_x, self.pgdisplay.pan_start_y = x, y
 
-    def handleMouseClick(self, x, y):
+    def handleLeftMouseClick(self, x, y):
         new_x, new_y = self.pgdisplay.returnMapPos(x, y)
         self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
             
+    def handleRightMouseClick(self, x, y):
+        if self.pgdisplay.game_paused:
+            new_x, new_y = self.pgdisplay.returnMapPos(x, y)
+            self.editor.handleRightMouseClick(self.world.entity_manager.get_entity_at(new_x, new_y))

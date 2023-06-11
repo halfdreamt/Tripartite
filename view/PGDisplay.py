@@ -9,15 +9,15 @@ class PGDisplay:
         # Initialize pygame
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
+
+        # Font settings
+        self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
         
         # Initialize event handler
         self.pgevents = PGEvents(self, pygame, world)
 
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []
-
-        # Font settings
-        self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
 
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
@@ -40,6 +40,19 @@ class PGDisplay:
             image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
             self.tilesets.append(pygame.image.load(image_path).convert_alpha())
             self.tileset_firstgids.append(tileset['firstgid'])
+
+    # creates a surface with a list of components and their values, and allows the user to edit them
+    def handleEntityEditor(self, entity):
+        component_data = entity.get_all_component_data()
+        component_data_keys = list(component_data.keys())
+        component_data_values = list(component_data.values())
+        component_data_surface = pygame.Surface((300, 30 * len(component_data_keys)))
+        component_data_surface.fill((0, 0, 0))
+        for i in range(len(component_data_keys)):
+            component_data_text = self.font.render(f'{component_data_keys[i]}: {component_data_values[i]}', True, (255, 255, 255))
+            component_data_surface.blit(component_data_text, (10, 30 * i))
+        self.screen.blit(component_data_surface, (self.screen.get_width() - 300, 0))
+
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):

@@ -16,7 +16,6 @@ class pathfindingSystem:
 
     def next_move(self, entity):
         curDirections = entity.get_component_data("pathfinding", "directions")
-        # TODO: run a collision check here, recalculate path if necessary
         self.system_manager.get_system("movement").set_movement(entity, curDirections[0][0], curDirections[0][1], "pathfindingSystem")
         entity.update_component_data("pathfinding", "directions", curDirections[1:])
 

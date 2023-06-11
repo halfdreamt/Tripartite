@@ -142,13 +142,6 @@
                     "data": {
                         "needs": []
                     }
-                },
-                {
-                    "id": "C012",
-                    "name": "age",
-                    "data": {
-                        "age:": 0
-                    }
                 }
             ]
         },
@@ -191,13 +184,6 @@
                     "name": "collision",
                     "data": {
                         "colliding": true
-                    }
-                },
-                {
-                    "id": "C012",
-                    "name": "age",
-                    "data": {
-                        "age:": 0
                     }
                 }
             ]

@@ -16,12 +16,11 @@ class thirstSystem:
                 self.entities.remove(component.entity)
 
     def isNearWater(self, entity):
-        x = entity.get_component_data("position", "x")
-        y = entity.get_component_data("position", "y")
+        position = self.system_manager.get_system("position").get_position(entity)
         for i in range(-1, 2):
             for j in range(-1, 2):
                 world = entity.get_world()
-                waterEntity = world.entity_manager.get_entity_at(x + i, y + j)
+                waterEntity = world.entity_manager.get_entity_at(position[0] + i, position[1] + j)
                 if waterEntity:
                     if waterEntity.has_component("drinkable"):
                         return True

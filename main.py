@@ -61,7 +61,7 @@ while running:
             world.tick()
             
     # Limit the frame rate
-    clock.tick(FRAMERATE)  
+    clock.tick(FRAMERATE)
 
     # Redraw screen with new camera position/zoom level
     pgdisplay.draw_screen()  

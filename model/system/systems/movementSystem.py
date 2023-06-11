@@ -20,17 +20,18 @@ class movementSystem:
                 self.move(entity)
 
     def set_movement(self, entity, xVel, yVel, source):
-        validMoves = entity.world.map.getValidMoves(entity.get_component_data("position", "x"), entity.get_component_data("position", "y"))
+        position = self.system_manager.get_system("position").get_position(entity)
+        validMoves = entity.world.map.getValidMoves(position[0], position[1])
         if (xVel, yVel) in validMoves:
             entity.update_component_data("movement", "xVel", xVel)
             entity.update_component_data("movement", "yVel", yVel)
             return True
         else:
-            print("Invalid move for " + entity.get_component_data("name", "name") + " by " + str(source) + " to " + str(entity.get_component_data("position", "x") + xVel) + ", " + str(entity.get_component_data("position", "y") + yVel) + ". Reason: Collision")
+            print("Invalid move for " + entity.get_component_data("name", "name") + " by " + str(source) + " to " + str(position[0] + xVel) + ", " + str(position[1] + yVel) + ". Reason: Collision")
             return False
 
     def move(self, entity):
-        entity.update_component_data("position", "x", entity.get_component_data("position", "x") + entity.get_component_data("movement", "xVel"))
-        entity.update_component_data("position", "y", entity.get_component_data("position", "y") + entity.get_component_data("movement", "yVel"))
+        position = self.system_manager.get_system("position").get_position(entity)
+        self.system_manager.get_system("position").set_position(entity, position[0] + entity.get_component_data("movement", "xVel"), position[1] + entity.get_component_data("movement", "yVel"))
         entity.update_component_data("movement", "xVel", 0)
         entity.update_component_data("movement", "yVel", 0)

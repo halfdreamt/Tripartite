@@ -24,8 +24,7 @@ class wanderSystem:
 
     #Queries the entity's world's map for valid tiles to move to and picks a random one to set movement to
     def wander(self, entity):
-        x = entity.get_component_data("position", "x")
-        y = entity.get_component_data("position", "y")
-        validMove = entity.world.map.getRandomValidMove(x, y)
+        position = self.system_manager.get_system("position").get_position(entity)
+        validMove = entity.world.map.getRandomValidMove(position[0], position[1])
         if validMove != (0, 0):
             self.system_manager.get_system("movement").set_movement(entity, validMove[0], validMove[1], "wanderSystem")

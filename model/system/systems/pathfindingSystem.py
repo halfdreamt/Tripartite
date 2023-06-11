@@ -14,18 +14,23 @@ class pathfindingSystem:
             elif updateType == "delete":
                 self.entities.remove(component.entity)
 
+    def get_reason(self, entity):
+        return entity.get_component_data("pathfinding", "reason")
+
     def next_move(self, entity):
-        curDirections = entity.get_component_data("pathfinding", "directions")
-        self.system_manager.get_system("movement").set_movement(entity, curDirections[0][0], curDirections[0][1], "pathfindingSystem")
-        entity.update_component_data("pathfinding", "directions", curDirections[1:])
+        curDirections = entity.get_component_data("pathfinding", "directions") 
+        if self.system_manager.get_system("movement").set_movement(entity, curDirections[0][0], curDirections[0][1], "pathfindingSystem"):
+            entity.update_component_data("pathfinding", "directions", curDirections[1:])
+        else:
+            self.set_path(entity, entity.get_component_data("pathfinding", "reason"), entity.get_component_data("pathfinding", "destinationX"), entity.get_component_data("pathfinding", "destinationY"))
 
     def get_path(self, entity, targetX , targetY):
-        x = entity.get_component_data("position", "x")
-        y = entity.get_component_data("position", "y")
-        path = entity.world.map.get_path((x, y), (targetX, targetY))
+        position = self.system_manager.get_system("position").get_position(entity)
+        path = entity.world.map.get_path((position[0], position[1]), (targetX, targetY))
         return path
     
     def set_path(self, entity, reason, targetX, targetY):
+        # TODO: Return false if no path found
         path = self.get_path(entity, targetX, targetY)
         directions = entity.world.map.pathToDirections(path)
         entity.update_component_data("pathfinding", "directions", directions)

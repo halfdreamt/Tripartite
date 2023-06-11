@@ -30,6 +30,13 @@ class positionSystem:
                 nearestDist = dist
         return nearest
     
+    def get_position(self, entity):
+        return (entity.get_component_data("position", "x"), entity.get_component_data("position", "y"))
+    
+    def set_position(self, entity, x, y):
+        entity.update_component_data("position", "x", x)
+        entity.update_component_data("position", "y", y)
+    
     def get_distance(self, entity1, entity2):
         x1 = entity1.get_component_data("position", "x")
         y1 = entity1.get_component_data("position", "y")

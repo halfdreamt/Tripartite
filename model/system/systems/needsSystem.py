@@ -38,10 +38,10 @@ class needsSystem:
     def update(self):
         for entity in self.entities:
             highestNeed = self.get_highest_priority_need(entity)
+            pathReason = self.system_manager.get_system("pathfinding").get_reason(entity)
             if highestNeed != None:
-                if highestNeed[0] == "thirst" and entity.get_component_data("pathfinding", "reason") != "thirst":
+                if highestNeed[0] == "thirst" and pathReason != "thirst":
                     nearestWater = self.system_manager.get_system("position").get_nearest_entity(entity, "Water Pot")
-                    waterX = nearestWater.get_component_data("position", "x")
-                    waterY = nearestWater.get_component_data("position", "y")
-                    spotNextToWater = entity.world.map.getRandomValidMove(waterX, waterY)
-                    self.system_manager.get_system("pathfinding").set_path(entity, "thirst", spotNextToWater[0] + waterX, spotNextToWater[1] + waterY)
+                    waterPosition = self.system_manager.get_system("position").get_position(nearestWater)
+                    spotNextToWater = entity.world.map.getRandomValidMove(waterPosition[0], waterPosition[1])
+                    self.system_manager.get_system("pathfinding").set_path(entity, "thirst", spotNextToWater[0] + waterPosition[0], spotNextToWater[1] + waterPosition[1])

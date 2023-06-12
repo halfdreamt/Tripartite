@@ -65,6 +65,7 @@ class PGEvents:
         self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
             
     def handleRightMouseClick(self, x, y):
-        if self.pgdisplay.game_paused:
-            new_x, new_y = self.pgdisplay.returnMapPos(x, y)
-            self.editor.handleRightMouseClick(self.world.entity_manager.get_entity_at(new_x, new_y))
+        if not self.pgdisplay.sidebarEnabled:
+            self.pgdisplay.sidebarEnabled = True
+        else:
+            self.pgdisplay.sidebarEnabled = False

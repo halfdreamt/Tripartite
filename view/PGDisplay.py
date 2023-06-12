@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 import os
 import math
 import xml.etree.ElementTree as ET
@@ -19,6 +20,8 @@ class PGDisplay:
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []
 
+        self.sidebarEnabled = False
+
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
 
@@ -31,6 +34,24 @@ class PGDisplay:
 
         self.displayInfo = False
 
+        self.buttonNames = [
+            "Button 1",
+            "Button 2",
+            "Button 3",
+            "Button 4",
+            "Button 5"
+        ]
+
+        self.manager = pygame_gui.UIManager((SCREENWIDTH, SCREENHEIGHT))
+        self.sidebar_width = 300
+        self.button_height = int(50*0.75)  # reduced button height by 25%
+        self.button_count = len(self.buttonNames)
+        self.sidebar_height = self.button_height * self.button_count
+        self.sidebar = pygame.Rect(0, 0, self.sidebar_width, self.sidebar_height)
+        self.sidebar_surface = pygame.Surface((self.sidebar_width, self.sidebar_height))
+        self.sidebar_surface.fill((0, 0, 0))
+        self.sidebar_buttons = [pygame_gui.elements.UIButton(relative_rect=pygame.Rect(0, i*self.button_height, self.sidebar_width, self.button_height), text=self.buttonNames[i], manager=self.manager) for i in range(self.button_count)]
+
         # Draw initial screen
         self.draw_screen()
 
@@ -41,18 +62,12 @@ class PGDisplay:
             self.tilesets.append(pygame.image.load(image_path).convert_alpha())
             self.tileset_firstgids.append(tileset['firstgid'])
 
-    # creates a surface with a list of components and their values, and allows the user to edit them
-    def handleEntityEditor(self, entity):
-        component_data = entity.get_all_component_data()
-        component_data_keys = list(component_data.keys())
-        component_data_values = list(component_data.values())
-        component_data_surface = pygame.Surface((300, 30 * len(component_data_keys)))
-        component_data_surface.fill((0, 0, 0))
-        for i in range(len(component_data_keys)):
-            component_data_text = self.font.render(f'{component_data_keys[i]}: {component_data_values[i]}', True, (255, 255, 255))
-            component_data_surface.blit(component_data_text, (10, 30 * i))
-        self.screen.blit(component_data_surface, (self.screen.get_width() - 300, 0))
-
+    def draw_sidebar(self):
+        if self.sidebarEnabled:
+            self.sidebar_surface.fill((0, 0, 0))
+            self.manager.update(self.curFrame / 60.0)
+            self.manager.draw_ui(self.sidebar_surface)
+            self.screen.blit(self.sidebar_surface, (0, 0))  # blit at position (0, 0)
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
@@ -171,5 +186,8 @@ class PGDisplay:
         
         # Draw UI
         self.draw_basic_UI() 
+
+        # Draw sidebar
+        self.draw_sidebar()
 
         pygame.display.flip()

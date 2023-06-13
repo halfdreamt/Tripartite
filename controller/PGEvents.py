@@ -1,5 +1,4 @@
 import pygame
-from controller import editor
 import xml.etree.ElementTree as ET
 
 class PGEvents:
@@ -7,7 +6,7 @@ class PGEvents:
         self.pgdisplay = pgdisplay
         self.world = world
         self.pygame = pygame
-        self.editor = editor.editor(world, pgdisplay)
+
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:

@@ -47,9 +47,6 @@ class PGEvents:
             elif event.button == 1:  # Left mouse button
                 x, y = event.pos
                 self.handleLeftMouseClick(x, y)
-            elif event.button == 3: # Right mouse button
-                x, y = event.pos
-                self.handleRightMouseClick(x, y)
         elif event.type == pygame.MOUSEMOTION:
             if self.pgdisplay.panning:
                 x, y = event.pos
@@ -62,9 +59,3 @@ class PGEvents:
     def handleLeftMouseClick(self, x, y):
         new_x, new_y = self.pgdisplay.returnMapPos(x, y)
         self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
-            
-    def handleRightMouseClick(self, x, y):
-        if not self.pgdisplay.sidebarEnabled:
-            self.pgdisplay.sidebarEnabled = True
-        else:
-            self.pgdisplay.sidebarEnabled = False

@@ -1,6 +1,4 @@
 import pygame
-import pygame_gui
-from pygame_gui.elements import UIButton, UIScrollingContainer, UIPanel
 import os
 import math
 import xml.etree.ElementTree as ET
@@ -34,19 +32,9 @@ class PGDisplay:
         self.curFrame = 0
 
         self.displayInfo = False
-
-        self.manager = pygame_gui.UIManager((SCREENWIDTH, SCREENHEIGHT))
-        self.sidebar_width = 300
-        self.button_height = int(50*0.75)  # reduced button height by 25%
-        self.button_count = 5
-        self.sidebar_height = self.button_height * self.button_count
-        self.sidebar = pygame.Rect(0, 0, self.sidebar_width, self.sidebar_height)
-        self.sidebar_surface = pygame.Surface((self.sidebar_width, self.sidebar_height))
-        self.sidebar_surface.fill((0, 0, 0))
        
         # Draw initial screen
         self.draw_screen()
-
 
         # Load tilesets
         for tileset in map_data['tilesets']:
@@ -56,46 +44,6 @@ class PGDisplay:
             self.tilesets.append(pygame.image.load(image_path).convert_alpha())
             self.tileset_firstgids.append(tileset['firstgid'])
 
-    def draw_tile_sidebar(self, manager, tilesets, rows, tile_size, sidebar_width):
-        sidebar_height = rows * tile_size
-
-        # Create a panel for the sidebar
-        sidebar_rect = pygame.Rect((0, 0), (sidebar_width, sidebar_height))
-        sidebar_panel = UIPanel(relative_rect=sidebar_rect, manager=manager)
-
-        # Create a scrolling container inside the panel
-        container_rect = pygame.Rect((0, 0), (sidebar_width, sidebar_height))
-        sidebar_container = UIScrollingContainer(relative_rect=container_rect,
-                                                manager=manager,
-                                                container=sidebar_panel)
-
-        # Create a button for each tile in the tilesets
-        buttons = []
-        for i, tileset in enumerate(tilesets):
-            button_rect = pygame.Rect((0, i * tile_size), (tile_size, tile_size))
-            button = UIButton(relative_rect=button_rect,
-                            text='',
-                            manager=manager,
-                            container=sidebar_container,
-                            object_id='#tileset_button_' + str(i))
-            buttons.append(button)
-
-            # Load the image onto the button
-            button.set_image(tileset)
-            button.set_dimensions((tile_size, tile_size))
-
-        return sidebar_panel, sidebar_container, buttons
-
-# Usage:
-# manager = pygame_gui.UIManager((window_width, window_height))
-# draw_sidebar(manager, self.tilesets, rows, tile_size, sidebar_width)
-
-    def draw_sidebar(self):
-        if self.sidebarEnabled:
-            self.sidebar_surface.fill((0, 0, 0))
-            self.manager.update(self.curFrame / 60.0)
-            self.manager.draw_ui(self.sidebar_surface)
-            self.screen.blit(self.sidebar_surface, (0, 0))  # blit at position (0, 0)
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
@@ -149,11 +97,6 @@ class PGDisplay:
 
                                     self.screen.blit(tile_image, (tile_screen_x, tile_screen_y))
                                     break
-
-                                    
-    #draw editor UI (display an array of options when right clicking, depending on the selected entity or empty space)
-    def draw_editor_UI(self):
-        pass
 
     # Draws the basic UI elements
     def draw_basic_UI(self):
@@ -214,10 +157,5 @@ class PGDisplay:
         
         # Draw UI
         self.draw_basic_UI() 
-
-        # Draw sidebar
-        self.draw_sidebar()
-
-        self.draw_tile_sidebar(self.manager, self.tilesets, 5, self.TILESIZE, self.sidebar_width)
 
         pygame.display.flip()

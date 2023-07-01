@@ -134,3 +134,4 @@ model/system/__pycache__/systemManager.cpython-311.pyc
 model/system/systems/__pycache__/ageSystem.cpython-311.pyc
 model/system/systems/__pycache__/nameSystem.cpython-311.pyc
 .gitignore
+controller/__pycache__/PGEvents.cpython-311.pyc

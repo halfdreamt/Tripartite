@@ -4,13 +4,6 @@ from model.world import World
 from view.PGDisplay import PGDisplay
 from data.dataFactory import dataFactory
 
-
-# Initialize pygame
-pygame.init()
-
-# Initialize data factory
-dataFactory = dataFactory()
-
 # Read the config file
 file_path = "rec/config.json"
 with open(file_path, "r") as json_file:
@@ -24,27 +17,21 @@ MAPFILE = data["MAPFILE"]
 ENTITYFILE = data["ENTITYFILE"]
 COMPONENTFILE = data["COMPONENTFILE"]
 
-# Load map data
+# Load data files
 with open(MAPFILE, 'r') as f:
     map_data = json.load(f)
-
-# Load entity data
 with open(ENTITYFILE, 'r') as f:
     entity_data = json.load(f)
-
-# Load component data
 with open(COMPONENTFILE, 'r') as f:
     component_data = json.load(f)
 
-# Initialize world
+# Initialize pygame, data factory, world, display, and clock
+pygame.init()
+dataFactory = dataFactory()
 world = World(map_data, entity_data, component_data)
-
-# Initialize display
 pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
-
-
-# Initialize clock for FPS control
 clock = pygame.time.Clock()
+
 
 # Main game loop
 while pgdisplay.running:

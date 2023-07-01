@@ -67,11 +67,11 @@ class PGEvents:
     def handleLeftMouseClick(self, x, y):
         new_x, new_y = self.pgdisplay.returnMapPos(x, y)
         if self.pgdisplay.viewMode == "menu":
-            if self.pgdisplay.continue_button.collidepoint(x, y):
+            if self.pgdisplay.menu.continue_button.collidepoint(x, y):
                 self.pgdisplay.viewMode = "town"
                 self.pgdisplay.game_paused = False
                 self.pgdisplay.draw_screen()
-            elif self.pgdisplay.quit_button.collidepoint(x, y):
+            elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
                 self.pgdisplay.running = False
         elif self.pgdisplay.viewMode == "town":
             self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))

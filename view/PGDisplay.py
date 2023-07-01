@@ -3,6 +3,8 @@ import os
 import math
 import xml.etree.ElementTree as ET
 from controller.PGEvents import PGEvents
+from view.displays.menu import Menu
+from view.displays.localView import LocalView
 
 class PGDisplay:
     def __init__(self, map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT):
@@ -10,16 +12,20 @@ class PGDisplay:
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
 
+        # Font settings
+        self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
+
         self.dataFactory = dataFactory
+
+        self.menu = Menu(self)
+
+        self.localView = LocalView(self)
 
         self.viewMode = "menu"
 
         self.running = True
 
         self.editorMode = False
-
-        # Font settings
-        self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
         
         # Initialize event handler
         self.pgevents = PGEvents(self, pygame, world)
@@ -49,35 +55,6 @@ class PGDisplay:
             image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
             self.tilesets.append(pygame.image.load(image_path).convert_alpha())
             self.tileset_firstgids.append(tileset['firstgid'])
-
-    # Draw initial game menu, currently with options for town mode, or battle mode, in the center of the screen
-    def draw_menu(self):
-        screen_width = self.screen.get_width()
-        screen_height = self.screen.get_height()
-
-        # Draw continue button
-        self.continue_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 250, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.continue_button)
-        continue_text = self.font.render("Continue", True, (0, 0, 0))
-        self.screen.blit(continue_text, (screen_width / 2 - continue_text.get_width() / 2, screen_height / 2 - 200 - continue_text.get_height() / 2))
-
-        # Draw new town button
-        self.new_town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 100, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.new_town_button)
-        new_town_text = self.font.render("New Town", True, (0, 0, 0))
-        self.screen.blit(new_town_text, (screen_width / 2 - new_town_text.get_width() / 2, screen_height / 2  - 50 - new_town_text.get_height() / 2))
-
-        # Draw settings button
-        self.settings_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 50, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.settings_button)
-        settings_text = self.font.render("Settings", True, (0, 0, 0))
-        self.screen.blit(settings_text, (screen_width / 2 - settings_text.get_width() / 2, screen_height / 2 + 100 - settings_text.get_height() / 2))
-
-        # Draw quit button
-        self.quit_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 200, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.quit_button)
-        quit_text = self.font.render("Quit", True, (0, 0, 0))
-        self.screen.blit(quit_text, (screen_width / 2 - quit_text.get_width() / 2, screen_height / 2 + 250 - quit_text.get_height() / 2))
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
@@ -179,22 +156,17 @@ class PGDisplay:
             for i in range(len(path) - 1):
                 pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
 
-    #
-
-
     def draw_screen(self):
 
         # Fill screen with black
         self.screen.fill((0, 0, 0))
 
         if self.viewMode == "menu":
-            self.draw_menu()
+            self.menu.draw_menu()
         elif self.viewMode == "town":
-            self.draw_tiles()
+            self.localView.draw_tiles()
             self.draw_basic_UI()
             if self.displayInfo:
                 self.draw_entity_info()
-            if self.editorMode:
-                self.draw_editor_UI()
     
         pygame.display.flip()

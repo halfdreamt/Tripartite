@@ -2,10 +2,14 @@ import pygame
 import json
 from model.world import World
 from view.PGDisplay import PGDisplay
+from data.dataFactory import dataFactory
 
 
 # Initialize pygame
 pygame.init()
+
+# Initialize data factory
+dataFactory = dataFactory()
 
 # Read the config file
 file_path = "rec/config.json"

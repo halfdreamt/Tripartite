@@ -188,5 +188,4 @@ class PGDisplay:
             self.draw_tiles()
             self.draw_basic_UI() 
     
-
         pygame.display.flip()

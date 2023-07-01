@@ -39,7 +39,7 @@ while pgdisplay.running:
     # Event processing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pgdisplay.running = False
         else:
             pgdisplay.pgevents.handle_event(event)
 

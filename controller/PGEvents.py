@@ -32,6 +32,9 @@ class PGEvents:
                 self.pgdisplay.tick_rate = 1
             elif event.key == pygame.K_SPACE: # Toggle pause
                 self.pgdisplay.game_paused = not self.pgdisplay.game_paused
+            elif event.key == pygame.K_ESCAPE: # Toggle menu
+                self.pgdisplay.viewMode = "menu"
+                self.pgdisplay.draw_screen()
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 2:  # Middle mouse button
@@ -58,4 +61,9 @@ class PGEvents:
 
     def handleLeftMouseClick(self, x, y):
         new_x, new_y = self.pgdisplay.returnMapPos(x, y)
-        self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
+        if self.pgdisplay.viewMode == "menu":
+            if self.pgdisplay.town_button.collidepoint(x, y):
+                self.pgdisplay.viewMode = "town"
+                self.pgdisplay.draw_screen()
+        elif self.pgdisplay.viewMode == "town":
+            self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))

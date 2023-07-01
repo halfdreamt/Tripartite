@@ -10,6 +10,8 @@ class PGDisplay:
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
 
+        self.viewMode = "menu"
+
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
         
@@ -27,7 +29,7 @@ class PGDisplay:
         # Time settings
         self.tick_rate = 60  # Update every x frames
         self.subTick = 0  # Counting frames until next tick
-        self.game_paused = False  # Game paused flag
+        self.game_paused = True  # Game paused flag
         self.panning = False
         self.curFrame = 0
 
@@ -44,6 +46,22 @@ class PGDisplay:
             self.tilesets.append(pygame.image.load(image_path).convert_alpha())
             self.tileset_firstgids.append(tileset['firstgid'])
 
+    # Draw initial game menu, currently with options for town mode, or battle mode, in the center of the screen
+    def draw_menu(self):
+        screen_width = self.screen.get_width()
+        screen_height = self.screen.get_height()
+
+        # Draw town button
+        self.town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 50, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.town_button)
+        town_text = self.font.render("Town", True, (0, 0, 0))
+        self.screen.blit(town_text, (screen_width / 2 - town_text.get_width() / 2, screen_height / 2 - town_text.get_height() / 2))
+
+        # Draw battle button
+        self.battle_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 100, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.battle_button)
+        battle_text = self.font.render("Battle", True, (0, 0, 0))
+        self.screen.blit(battle_text, (screen_width / 2 - battle_text.get_width() / 2, screen_height / 2 + 150 - battle_text.get_height() / 2))
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
@@ -152,8 +170,10 @@ class PGDisplay:
         # Fill screen with black
         self.screen.fill((0, 0, 0))
 
-        # Draw tiles
-        self.draw_tiles()
+        if self.viewMode == "menu":
+            self.draw_menu()
+        elif self.viewMode == "town":
+            self.draw_tiles()
         
         # Draw UI
         self.draw_basic_UI() 

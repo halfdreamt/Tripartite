@@ -186,8 +186,7 @@ class PGDisplay:
             self.draw_menu()
         elif self.viewMode == "town":
             self.draw_tiles()
-        
-        # Draw UI
-        self.draw_basic_UI() 
+            self.draw_basic_UI() 
+    
 
         pygame.display.flip()

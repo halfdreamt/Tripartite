@@ -5,14 +5,18 @@ import xml.etree.ElementTree as ET
 from controller.PGEvents import PGEvents
 
 class PGDisplay:
-    def __init__(self, map_data, pygame, world, SCREENWIDTH, SCREENHEIGHT):
+    def __init__(self, map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT):
         # Initialize pygame
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
 
+        self.dataFactory = dataFactory
+
         self.viewMode = "menu"
 
         self.running = True
+
+        self.editorMode = False
 
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
@@ -51,17 +55,17 @@ class PGDisplay:
         screen_width = self.screen.get_width()
         screen_height = self.screen.get_height()
 
-        # Draw town button
-        self.town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 250, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.town_button)
-        town_text = self.font.render("Town", True, (0, 0, 0))
-        self.screen.blit(town_text, (screen_width / 2 - town_text.get_width() / 2, screen_height / 2 - 200 - town_text.get_height() / 2))
+        # Draw continue button
+        self.continue_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 250, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.continue_button)
+        continue_text = self.font.render("Continue", True, (0, 0, 0))
+        self.screen.blit(continue_text, (screen_width / 2 - continue_text.get_width() / 2, screen_height / 2 - 200 - continue_text.get_height() / 2))
 
-        # Draw battle button
-        self.battle_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 100, 200, 100)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.battle_button)
-        battle_text = self.font.render("Battle", True, (0, 0, 0))
-        self.screen.blit(battle_text, (screen_width / 2 - battle_text.get_width() / 2, screen_height / 2  - 50 - battle_text.get_height() / 2))
+        # Draw new town button
+        self.new_town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 100, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.new_town_button)
+        new_town_text = self.font.render("New Town", True, (0, 0, 0))
+        self.screen.blit(new_town_text, (screen_width / 2 - new_town_text.get_width() / 2, screen_height / 2  - 50 - new_town_text.get_height() / 2))
 
         # Draw settings button
         self.settings_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 50, 200, 100)
@@ -139,43 +143,44 @@ class PGDisplay:
         time_text = self.font.render(f"Days: {days} Hours: {hours} Minutes: {minutes}", True, (255, 255, 255))
         self.screen.blit(time_text, (10, 10))
 
-        # Draw entity info panel
-        if self.displayInfo:
-
-            #draw entity ID
-
-            entityIDText = self.font.render(f'Entity ID: {self.entityInfo.get_id()}', True, (255, 255, 255))
-            self.screen.blit(entityIDText, (10, 40))
-
-            componentData = self.entityInfo.get_all_component_data()
-
-            # For each component data, draw a label and the data
-            for componentDataKey in componentData:
-
-                # Draw health and thirst bars if entity has health and thirst components
-                if componentDataKey == "health" or componentDataKey == "thirst":
-                    current_health = componentData[componentDataKey]["current"]
-                    max_health = componentData[componentDataKey]["max"]
-                    health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200, 20)
-                    pygame.draw.rect(self.screen, (255, 0, 0), health_bar)
-                    health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200 * (current_health / max_health), 20)
-                    pygame.draw.rect(self.screen, (0, 255, 0), health_bar)
-
-                componentDataText = self.font.render(f'{componentDataKey}: {componentData[componentDataKey]}', True, (255, 255, 255))
-                self.screen.blit(componentDataText, (10, 60 + 30 * list(componentData.keys()).index(componentDataKey)))
-
-            #highlight entity's path
-            path = self.entityInfo.get_component_data("pathfinding", "path")
-            if path:
-                for i in range(len(path) - 1):
-                    pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
-
-
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
         tile_x, tile_y = self.returnMapPos(mouse_x, mouse_y)
         mouse_pos = self.font.render(f'X: {tile_x} Y: {tile_y}', True, (255, 255, 255))
         self.screen.blit(mouse_pos, (10, self.screen.get_height() - 40))
+
+    #draw entity info panel if an entity is selected
+    def draw_entity_info(self):
+
+        #draw entity ID
+        entityIDText = self.font.render(f'Entity ID: {self.entityInfo.get_id()}', True, (255, 255, 255))
+        self.screen.blit(entityIDText, (10, 40))
+
+        componentData = self.entityInfo.get_all_component_data()
+
+        # For each component data, draw a label and the data
+        for componentDataKey in componentData:
+
+            # Draw health and thirst bars if entity has health and thirst components
+            if componentDataKey == "health" or componentDataKey == "thirst":
+                current_health = componentData[componentDataKey]["current"]
+                max_health = componentData[componentDataKey]["max"]
+                health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200, 20)
+                pygame.draw.rect(self.screen, (255, 0, 0), health_bar)
+                health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200 * (current_health / max_health), 20)
+                pygame.draw.rect(self.screen, (0, 255, 0), health_bar)
+
+            componentDataText = self.font.render(f'{componentDataKey}: {componentData[componentDataKey]}', True, (255, 255, 255))
+            self.screen.blit(componentDataText, (10, 60 + 30 * list(componentData.keys()).index(componentDataKey)))
+
+        #highlight entity's path
+        path = self.entityInfo.get_component_data("pathfinding", "path")
+        if path:
+            for i in range(len(path) - 1):
+                pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), ((path[i + 1][0] * self.TILESIZE - self.camera_x) * self.zoom_level + self.TILESIZE * self.zoom_level / 2, (path[i + 1][1] * self.TILESIZE - self.camera_y) * self.zoom_level + self.TILESIZE * self.zoom_level / 2), 5)
+
+    #
+
 
     def draw_screen(self):
 
@@ -186,6 +191,10 @@ class PGDisplay:
             self.draw_menu()
         elif self.viewMode == "town":
             self.draw_tiles()
-            self.draw_basic_UI() 
+            self.draw_basic_UI()
+            if self.displayInfo:
+                self.draw_entity_info()
+            if self.editorMode:
+                self.draw_editor_UI()
     
         pygame.display.flip()

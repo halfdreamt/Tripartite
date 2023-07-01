@@ -40,7 +40,7 @@ with open(COMPONENTFILE, 'r') as f:
 world = World(map_data, entity_data, component_data)
 
 # Initialize display
-pgdisplay = PGDisplay(map_data, pygame, world, SCREENWIDTH, SCREENHEIGHT)
+pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
 
 
 # Initialize clock for FPS control

@@ -1,11 +1,13 @@
 import pygame
 import math
+from view.displays.localViewUI import LocalViewUI
 
 class LocalView:
     def __init__(self, pgdisplay):
         self.pgdisplay = pgdisplay
         self.screen = pgdisplay.screen
         self.font = pgdisplay.font
+        self.UI = LocalViewUI(pgdisplay)
 
     def draw_tiles(self):
         # Calculate darkness based on time of day
@@ -42,3 +44,7 @@ class LocalView:
                                     tile_image.blit(overlay, (0, 0))
 
                                     self.screen.blit(tile_image, (tile_screen_x, tile_screen_y))
+
+    def draw_local_view(self):
+        self.draw_tiles()
+        self.UI.draw_UI()

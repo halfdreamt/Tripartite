@@ -34,9 +34,9 @@ class PGEvents:
                 self.pgdisplay.game_paused = not self.pgdisplay.game_paused
             elif event.key == pygame.K_ESCAPE: # Toggle menu
                 if self.pgdisplay.viewMode == "menu":
-                    self.pgdisplay.viewMode = "town"
+                    self.pgdisplay.viewMode = "local"
                     self.pgdisplay.game_paused = False
-                elif self.pgdisplay.viewMode == "town":
+                elif self.pgdisplay.viewMode == "local":
                     self.pgdisplay.viewMode = "menu"
                     self.pgdisplay.game_paused = True
                 self.pgdisplay.draw_screen()
@@ -68,10 +68,10 @@ class PGEvents:
         new_x, new_y = self.pgdisplay.returnMapPos(x, y)
         if self.pgdisplay.viewMode == "menu":
             if self.pgdisplay.menu.continue_button.collidepoint(x, y):
-                self.pgdisplay.viewMode = "town"
+                self.pgdisplay.viewMode = "local"
                 self.pgdisplay.game_paused = False
                 self.pgdisplay.draw_screen()
             elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
                 self.pgdisplay.running = False
-        elif self.pgdisplay.viewMode == "town":
+        elif self.pgdisplay.viewMode == "local":
             self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))

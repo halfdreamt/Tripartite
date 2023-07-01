@@ -12,6 +12,8 @@ class PGDisplay:
 
         self.viewMode = "menu"
 
+        self.running = True
+
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
         
@@ -20,8 +22,6 @@ class PGDisplay:
 
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []
-
-        self.sidebarEnabled = False
 
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
@@ -52,16 +52,28 @@ class PGDisplay:
         screen_height = self.screen.get_height()
 
         # Draw town button
-        self.town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 50, 200, 100)
+        self.town_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 250, 200, 100)
         pygame.draw.rect(self.screen, (255, 255, 255), self.town_button)
         town_text = self.font.render("Town", True, (0, 0, 0))
-        self.screen.blit(town_text, (screen_width / 2 - town_text.get_width() / 2, screen_height / 2 - town_text.get_height() / 2))
+        self.screen.blit(town_text, (screen_width / 2 - town_text.get_width() / 2, screen_height / 2 - 200 - town_text.get_height() / 2))
 
         # Draw battle button
-        self.battle_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 100, 200, 100)
+        self.battle_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 - 100, 200, 100)
         pygame.draw.rect(self.screen, (255, 255, 255), self.battle_button)
         battle_text = self.font.render("Battle", True, (0, 0, 0))
-        self.screen.blit(battle_text, (screen_width / 2 - battle_text.get_width() / 2, screen_height / 2 + 150 - battle_text.get_height() / 2))
+        self.screen.blit(battle_text, (screen_width / 2 - battle_text.get_width() / 2, screen_height / 2  - 50 - battle_text.get_height() / 2))
+
+        # Draw settings button
+        self.settings_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 50, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.settings_button)
+        settings_text = self.font.render("Settings", True, (0, 0, 0))
+        self.screen.blit(settings_text, (screen_width / 2 - settings_text.get_width() / 2, screen_height / 2 + 100 - settings_text.get_height() / 2))
+
+        # Draw quit button
+        self.quit_button = pygame.Rect(screen_width / 2 - 100, screen_height / 2 + 200, 200, 100)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.quit_button)
+        quit_text = self.font.render("Quit", True, (0, 0, 0))
+        self.screen.blit(quit_text, (screen_width / 2 - quit_text.get_width() / 2, screen_height / 2 + 250 - quit_text.get_height() / 2))
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):

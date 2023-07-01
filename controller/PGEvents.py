@@ -71,5 +71,7 @@ class PGEvents:
                 self.pgdisplay.viewMode = "town"
                 self.pgdisplay.game_paused = False
                 self.pgdisplay.draw_screen()
+            elif self.pgdisplay.quit_button.collidepoint(x, y):
+                self.pgdisplay.running = False
         elif self.pgdisplay.viewMode == "town":
             self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))

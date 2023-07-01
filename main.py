@@ -43,8 +43,7 @@ pgdisplay = PGDisplay(map_data, pygame, world, SCREENWIDTH, SCREENHEIGHT)
 clock = pygame.time.Clock()
 
 # Main game loop
-running = True
-while running:
+while pgdisplay.running:
     
     # Event processing
     for event in pygame.event.get():

@@ -62,6 +62,9 @@ class LocalViewUI:
             for i in range(len(path) - 1):
                 pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.pgdisplay.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i][1] * self.pgdisplay.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level / 2), ((path[i + 1][0] * self.pgdisplay.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i + 1][1] * self.pgdisplay.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level / 2), 5)
 
+        #Highlight the entity
+        entity_rect = pygame.Rect((self.entityInfo.get_component_data("position", "x") * self.pgdisplay.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level, (self.entityInfo.get_component_data("position", "y") * self.pgdisplay.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level, self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level, self.pgdisplay.TILESIZE * self.pgdisplay.zoom_level)
+        pygame.draw.rect(self.screen, (255, 0, 0), entity_rect, 5)
 
     def draw_UI(self):
         self.draw_basic_UI()

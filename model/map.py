@@ -27,7 +27,7 @@ class Map:
                     ids.append((layer_data[y][x], x, y))
         return ids
     
-    #returns a the tile ID at the given location, on the given layer
+    #returns a the tile ID aat the given location, on the given layer
     def getLayerTile(self, layerName, x, y):
         layer_data = self.layers.get(layerName, [])
         if layer_data and 0 <= x < self.MAPWIDTH and 0 <= y < self.MAPHEIGHT:

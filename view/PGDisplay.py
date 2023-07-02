@@ -27,6 +27,15 @@ class PGDisplay:
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []
 
+        # #load tile data into SQL database
+        # self.dataFactory.insertTileData(map_data)
+
+        # #Create a new map of 30x20 tiles
+        # self.dataFactory.createMap("New Town", 30, 20)
+
+        #load tile data from SQL database
+        self.tileData = self.dataFactory.getTileData()
+
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
 

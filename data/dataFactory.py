@@ -8,6 +8,8 @@ from PIL import Image
 #This class will be used to manage the database containing game data
 #The database will contain the following tables: tile_data, map_data, component_data, entity_data
 #The tile_data table will contain the following columns: id, name, image_data
+#The coordinates table will contain the following columns: id (Primary ID), x (unqiue), y (unique), map_id (foreign key)
+#The map_data table will contain the following columns: id (Primary ID), name, width, height
 
 class dataFactory:
     #initializes the database connection
@@ -20,6 +22,21 @@ class dataFactory:
     def createTables(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS tile_data
                      (id INTEGER PRIMARY KEY, name TEXT, image_data BLOB)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS coordinates
+                        (id INTEGER PRIMARY KEY, x INTEGER, y INTEGER, map_id INTEGER, FOREIGN KEY(map_id) REFERENCES map_data(id))''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS map_data
+                        (id INTEGER PRIMARY KEY, name TEXT, width INTEGER, height INTEGER)''')
+        
+    #Create a new map in the database
+    def createMap(self, name, width, height):
+        self.cursor.execute("INSERT INTO map_data (name, width, height) VALUES (?, ?, ?)", (name, width, height))
+        self.conn.commit()
+        map_id = self.cursor.lastrowid
+        #Generate coordinates for the map
+        for x in range(width):
+            for y in range(height):
+                self.cursor.execute("INSERT INTO coordinates (x, y, map_id) VALUES (?, ?, ?)", (x, y, map_id))
+        self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_data table
     def insertTileData(self, map_data):
@@ -54,3 +71,8 @@ class dataFactory:
     def getTileImage(self, tile_id):
         self.cursor.execute("SELECT image_data FROM tile_data WHERE id = ?", (tile_id,))
         return self.cursor.fetchone()[0]
+    
+    #returns all of the tile data from the tile_data table
+    def getTileData(self):
+        self.cursor.execute("SELECT * FROM tile_data")
+        return self.cursor.fetchall()

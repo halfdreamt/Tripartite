@@ -52,14 +52,6 @@ class PGDisplay:
         # Draw initial screen
         self.draw_screen()
 
-        # # Load tilesets
-        # for tileset in map_data['tilesets']:
-        #     tsx_path = "./rec/mapfiles/" + tileset['source']
-        #     tsx_root = ET.parse(tsx_path).getroot()
-        #     image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
-        #     self.tilesets.append(pygame.image.load(image_path).convert_alpha())
-        #     self.tileset_firstgids.append(tileset['firstgid'])
-
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
         if entity:

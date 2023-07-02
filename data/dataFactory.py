@@ -10,6 +10,8 @@ from PIL import Image
 #The tile_data table will contain the following columns: id, name, image_data
 #The coordinates table will contain the following columns: id (Primary ID), x (unqiue), y (unique), map_id (foreign key)
 #The map_data table will contain the following columns: id (Primary ID), name, width, height
+#The entity_data table will contain the following columns: id (Primary ID)
+#The component_data table will contain the following columns: id (Primary ID), entity_id (foreign key), name, data
 
 class dataFactory:
     #initializes the database connection
@@ -26,6 +28,10 @@ class dataFactory:
                         (id INTEGER PRIMARY KEY, x INTEGER, y INTEGER, map_id INTEGER, FOREIGN KEY(map_id) REFERENCES map_data(id))''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS map_data
                         (id INTEGER PRIMARY KEY, name TEXT, width INTEGER, height INTEGER)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS entity_data
+                        (id INTEGER PRIMARY KEY)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS component_data
+                        (id INTEGER PRIMARY KEY, entity_id INTEGER, name TEXT, data TEXT, FOREIGN KEY(entity_id) REFERENCES entity_data(id))''')
         
     #Create a new map in the database
     def createMap(self, name, width, height):

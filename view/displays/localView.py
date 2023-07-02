@@ -16,22 +16,25 @@ class LocalView:
         darkness = 0.5 * (math.cos(math.pi * time_minutes / (12 * 60)) + 1)
 
         TILESIZE = self.pgdisplay.TILESIZE
+        ZOOMLEVEL = self.pgdisplay.zoom_level
+        camera_x = self.pgdisplay.camera_x
+        camera_y = self.pgdisplay.camera_y
 
         screen_width = self.pgdisplay.screen.get_width()
         screen_height = self.pgdisplay.screen.get_height()
 
         visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom = self.pgdisplay.calculate_visible_tiles(screen_width, screen_height)
 
-        for layer_name, tile_data in self.pgdisplay.world.map.layers.items():
+        for layer_name, tile_data in self.pgdisplay.world.map.layers.items(): 
             for y in range(visible_tile_top, visible_tile_bottom):
                 for x in range(visible_tile_left, visible_tile_right):
                     tile_id = tile_data[y][x] - 1 
                     # Calculate tile position in screen space
-                    tile_screen_x = (x * TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level
-                    tile_screen_y = (y * TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level
+                    tile_screen_x = (x * TILESIZE - camera_x) * ZOOMLEVEL
+                    tile_screen_y = (y * TILESIZE - camera_y) * ZOOMLEVEL
 
                     tile_image = self.tileImages[tile_id]
-                    tile_image = pygame.transform.scale(tile_image, (int(TILESIZE*self.pgdisplay.zoom_level), int(TILESIZE*self.pgdisplay.zoom_level)))
+                    tile_image = pygame.transform.scale(tile_image, (int(TILESIZE*ZOOMLEVEL), int(TILESIZE*ZOOMLEVEL)))
 
                     self.screen.blit(tile_image, (tile_screen_x, tile_screen_y))
 

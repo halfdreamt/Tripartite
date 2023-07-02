@@ -53,7 +53,7 @@ while pgdisplay.running:
     # Limit the frame rate
     clock.tick(FRAMERATE)
 
-    # Redraw screen with new camera position/zoom level
+    # Redraw screen
     pgdisplay.draw_screen()  
 
 pygame.quit()

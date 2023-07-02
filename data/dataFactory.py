@@ -2,16 +2,19 @@ import sqlite3
 import xml.etree.ElementTree as ET
 import os
 import pygame
+import json
 import io
 from PIL import Image
 
 #This class will be used to manage the database containing game data
-#The database will contain the following tables: tile_data, map_data, component_data, entity_data
-#The tile_data table will contain the following columns: id, name, image_data
-#The coordinates table will contain the following columns: id (Primary ID), x (unqiue), y (unique), map_id (foreign key)
+#The database will contain the following tables: tile_master, map_data, component_data, entity_data
+#The tile_master table will contain the following columns: id, name, image_data
+#The coordinate_data table will contain the following columns: id (Primary ID), x (unqiue), y (unique), map_id (foreign key)
 #The map_data table will contain the following columns: id (Primary ID), name, width, height
 #The entity_data table will contain the following columns: id (Primary ID)
-#The component_data table will contain the following columns: id (Primary ID), entity_id (foreign key), name, data
+#The component_data table will contain the following columns: id (Primary ID), entity_id (foreign key), component_ID (foreign key from component_master), name, data
+#The component_master table will contain the following columns: id (Primary ID), name, data
+#The archetype_master table will contain the following columns: id (Primary ID), name, components
 
 class dataFactory:
     #initializes the database connection
@@ -22,38 +25,57 @@ class dataFactory:
 
     #creates the tables in the database, if they don't already exist
     def createTables(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tile_data
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tile_master
                      (id INTEGER PRIMARY KEY, name TEXT, image_data BLOB)''')
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS coordinates
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS coordinate_data
                         (id INTEGER PRIMARY KEY, x INTEGER, y INTEGER, map_id INTEGER, FOREIGN KEY(map_id) REFERENCES map_data(id))''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS map_data
                         (id INTEGER PRIMARY KEY, name TEXT, width INTEGER, height INTEGER)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS entity_data
                         (id INTEGER PRIMARY KEY)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS component_data
-                        (id INTEGER PRIMARY KEY, entity_id INTEGER, name TEXT, data TEXT, FOREIGN KEY(entity_id) REFERENCES entity_data(id))''')
+                        (id INTEGER PRIMARY KEY, entity_id INTEGER, component_id INTEGER, name TEXT, data TEXT, FOREIGN KEY(entity_id) REFERENCES entity_data(id), FOREIGN KEY(component_id) REFERENCES component_master(id))''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS component_master
+                        (id INTEGER PRIMARY KEY, name TEXT, data TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS archetype_master
+                        (id INTEGER PRIMARY KEY, name TEXT, components TEXT)''')
         
     #Create a new map in the database
     def createMap(self, name, width, height):
         self.cursor.execute("INSERT INTO map_data (name, width, height) VALUES (?, ?, ?)", (name, width, height))
         self.conn.commit()
         map_id = self.cursor.lastrowid
-        #Generate coordinates for the map
+        #Generate coordinate_data for the map
         for x in range(width):
             for y in range(height):
-                self.cursor.execute("INSERT INTO coordinates (x, y, map_id) VALUES (?, ?, ?)", (x, y, map_id))
+                self.cursor.execute("INSERT INTO coordinate_data (x, y, map_id) VALUES (?, ?, ?)", (x, y, map_id))
         self.conn.commit()
 
     #Take blob images data from database and convert it into an array of usable images
     def getTileImages(self):
-        self.cursor.execute("SELECT image_data FROM tile_data")
+        self.cursor.execute("SELECT image_data FROM tile_master")
         images = []
         for row in self.cursor:
             images.append(pygame.image.load(io.BytesIO(row[0])))
         return images
+    
+    #takes component master data and inserts it into the component_master table
+    def insertComponentMasterData(self, component_master_data):
+        for component in component_master_data['components']:
+            name = component['name']
+            json_data = json.dumps(component['data'])
+            self.cursor.execute("INSERT INTO component_master (name, data) VALUES (?, ?)", (name, json_data))
+        self.conn.commit()
+
+    def insertArchetypeMasterData(self, archetype_master_data):
+        for archetype in archetype_master_data['archetypes']:
+            name = archetype['name']
+            json_data = json.dumps(archetype['components'])
+            self.cursor.execute("INSERT INTO archetype_master (name, components) VALUES (?, ?)", (name, json_data))
+        self.conn.commit()
         
-    #takes the map_data object and uses it to insert individual tile images into the tile_data table
-    def insertTileData(self, map_data):
+    #takes the map_data object and uses it to insert individual tile images into the tile_master table
+    def insertTileMasterData(self, map_data):
         tilewidth, tileheight = map_data['tilewidth'], map_data['tileheight']
 
         # Load tilesets
@@ -78,15 +100,28 @@ class dataFactory:
                     image_bytes = byte_arr.getvalue()
 
                     name = f'{tileset["source"].split("/")[-1].split(".")[0]}_{tile_y}_{tile_x}'
-                    self.cursor.execute("INSERT INTO tile_data (name, image_data) VALUES (?, ?)", (name, image_bytes))
+                    self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_bytes))
                     self.conn.commit()
 
     #returns the image data for the tile with the given id
     def getTileImage(self, tile_id):
-        self.cursor.execute("SELECT image_data FROM tile_data WHERE id = ?", (tile_id,))
+        self.cursor.execute("SELECT image_data FROM tile_master WHERE id = ?", (tile_id,))
         return self.cursor.fetchone()[0]
     
-    #returns all of the tile data from the tile_data table
+    #returns all of the tile data from the tile_master table
     def getTileData(self):
-        self.cursor.execute("SELECT * FROM tile_data")
+        self.cursor.execute("SELECT * FROM tile_master")
         return self.cursor.fetchall()
+    
+    #Inserts master data if the target table is empty
+    def insertMasterData(self, master_data):
+        targetTables = master_data.keys()
+        for table in targetTables:
+            self.cursor.execute("SELECT * FROM " + table)
+            if len(self.cursor.fetchall()) == 0:
+                if table == "tile_master":
+                    self.insertTileMasterData(master_data[table])
+                elif table == "component_master":
+                    self.insertComponentMasterData(master_data[table])
+                elif table == "archetype_master":
+                    self.insertArchetypeMasterData(master_data[table])

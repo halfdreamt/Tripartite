@@ -25,13 +25,21 @@ with open(ENTITYFILE, 'r') as f:
 with open(COMPONENTFILE, 'r') as f:
     component_data = json.load(f)
 
-# Initialize pygame, data factory, world, display, and clock
+# Initialize data factory and load master data
 pygame.init()
 dataFactory = dataFactory()
+
+MASTERDATA = {
+    "tile_master": map_data,
+    "component_master": component_data,
+    "archetype_master": entity_data
+}
+dataFactory.insertMasterData(MASTERDATA)
+
+# initialize the display, gamestate, and clock
 world = World(map_data, entity_data, component_data)
 pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
 clock = pygame.time.Clock()
-
 
 # Main game loop
 while pgdisplay.running:

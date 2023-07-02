@@ -29,7 +29,8 @@
             "id": "C004",
             "name": "render",
             "data": {
-                "spriteID": 0
+                "spriteID": 0,
+                "renderLayer": "ground"
             }
         },
         {

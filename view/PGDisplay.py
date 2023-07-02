@@ -13,13 +13,6 @@ class PGDisplay:
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
 
-
-        #load tile data into SQL database
-        self.dataFactory.insertTileData(map_data)
-
-        #Create a new map of 30x20 tiles
-        self.dataFactory.createMap("New Town", 30, 20)
-
         #load tile images from SQL database
         self.tileImages = self.dataFactory.getTileImages()
 

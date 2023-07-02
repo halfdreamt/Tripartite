@@ -37,6 +37,14 @@ class dataFactory:
             for y in range(height):
                 self.cursor.execute("INSERT INTO coordinates (x, y, map_id) VALUES (?, ?, ?)", (x, y, map_id))
         self.conn.commit()
+
+    #Take blob images data from database and convert it into an array of usable images
+    def getTileImages(self):
+        self.cursor.execute("SELECT image_data FROM tile_data")
+        images = []
+        for row in self.cursor:
+            images.append(pygame.image.load(io.BytesIO(row[0])))
+        return images
         
     #takes the map_data object and uses it to insert individual tile images into the tile_data table
     def insertTileData(self, map_data):

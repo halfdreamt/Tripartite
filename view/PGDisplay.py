@@ -13,6 +13,16 @@ class PGDisplay:
         self.world = world
         self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
 
+
+        # #load tile data into SQL database
+        # self.dataFactory.insertTileData(map_data)
+
+        # #Create a new map of 30x20 tiles
+        # self.dataFactory.createMap("New Town", 30, 20)
+
+        #load tile images from SQL database
+        self.tileImages = self.dataFactory.getTileImages()
+
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
 
@@ -26,15 +36,6 @@ class PGDisplay:
     
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []
-
-        # #load tile data into SQL database
-        # self.dataFactory.insertTileData(map_data)
-
-        # #Create a new map of 30x20 tiles
-        # self.dataFactory.createMap("New Town", 30, 20)
-
-        #load tile data from SQL database
-        self.tileData = self.dataFactory.getTileData()
 
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
@@ -51,13 +52,13 @@ class PGDisplay:
         # Draw initial screen
         self.draw_screen()
 
-        # Load tilesets
-        for tileset in map_data['tilesets']:
-            tsx_path = "./rec/mapfiles/" + tileset['source']
-            tsx_root = ET.parse(tsx_path).getroot()
-            image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
-            self.tilesets.append(pygame.image.load(image_path).convert_alpha())
-            self.tileset_firstgids.append(tileset['firstgid'])
+        # # Load tilesets
+        # for tileset in map_data['tilesets']:
+        #     tsx_path = "./rec/mapfiles/" + tileset['source']
+        #     tsx_root = ET.parse(tsx_path).getroot()
+        #     image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
+        #     self.tilesets.append(pygame.image.load(image_path).convert_alpha())
+        #     self.tileset_firstgids.append(tileset['firstgid'])
 
     # Enables and draws an entity information panel
     def handleEntityInfoDisplay(self, entity):
@@ -82,7 +83,6 @@ class PGDisplay:
         visible_tile_right = min(self.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.TILESIZE * self.zoom_level)))
         visible_tile_bottom = min(self.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.TILESIZE * self.zoom_level)))
         return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
-
 
     def draw_screen(self):
 

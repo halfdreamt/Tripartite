@@ -11,10 +11,6 @@ class LocalView:
         self.tileImages = self.pgdisplay.tileImages
 
     def draw_tiles(self):
-        # Calculate darkness based on time of day
-        time_minutes = self.pgdisplay.world.time + self.pgdisplay.curFrame / 60.0
-        darkness = 0.5 * (math.cos(math.pi * time_minutes / (12 * 60)) + 1)
-
         TILESIZE = self.pgdisplay.TILESIZE
         ZOOMLEVEL = self.pgdisplay.zoom_level
         camera_x = self.pgdisplay.camera_x
@@ -37,6 +33,14 @@ class LocalView:
                     tile_image = pygame.transform.scale(tile_image, (int(TILESIZE*ZOOMLEVEL), int(TILESIZE*ZOOMLEVEL)))
 
                     self.screen.blit(tile_image, (tile_screen_x, tile_screen_y))
+
+        self.draw_darkness(screen_height, screen_width)
+
+    def draw_darkness(self, screen_height, screen_width):
+
+        # Calculate darkness based on time of day
+        time_minutes = self.pgdisplay.world.time + self.pgdisplay.curFrame / 60.0
+        darkness = 0.5 * (math.cos(math.pi * time_minutes / (12 * 60)) + 1)
 
         # Create a dark overlay with the calculated darkness and apply it to the entire screen
         overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)

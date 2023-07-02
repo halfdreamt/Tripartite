@@ -1,5 +1,4 @@
 import pygame
-import os
 import math
 import xml.etree.ElementTree as ET
 from controller.PGEvents import PGEvents

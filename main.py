@@ -4,6 +4,9 @@ from model.world import World
 from view.PGDisplay import PGDisplay
 from data.dataFactory import dataFactory
 
+# Initialize pygame
+pygame.init()
+
 # Read the config file
 file_path = "rec/config.json"
 with open(file_path, "r") as json_file:
@@ -25,8 +28,7 @@ with open(ENTITYFILE, 'r') as f:
 with open(COMPONENTFILE, 'r') as f:
     component_data = json.load(f)
 
-# Initialize data factory and load master data
-pygame.init()
+# Initialize data factory and insert master data into database
 dataFactory = dataFactory()
 
 MASTERDATA = {

@@ -1,5 +1,4 @@
 import pygame
-import math
 
 class LocalViewUI:
     def __init__(self, pgdisplay):
@@ -22,17 +21,25 @@ class LocalViewUI:
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
         tile_x, tile_y = self.pgdisplay.returnMapPos(mouse_x, mouse_y)
+        tile_x = int(tile_x)
+        tile_y = int(tile_y)
         mouse_pos = self.font.render(f'X: {tile_x} Y: {tile_y}', True, (255, 255, 255))
         self.screen.blit(mouse_pos, (10, self.screen.get_height() - 40))
 
-    #draw entity info panel if an entity is selected
+        #draw tile ID at the screen's bottom
+        tile_id = self.pgdisplay.world.map.getLayerTile('collision', tile_x, tile_y)
+        tile_id_text = self.font.render(f'Tile ID: {tile_id}', True, (255, 255, 255))
+        self.screen.blit(tile_id_text, (10, self.screen.get_height() - 70))
+
+    #draw entity info panel
     def draw_entity_info(self):
+
         self.entityInfo = self.pgdisplay.entityInfo
+        componentData = self.pgdisplay.entityInfo.get_all_component_data()
+
         #draw entity ID
         entityIDText = self.font.render(f'Entity ID: {self.entityInfo.get_id()}', True, (255, 255, 255))
         self.screen.blit(entityIDText, (10, 40))
-
-        componentData = self.pgdisplay.entityInfo.get_all_component_data()
 
         # For each component data, draw a label and the data
         for componentDataKey in componentData:

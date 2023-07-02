@@ -1,6 +1,5 @@
 import pygame
 import os
-import math
 import xml.etree.ElementTree as ET
 from controller.PGEvents import PGEvents
 from view.displays.menu import Menu
@@ -23,7 +22,6 @@ class PGDisplay:
 
         self.viewMode = "menu"
         self.running = True
-        self.editorMode = False
     
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
         self.tilesets, self.tileset_firstgids = [], []

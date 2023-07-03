@@ -46,7 +46,7 @@ class Entity:
 class EntityManager:
     def __init__(self, entity_data, component_manager, world):
         self.entities = []
-        self.archetypes = entity_data['archetypes']
+        self.archetypes = entity_data
         self.component_manager = component_manager
         self.world = world
 

@@ -38,8 +38,11 @@ MASTERDATA = {
 }
 dataFactory.insertMasterData(MASTERDATA)
 
+#load archetype data from SQL database
+archetype_data = dataFactory.getArchetypes()
+
 # initialize the display, gamestate, and clock
-world = World(map_data, entity_data, component_data)
+world = World(map_data, archetype_data, component_data)
 pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
 clock = pygame.time.Clock()
 

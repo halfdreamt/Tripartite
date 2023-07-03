@@ -125,3 +125,10 @@ class dataFactory:
                     self.insertComponentMasterData(master_data[table])
                 elif table == "archetype_master":
                     self.insertArchetypeMasterData(master_data[table])
+
+    def getArchetypes(self):
+        self.cursor.execute("SELECT * FROM archetype_master")
+        archetypes = []
+        for row in self.cursor:
+            archetypes.append({'name': row[1], 'components': json.loads(row[2])})
+        return archetypes

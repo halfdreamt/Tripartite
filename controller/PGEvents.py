@@ -1,5 +1,4 @@
 import pygame
-import xml.etree.ElementTree as ET
 
 class PGEvents:
     def __init__(self, pgdisplay, world):

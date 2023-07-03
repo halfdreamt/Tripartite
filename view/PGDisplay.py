@@ -1,6 +1,5 @@
 import pygame
 import math
-import xml.etree.ElementTree as ET
 from controller.PGEvents import PGEvents
 from view.displays.menu import Menu
 from view.displays.localView import LocalView

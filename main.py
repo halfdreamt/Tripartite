@@ -24,7 +24,7 @@ COMPONENTFILE = data["COMPONENTFILE"]
 with open(MAPFILE, 'r') as f:
     map_data = json.load(f)
 with open(ENTITYFILE, 'r') as f:
-    entity_data = json.load(f)
+    archetype_data = json.load(f)
 with open(COMPONENTFILE, 'r') as f:
     component_data = json.load(f)
 
@@ -34,15 +34,16 @@ dataFactory = dataFactory()
 MASTERDATA = {
     "tile_master": map_data,
     "component_master": component_data,
-    "archetype_master": entity_data
+    "archetype_master": archetype_data
 }
 dataFactory.insertMasterData(MASTERDATA)
 
-#load archetype data from SQL database
-archetype_data = dataFactory.getArchetypes()
+#load archetype data and component data from SQL database
+archetype_data_DB = dataFactory.getArchetypes()
+component_master_data = dataFactory.getComponentMasters()
 
 # initialize the display, gamestate, and clock
-world = World(map_data, archetype_data, component_data)
+world = World(map_data, archetype_data_DB, component_master_data)
 pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
 clock = pygame.time.Clock()
 

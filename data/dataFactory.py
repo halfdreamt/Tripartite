@@ -132,3 +132,10 @@ class dataFactory:
         for row in self.cursor:
             archetypes.append({'name': row[1], 'components': json.loads(row[2])})
         return archetypes
+    
+    def getComponentMasters(self):
+        self.cursor.execute("SELECT * FROM component_master")
+        components = []
+        for row in self.cursor:
+            components.append({'name': row[1], 'data': json.loads(row[2])})
+        return components

@@ -2,10 +2,9 @@ import pygame
 import xml.etree.ElementTree as ET
 
 class PGEvents:
-    def __init__(self, pgdisplay, pygame, world):
+    def __init__(self, pgdisplay, world):
         self.pgdisplay = pgdisplay
         self.world = world
-        self.pygame = pygame
 
 
     def handle_event(self, event):

@@ -6,7 +6,7 @@ from view.displays.menu import Menu
 from view.displays.localView import LocalView
 
 class PGDisplay:
-    def __init__(self, map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT):
+    def __init__(self, map_data, world, dataFactory, SCREENWIDTH, SCREENHEIGHT):
 
         self.dataFactory = dataFactory
         self.world = world
@@ -19,7 +19,7 @@ class PGDisplay:
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
 
         # Initialize event handler and view classes
-        self.pgevents = PGEvents(self, pygame, world)
+        self.pgevents = PGEvents(self, world)
         self.menu = Menu(self)
         self.localView = LocalView(self)
 

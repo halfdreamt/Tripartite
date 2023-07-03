@@ -19,6 +19,7 @@ FRAMERATE = data["FRAMERATE"]
 MAPFILE = data["MAPFILE"]
 ENTITYFILE = data["ENTITYFILE"]
 COMPONENTFILE = data["COMPONENTFILE"]
+DBFILE = data["DBFILE"]
 
 # Load data files
 with open(MAPFILE, 'r') as f:
@@ -29,7 +30,7 @@ with open(COMPONENTFILE, 'r') as f:
     component_data = json.load(f)
 
 # Initialize data factory and insert master data into database
-dataFactory = dataFactory()
+dataFactory = dataFactory(DBFILE)
 
 MASTERDATA = {
     "tile_master": map_data,
@@ -44,7 +45,7 @@ component_master_data = dataFactory.getComponentMasters()
 
 # initialize the display, gamestate, and clock
 world = World(map_data, archetype_data_DB, component_master_data)
-pgdisplay = PGDisplay(map_data, pygame, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
+pgdisplay = PGDisplay(map_data, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
 clock = pygame.time.Clock()
 
 # Main game loop

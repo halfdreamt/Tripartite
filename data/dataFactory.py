@@ -18,8 +18,8 @@ from PIL import Image
 
 class dataFactory:
     #initializes the database connection
-    def __init__(self):
-        self.conn = sqlite3.connect('data/gameData.sqlite')
+    def __init__(self, DBFILE):
+        self.conn = sqlite3.connect(DBFILE)
         self.cursor = self.conn.cursor()
         self.createTables()
 

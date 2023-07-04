@@ -80,20 +80,19 @@ class dataFactory:
         self.conn.commit()
 
     def insert_map_master_data(self, map_master_data):
-        for map_data in map_master_data['maps']:
-            name = map_data['name']
-            width = map_data['width']
-            height = map_data['height']
-            layers = map_data['layers']
-            tilesize = map_data['tilewidth']
-            for layer in layers:
-                if layer['name'] == 'Tile Layer 1':
-                    ground = json.dumps(layers['data'])
-                elif layer['name'] == 'collision':
-                    collision = json.dumps(layers['data'])
-                elif layer['name'] == 'sprites':
-                    entities = json.dumps(layers['data'])
-            self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
+        name = map_master_data['name']
+        width = map_master_data['width']
+        height = map_master_data['height']
+        layers = map_master_data['layers']
+        tilesize = map_master_data['tilewidth']
+        for layer in layers:
+            if layer['name'] == 'Tile Layer 1':
+                ground = json.dumps(layer['data'])
+            elif layer['name'] == 'collision':
+                collision = json.dumps(layer['data'])
+            elif layer['name'] == 'sprites':
+                entities = json.dumps(layer['data'])
+        self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
         self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_master table
@@ -142,6 +141,8 @@ class dataFactory:
                     self.insert_component_master_data(master_data[table])
                 elif table == "archetype_master":
                     self.insert_archetype_master_data(master_data[table])
+                elif table == "map_master":
+                    self.insert_map_master_data(master_data[table])
 
     def get_archetypes(self):
         self.cursor.execute("SELECT * FROM archetype_master")
@@ -169,7 +170,8 @@ class dataFactory:
         self.master_json_data = {
             "tile_master": map_data,
             "component_master": component_data,
-            "archetype_master": archetype_data
+            "archetype_master": archetype_data,
+            "map_master": map_data
         }
 
         self.insert_master_json_data(self.master_json_data)

@@ -1,51 +1,30 @@
 import pygame
-import json
 from model.world import World
 from view.PGDisplay import PGDisplay
 from data.dataFactory import dataFactory
+from controller.settingsManager import SettingsManager
 
 # Initialize pygame
 pygame.init()
 
-# Read the config file
-file_path = "rec/config.json"
-with open(file_path, "r") as json_file:
-    data = json.load(json_file)
-
-# Import the config data
-SCREENWIDTH = data["SCREENWIDTH"]
-SCREENHEIGHT = data["SCREENHEIGHT"]
-FRAMERATE = data["FRAMERATE"]
-MAPFILE = data["MAPFILE"]
-ENTITYFILE = data["ENTITYFILE"]
-COMPONENTFILE = data["COMPONENTFILE"]
-DBFILE = data["DBFILE"]
-
-# Load data files
-with open(MAPFILE, 'r') as f:
-    map_data = json.load(f)
-with open(ENTITYFILE, 'r') as f:
-    archetype_data = json.load(f)
-with open(COMPONENTFILE, 'r') as f:
-    component_data = json.load(f)
+# Initialize the settings manager
+SettingsManager = SettingsManager("rec/config.json")
+master_file_paths = SettingsManager.get_master_file_paths()
+MASTERDATA = SettingsManager.get_master_data()
 
 # Initialize data factory and insert master data into database
-dataFactory = dataFactory(DBFILE)
-
-MASTERDATA = {
-    "tile_master": map_data,
-    "component_master": component_data,
-    "archetype_master": archetype_data
-}
-dataFactory.insertMasterData(MASTERDATA)
+dataFactory = dataFactory(master_file_paths)
 
 #load archetype data and component data from SQL database
 archetype_data_DB = dataFactory.getArchetypes()
 component_master_data = dataFactory.getComponentMasters()
 
+map_data = MASTERDATA["tile_master"]
+
 # initialize the display, gamestate, and clock
+displaySettings = SettingsManager.get_display_settings()
 world = World(map_data, archetype_data_DB, component_master_data)
-pgdisplay = PGDisplay(map_data, world, dataFactory, SCREENWIDTH, SCREENHEIGHT)
+pgdisplay = PGDisplay(map_data, world, dataFactory.getTileImages(), displaySettings)
 clock = pygame.time.Clock()
 
 # Main game loop
@@ -66,7 +45,7 @@ while pgdisplay.running:
             world.tick()
             
     # Limit the frame rate
-    clock.tick(FRAMERATE)
+    clock.tick(displaySettings['FRAMERATE'])
 
     # Redraw screen
     pgdisplay.draw_screen()  

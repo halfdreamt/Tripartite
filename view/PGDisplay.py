@@ -5,14 +5,13 @@ from view.displays.menu import Menu
 from view.displays.localView import LocalView
 
 class PGDisplay:
-    def __init__(self, map_data, world, dataFactory, SCREENWIDTH, SCREENHEIGHT):
+    def __init__(self, map_data, world, tile_images, display_settings):
 
-        self.dataFactory = dataFactory
         self.world = world
-        self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((display_settings['SCREENWIDTH'], display_settings['SCREENHEIGHT']), pygame.RESIZABLE)
 
         #load tile images from SQL database
-        self.tileImages = self.dataFactory.getTileImages()
+        self.tileImages = tile_images
 
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)

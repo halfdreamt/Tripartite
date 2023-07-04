@@ -18,10 +18,12 @@ from PIL import Image
 
 class dataFactory:
     #initializes the database connection
-    def __init__(self, DBFILE):
-        self.conn = sqlite3.connect(DBFILE)
+    def __init__(self, master_file_paths):
+        self.master_file_paths = master_file_paths
+        self.conn = sqlite3.connect(master_file_paths['DBFILE'])
         self.cursor = self.conn.cursor()
         self.createTables()
+        self.load_master_json_data()
 
     #creates the tables in the database, if they don't already exist
     def createTables(self):
@@ -139,3 +141,20 @@ class dataFactory:
         for row in self.cursor:
             components.append({'name': row[1], 'data': json.loads(row[2])})
         return components
+    
+    def load_master_json_data(self):
+        # Load data files
+        with open(self.master_file_paths['MAPFILE'], 'r') as f:
+            map_data = json.load(f)
+        with open(self.master_file_paths['ENTITYFILE'], 'r') as f:
+            archetype_data = json.load(f)
+        with open(self.master_file_paths['COMPONENTFILE'], 'r') as f:
+            component_data = json.load(f)
+
+        self.master_json_data = {
+            "tile_master": map_data,
+            "component_master": component_data,
+            "archetype_master": archetype_data
+        }
+
+        self.insertMasterData(self.master_json_data)

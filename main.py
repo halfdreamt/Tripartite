@@ -17,19 +17,14 @@ displaySettings = settings_manager.get_display_settings()
 # Initialize data factory with the master file paths, which inserts the master json data into the DB 
 data_factory = dataFactory(masterFilePaths)
 
-# Load archetype master data and component master data from SQL database for world
-archetypeMasterData = data_factory.get_archetypes()
-componentMasterData = data_factory.get_component_masters()
-
-# Load map data for map class and pgdisplay (TODO: soon this will be loaded from the DB as well)
-masterData = data_factory.get_master_json_data()
-mapData = masterData["tile_master"]
+# Load master from SQL database for world
+masterData = data_factory.get_master_data()
 
 # Initialize the world (primarily model data)
-world = World(mapData, archetypeMasterData, componentMasterData)
+world = World(masterData)
 
 # Initialize the display, which also initializes the event handler
-pgdisplay = PGDisplay(mapData, world, data_factory.get_tile_images(), displaySettings)
+pgdisplay = PGDisplay(masterData['map_master'], world, data_factory.get_tile_images(), displaySettings)
 
 # Initialize the clock
 clock = pygame.time.Clock()

@@ -5,9 +5,9 @@ from model.system.systemManager import SystemManager
 
 # The World class is another name for gamestate. It contains the map, the time, and the entities.
 class World:
-    def __init__(self, map_data, entity_data, component_data):
+    def __init__(self, masterData):
         # Initialize the map
-        self.map = Map(map_data)
+        self.map = Map(masterData['map_master'])
 
         # Initialize the time
         self.time = 0
@@ -16,10 +16,10 @@ class World:
         self.system_manager = SystemManager()
 
         # Initialize the component manager
-        self.component_manager = ComponentManager(component_data, self.system_manager)
+        self.component_manager = ComponentManager(masterData['component_master'], self.system_manager)
 
         # Initialize the entity manager
-        self.entity_manager = EntityManager(entity_data, self.component_manager, self)
+        self.entity_manager = EntityManager(masterData['archetype_master'], self.component_manager, self)
 
         # Initialize the entities from map data
         spriteData = self.map.get_layer_ids('sprites')

@@ -158,6 +158,32 @@ class dataFactory:
             components.append({'name': row[1], 'data': json.loads(row[2])})
         return components
     
+    def get_map_master(self):
+        self.cursor.execute("SELECT * FROM map_master")
+        map_data = {}
+        layers = {}
+        for row in self.cursor:
+            map_data['name'] = row[1]
+            map_data['width'] = row[2]
+            map_data['height'] = row[3]
+            layers['ground'] = json.loads(row[4])
+            map_data['tilesize'] = row[5]
+            layers['collision'] = json.loads(row[6])
+            layers['sprites'] = json.loads(row[7])
+            map_data['layers'] = [
+                {
+                    "name": "Tile Layer 1",
+                    "data": layers['ground']
+                }, {
+                    "name": "collision",
+                    "data": layers['collision']
+                }, {
+                    "name": "sprites",
+                    "data": layers['sprites']
+                }
+            ]
+        return map_data
+    
     def load_master_json_data(self):
         # Load data files
         with open(self.master_file_paths['MAPFILE'], 'r') as f:
@@ -178,3 +204,13 @@ class dataFactory:
 
     def get_master_json_data(self):
         return self.master_json_data
+    
+    def get_master_data(self):
+        component_master_data = self.get_component_masters()
+        archetype_master_data = self.get_archetypes()
+        map_master_data = self.get_map_master()
+        return {
+            "component_master": component_master_data,
+            "archetype_master": archetype_master_data,
+            "map_master": map_master_data
+        }

@@ -24,7 +24,7 @@ class PGDisplay:
         self.viewMode = "menu"
         self.running = True
     
-        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = mapData['tilewidth'], mapData['width'], mapData['height']
+        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = mapData['tilesize'], mapData['width'], mapData['height']
         self.tilesets, self.tileset_firstgids = [], []
 
         # Camera settings

@@ -8,7 +8,7 @@ class Map:
         self.layers = {}
 
         #set map data
-        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
+        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilesize'], map_data['width'], map_data['height']
 
         # Load the layers from the map data
         for layer in map_data['layers']:

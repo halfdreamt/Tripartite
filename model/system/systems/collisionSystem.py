@@ -18,7 +18,7 @@ class collisionSystem:
     def check_collision(self, entity):
         world = entity.get_world()
         position = self.system_manager.get_system("position").get_position(entity)
-        return world.map.getValidMoves(position[0], position[1])
+        return world.map.get_valid_moves(position[0], position[1])
 
     def update(self):
         pass

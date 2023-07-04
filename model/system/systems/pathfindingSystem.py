@@ -32,7 +32,7 @@ class pathfindingSystem:
     def set_path(self, entity, reason, targetX, targetY):
         # TODO: Return false if no path found
         path = self.get_path(entity, targetX, targetY)
-        directions = entity.world.map.pathToDirections(path)
+        directions = entity.world.map.path_to_directions(path)
         entity.update_component_data("pathfinding", "directions", directions)
         entity.update_component_data("pathfinding", "path", path)
         entity.update_component_data("pathfinding", "reason", reason)

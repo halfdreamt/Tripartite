@@ -23,11 +23,11 @@ class World:
 
         # TODO: don't hardcode this
         # Initialize the entities from map data
-        spriteData = self.map.getLayerIds('sprites')
+        spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
             self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
 
-        itemData = self.map.getLayerIds('items')
+        itemData = self.map.get_layer_ids('items')
         for item in itemData:
             self.entity_manager.create_entity('Water Pot',  item[0], item[1], item[2])
 
@@ -35,7 +35,7 @@ class World:
     def tick(self):
         self.increment_time()
         self.system_manager.update_systems()
-        self.map.updateMap(self.entity_manager.return_entities())
+        self.map.update_map(self.entity_manager.return_entities())
 
     # Increments the time
     def increment_time(self):

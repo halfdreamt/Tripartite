@@ -27,7 +27,7 @@ class LocalViewUI:
         self.screen.blit(mouse_pos, (10, self.screen.get_height() - 40))
 
         #draw tile ID at the screen's bottom
-        tile_id = self.pgdisplay.world.map.getLayerTile('collision', tile_x, tile_y)
+        tile_id = self.pgdisplay.world.map.get_layer_tile('collision', tile_x, tile_y)
         tile_id_text = self.font.render(f'Tile ID: {tile_id}', True, (255, 255, 255))
         self.screen.blit(tile_id_text, (10, self.screen.get_height() - 70))
 

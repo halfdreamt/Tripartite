@@ -22,11 +22,11 @@ class dataFactory:
         self.master_file_paths = master_file_paths
         self.conn = sqlite3.connect(master_file_paths['DBFILE'])
         self.cursor = self.conn.cursor()
-        self.createTables()
+        self.create_tables()
         self.load_master_json_data()
 
     #creates the tables in the database, if they don't already exist
-    def createTables(self):
+    def create_tables(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS tile_master
                      (id INTEGER PRIMARY KEY, name TEXT, image_data BLOB)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS coordinate_data
@@ -62,14 +62,14 @@ class dataFactory:
         return images
     
     #takes component master data and inserts it into the component_master table
-    def insertComponentMasterData(self, component_master_data):
+    def insert_component_master_data(self, component_master_data):
         for component in component_master_data['components']:
             name = component['name']
             json_data = json.dumps(component['data'])
             self.cursor.execute("INSERT INTO component_master (name, data) VALUES (?, ?)", (name, json_data))
         self.conn.commit()
 
-    def insertArchetypeMasterData(self, archetype_master_data):
+    def insert_archetype_master_data(self, archetype_master_data):
         for archetype in archetype_master_data['archetypes']:
             name = archetype['name']
             json_data = json.dumps(archetype['components'])
@@ -77,7 +77,7 @@ class dataFactory:
         self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_master table
-    def insertTileMasterData(self, map_data):
+    def insert_tile_master_data(self, map_data):
         tilewidth, tileheight = map_data['tilewidth'], map_data['tileheight']
 
         # Load tilesets
@@ -116,26 +116,26 @@ class dataFactory:
         return self.cursor.fetchall()
     
     #Inserts master data if the target table is empty
-    def insertMasterData(self, master_data):
+    def insert_master_json_data(self, master_data):
         targetTables = master_data.keys()
         for table in targetTables:
             self.cursor.execute("SELECT * FROM " + table)
             if len(self.cursor.fetchall()) == 0:
                 if table == "tile_master":
-                    self.insertTileMasterData(master_data[table])
+                    self.insert_tile_master_data(master_data[table])
                 elif table == "component_master":
-                    self.insertComponentMasterData(master_data[table])
+                    self.insert_component_master_data(master_data[table])
                 elif table == "archetype_master":
-                    self.insertArchetypeMasterData(master_data[table])
+                    self.insert_archetype_master_data(master_data[table])
 
-    def getArchetypes(self):
+    def get_archetypes(self):
         self.cursor.execute("SELECT * FROM archetype_master")
         archetypes = []
         for row in self.cursor:
             archetypes.append({'name': row[1], 'components': json.loads(row[2])})
         return archetypes
     
-    def getComponentMasters(self):
+    def get_component_masters(self):
         self.cursor.execute("SELECT * FROM component_master")
         components = []
         for row in self.cursor:
@@ -157,4 +157,7 @@ class dataFactory:
             "archetype_master": archetype_data
         }
 
-        self.insertMasterData(self.master_json_data)
+        self.insert_master_json_data(self.master_json_data)
+
+    def get_master_json_data(self):
+        return self.master_json_data

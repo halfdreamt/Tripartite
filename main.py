@@ -9,22 +9,22 @@ pygame.init()
 
 # Initialize the settings manager
 SettingsManager = SettingsManager("rec/config.json")
-master_file_paths = SettingsManager.get_master_file_paths()
-MASTERDATA = SettingsManager.get_master_data()
+masterFilePaths = SettingsManager.get_master_file_paths()
+displaySettings = SettingsManager.get_display_settings()
 
 # Initialize data factory and insert master data into database
-dataFactory = dataFactory(master_file_paths)
+dataFactory = dataFactory(masterFilePaths)
+masterData = dataFactory.get_master_json_data()
 
 #load archetype data and component data from SQL database
-archetype_data_DB = dataFactory.getArchetypes()
-component_master_data = dataFactory.getComponentMasters()
+archetypeDataDB = dataFactory.get_archetypes()
+componentMasterData = dataFactory.get_component_masters()
 
-map_data = MASTERDATA["tile_master"]
+mapData = masterData["tile_master"]
 
 # initialize the display, gamestate, and clock
-displaySettings = SettingsManager.get_display_settings()
-world = World(map_data, archetype_data_DB, component_master_data)
-pgdisplay = PGDisplay(map_data, world, dataFactory.getTileImages(), displaySettings)
+world = World(mapData, archetypeDataDB, componentMasterData)
+pgdisplay = PGDisplay(mapData, world, dataFactory.getTileImages(), displaySettings)
 clock = pygame.time.Clock()
 
 # Main game loop

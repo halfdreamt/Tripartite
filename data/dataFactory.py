@@ -43,7 +43,7 @@ class dataFactory:
                         (id INTEGER PRIMARY KEY, name TEXT, components TEXT)''')
         
     #Create a new map in the database
-    def createMap(self, name, width, height):
+    def create_map(self, name, width, height):
         self.cursor.execute("INSERT INTO map_data (name, width, height) VALUES (?, ?, ?)", (name, width, height))
         self.conn.commit()
         map_id = self.cursor.lastrowid
@@ -54,7 +54,7 @@ class dataFactory:
         self.conn.commit()
 
     #Take blob images data from database and convert it into an array of usable images
-    def getTileImages(self):
+    def get_tile_images(self):
         self.cursor.execute("SELECT image_data FROM tile_master")
         images = []
         for row in self.cursor:
@@ -106,14 +106,9 @@ class dataFactory:
                     self.conn.commit()
 
     #returns the image data for the tile with the given id
-    def getTileImage(self, tile_id):
+    def get_tile_image(self, tile_id):
         self.cursor.execute("SELECT image_data FROM tile_master WHERE id = ?", (tile_id,))
         return self.cursor.fetchone()[0]
-    
-    #returns all of the tile data from the tile_master table
-    def getTileData(self):
-        self.cursor.execute("SELECT * FROM tile_master")
-        return self.cursor.fetchall()
     
     #Inserts master data if the target table is empty
     def insert_master_json_data(self, master_data):

@@ -33,10 +33,10 @@ class World:
 
     # Iterates through all systems and updates them, equal to one step through the game loop
     def tick(self):
-        self.incrementTime()
+        self.increment_time()
         self.system_manager.update_systems()
         self.map.updateMap(self.entity_manager.return_entities())
 
     # Increments the time
-    def incrementTime(self):
+    def increment_time(self):
         self.time += 1

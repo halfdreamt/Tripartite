@@ -24,7 +24,7 @@ mapData = masterData["tile_master"]
 
 # initialize the display, gamestate, and clock
 world = World(mapData, archetypeDataDB, componentMasterData)
-pgdisplay = PGDisplay(mapData, world, dataFactory.getTileImages(), displaySettings)
+pgdisplay = PGDisplay(mapData, world, dataFactory.get_tile_images(), displaySettings)
 clock = pygame.time.Clock()
 
 # Main game loop

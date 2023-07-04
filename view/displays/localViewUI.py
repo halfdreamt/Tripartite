@@ -20,7 +20,7 @@ class LocalViewUI:
 
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        tile_x, tile_y = self.pgdisplay.returnMapPos(mouse_x, mouse_y)
+        tile_x, tile_y = self.pgdisplay.return_map_pos(mouse_x, mouse_y)
         tile_x = int(tile_x)
         tile_y = int(tile_y)
         mouse_pos = self.font.render(f'X: {tile_x} Y: {tile_y}', True, (255, 255, 255))

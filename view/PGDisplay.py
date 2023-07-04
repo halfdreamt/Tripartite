@@ -5,13 +5,13 @@ from view.displays.menu import Menu
 from view.displays.localView import LocalView
 
 class PGDisplay:
-    def __init__(self, map_data, world, tile_images, display_settings):
+    def __init__(self, mapData, world, tileImages, displaySettings):
 
         self.world = world
-        self.screen = pygame.display.set_mode((display_settings['screenWidth'], display_settings['screenHeight']), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((displaySettings['screenWidth'], displaySettings['screenHeight']), pygame.RESIZABLE)
 
         #load tile images from SQL database
-        self.tileImages = tile_images
+        self.tileImages = tileImages
 
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
@@ -24,7 +24,7 @@ class PGDisplay:
         self.viewMode = "menu"
         self.running = True
     
-        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilewidth'], map_data['width'], map_data['height']
+        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = mapData['tilewidth'], mapData['width'], mapData['height']
         self.tilesets, self.tileset_firstgids = [], []
 
         # Camera settings
@@ -43,7 +43,7 @@ class PGDisplay:
         self.draw_screen()
 
     # Enables and draws an entity information panel
-    def handleEntityInfoDisplay(self, entity):
+    def handle_entity_info_display(self, entity):
         if entity:
             self.displayInfo = True
             self.entityInfo = entity
@@ -53,7 +53,7 @@ class PGDisplay:
             self.draw_screen()
 
     # adjusts x and y values based on camera position, zoom level and tile size
-    def returnMapPos(self, x, y):
+    def return_map_pos(self, x, y):
         tile_x = (x // self.zoom_level + self.camera_x) // self.TILESIZE
         tile_y = (y // self.zoom_level + self.camera_y) // self.TILESIZE
         return tile_x, tile_y

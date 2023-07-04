@@ -52,7 +52,7 @@ class PGEvents:
                 self.pgdisplay.panning = False
             elif event.button == 1:  # Left mouse button
                 x, y = event.pos
-                self.handleLeftMouseClick(x, y)
+                self.handle_left_mouse_click(x, y)
         elif event.type == pygame.MOUSEMOTION:
             if self.pgdisplay.panning:
                 x, y = event.pos
@@ -62,8 +62,8 @@ class PGEvents:
                 self.pgdisplay.camera_y += dy
                 self.pgdisplay.pan_start_x, self.pgdisplay.pan_start_y = x, y
 
-    def handleLeftMouseClick(self, x, y):
-        new_x, new_y = self.pgdisplay.returnMapPos(x, y)
+    def handle_left_mouse_click(self, x, y):
+        new_x, new_y = self.pgdisplay.return_map_pos(x, y)
         if self.pgdisplay.viewMode == "menu":
             if self.pgdisplay.menu.continue_button.collidepoint(x, y):
                 self.pgdisplay.viewMode = "local"
@@ -72,4 +72,4 @@ class PGEvents:
             elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
                 self.pgdisplay.running = False
         elif self.pgdisplay.viewMode == "local":
-            self.pgdisplay.handleEntityInfoDisplay(self.world.entity_manager.get_entity_at(new_x, new_y))
+            self.pgdisplay.handle_entity_info_display(self.world.entity_manager.get_entity_at(new_x, new_y))

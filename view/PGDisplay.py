@@ -17,7 +17,7 @@ class PGDisplay:
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
 
         # Initialize event handler and view classes
-        self.pgevents = PGEvents(self, world)
+        self.pgevents = PGEvents(self)
         self.menu = Menu(self)
         self.localView = LocalView(self)
 
@@ -43,7 +43,8 @@ class PGDisplay:
         self.draw_screen()
 
     # Enables and draws an entity information panel
-    def handle_entity_info_display(self, entity):
+    def handle_entity_info_display(self, x, y):
+        entity = self.world.entity_manager.get_entity_at(x, y)
         if entity:
             self.displayInfo = True
             self.entityInfo = entity

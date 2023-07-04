@@ -1,21 +1,19 @@
 import pygame
 
 class PGEvents:
-    def __init__(self, pgdisplay, world):
+    def __init__(self, pgdisplay):
         self.pgdisplay = pgdisplay
-        self.world = world
-
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:  # Move camera up
-                self.pgdisplay.camera_y -= self.world.map.TILESIZE
+                self.pgdisplay.camera_y -= self.pgdisplay.TILESIZE
             elif event.key == pygame.K_s:  # Move camera down
-                self.pgdisplay.camera_y += self.world.map.TILESIZE
+                self.pgdisplay.camera_y += self.pgdisplay.TILESIZE
             elif event.key == pygame.K_a:  # Move camera left
-                self.pgdisplay.camera_x -= self.world.map.TILESIZE
+                self.pgdisplay.camera_x -= self.pgdisplay.TILESIZE
             elif event.key == pygame.K_d:  # Move camera right
-                self.pgdisplay.camera_x += self.world.map.TILESIZE
+                self.pgdisplay.camera_x += self.pgdisplay.TILESIZE
             elif event.key == pygame.K_q:  # Zoom out
                 self.zoom_level = max(self.pgdisplay.zoom_level - 0.1, 0.1)  # Prevent zoom level from getting too small
             elif event.key == pygame.K_e:  # Zoom in
@@ -72,4 +70,4 @@ class PGEvents:
             elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
                 self.pgdisplay.running = False
         elif self.pgdisplay.viewMode == "local":
-            self.pgdisplay.handle_entity_info_display(self.world.entity_manager.get_entity_at(new_x, new_y))
+            self.pgdisplay.handle_entity_info_display(new_x, new_y)

@@ -15,6 +15,7 @@ from PIL import Image
 #The component_data table will contain the following columns: id (Primary ID), entity_id (foreign key), component_ID (foreign key from component_master), name, data
 #The component_master table will contain the following columns: id (Primary ID), name, data
 #The archetype_master table will contain the following columns: id (Primary ID), name, components
+#The map_master table will contain the following columns: id (Primary ID), name, width, height, ground, tilesize, collision, sprites
 
 class dataFactory:
     #initializes the database connection
@@ -41,6 +42,8 @@ class dataFactory:
                         (id INTEGER PRIMARY KEY, name TEXT, data TEXT)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS archetype_master
                         (id INTEGER PRIMARY KEY, name TEXT, components TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS map_master
+                        (id INTEGER PRIMARY KEY, name TEXT, width INTEGER, height INTEGER, ground TEXT, tilesize INTEGER, collision TEXT, sprites TEXT)''')
         
     #Create a new map in the database
     def create_map(self, name, width, height):
@@ -74,6 +77,23 @@ class dataFactory:
             name = archetype['name']
             json_data = json.dumps(archetype['components'])
             self.cursor.execute("INSERT INTO archetype_master (name, components) VALUES (?, ?)", (name, json_data))
+        self.conn.commit()
+
+    def insert_map_master_data(self, map_master_data):
+        for map_data in map_master_data['maps']:
+            name = map_data['name']
+            width = map_data['width']
+            height = map_data['height']
+            layers = map_data['layers']
+            tilesize = map_data['tilewidth']
+            for layer in layers:
+                if layer['name'] == 'Tile Layer 1':
+                    ground = json.dumps(layers['data'])
+                elif layer['name'] == 'collision':
+                    collision = json.dumps(layers['data'])
+                elif layer['name'] == 'sprites':
+                    entities = json.dumps(layers['data'])
+            self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
         self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_master table

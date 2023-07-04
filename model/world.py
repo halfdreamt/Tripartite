@@ -21,15 +21,15 @@ class World:
         # Initialize the entity manager
         self.entity_manager = EntityManager(entity_data, self.component_manager, self)
 
-        # TODO: don't hardcode this
         # Initialize the entities from map data
         spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
-            self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
-
-        itemData = self.map.get_layer_ids('items')
-        for item in itemData:
-            self.entity_manager.create_entity('Water Pot',  item[0], item[1], item[2])
+            if sprite[0] == 2225:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2221:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2572:
+                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])
 
     # Iterates through all systems and updates them, equal to one step through the game loop
     def tick(self):

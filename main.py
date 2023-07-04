@@ -16,13 +16,13 @@ displaySettings = settings_manager.get_display_settings()
 
 # Initialize data factory with the master file paths, which inserts the master json data into the DB 
 data_factory = dataFactory(masterFilePaths)
-masterData = data_factory.get_master_json_data()
 
 # Load archetype master data and component master data from SQL database for world
 archetypeMasterData = data_factory.get_archetypes()
 componentMasterData = data_factory.get_component_masters()
 
 # Load map data for map class and pgdisplay (TODO: soon this will be loaded from the DB as well)
+masterData = data_factory.get_master_json_data()
 mapData = masterData["tile_master"]
 
 # Initialize the world (primarily model data)

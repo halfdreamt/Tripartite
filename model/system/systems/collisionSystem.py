@@ -5,7 +5,6 @@ class collisionSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    # TODO: Noticed an issue with collision, possibly isolated to when following a path
     def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "collision":
             if updateType == "create":

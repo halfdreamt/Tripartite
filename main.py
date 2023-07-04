@@ -10,11 +10,11 @@ pygame.init()
 # Initialize the settings manager with a file path to the config file, which contains the file paths to the master files among other settings
 settings_manager = SettingsManager("rec/config.json")
 
-# Get the master file paths and display settings from the settings manager
+# Get the master data file paths and display settings from the settings manager (master data is for first time setup)
 masterFilePaths = settings_manager.get_master_file_paths()
 displaySettings = settings_manager.get_display_settings()
 
-# Initialize data factory with the master file paths, which inserts the master json data into the DB (master data is for first time setup)
+# Initialize data factory with the master file paths, which inserts the master json data into the DB 
 data_factory = dataFactory(masterFilePaths)
 masterData = data_factory.get_master_json_data()
 
@@ -22,7 +22,7 @@ masterData = data_factory.get_master_json_data()
 archetypeMasterData = data_factory.get_archetypes()
 componentMasterData = data_factory.get_component_masters()
 
-# Load map data for map class and pgdisplay (soon this will be loaded from the DB as well)
+# Load map data for map class and pgdisplay (TODO: soon this will be loaded from the DB as well)
 mapData = masterData["tile_master"]
 
 # Initialize the world (primarily model data)

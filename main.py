@@ -7,24 +7,31 @@ from controller.settingsManager import SettingsManager
 # Initialize pygame
 pygame.init()
 
-# Initialize the settings manager
-SettingsManager = SettingsManager("rec/config.json")
-masterFilePaths = SettingsManager.get_master_file_paths()
-displaySettings = SettingsManager.get_display_settings()
+# Initialize the settings manager with a file path to the config file, which contains the file paths to the master files among other settings
+settings_manager = SettingsManager("rec/config.json")
 
-# Initialize data factory and insert master data into database
-dataFactory = dataFactory(masterFilePaths)
-masterData = dataFactory.get_master_json_data()
+# Get the master file paths and display settings from the settings manager
+masterFilePaths = settings_manager.get_master_file_paths()
+displaySettings = settings_manager.get_display_settings()
 
-#load archetype data and component data from SQL database
-archetypeDataDB = dataFactory.get_archetypes()
-componentMasterData = dataFactory.get_component_masters()
+# Initialize data factory with the master file paths, which inserts the master json data into the DB (master data is for first time setup)
+data_factory = dataFactory(masterFilePaths)
+masterData = data_factory.get_master_json_data()
 
+# Load archetype master data and component master data from SQL database for world
+archetypeMasterData = data_factory.get_archetypes()
+componentMasterData = data_factory.get_component_masters()
+
+# Load map data for map class and pgdisplay (soon this will be loaded from the DB as well)
 mapData = masterData["tile_master"]
 
-# initialize the display, gamestate, and clock
-world = World(mapData, archetypeDataDB, componentMasterData)
-pgdisplay = PGDisplay(mapData, world, dataFactory.get_tile_images(), displaySettings)
+# Initialize the world (primarily model data)
+world = World(mapData, archetypeMasterData, componentMasterData)
+
+# Initialize the display, which also initializes the event handler
+pgdisplay = PGDisplay(mapData, world, data_factory.get_tile_images(), displaySettings)
+
+# Initialize the clock
 clock = pygame.time.Clock()
 
 # Main game loop

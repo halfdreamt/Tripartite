@@ -8,7 +8,7 @@ class PGDisplay:
     def __init__(self, map_data, world, tile_images, display_settings):
 
         self.world = world
-        self.screen = pygame.display.set_mode((display_settings['SCREENWIDTH'], display_settings['SCREENHEIGHT']), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((display_settings['screenWidth'], display_settings['screenHeight']), pygame.RESIZABLE)
 
         #load tile images from SQL database
         self.tileImages = tile_images

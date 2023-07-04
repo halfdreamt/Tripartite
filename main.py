@@ -45,7 +45,7 @@ while pgdisplay.running:
             world.tick()
             
     # Limit the frame rate
-    clock.tick(displaySettings['FRAMERATE'])
+    clock.tick(displaySettings['framerate'])
 
     # Redraw screen
     pgdisplay.draw_screen()  

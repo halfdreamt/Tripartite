@@ -53,3 +53,52 @@ class World:
     # Increments the time
     def increment_time(self):
         self.time += 1
+
+    def initialize_battle_map(self):
+        battle_map_data = {
+            "name": "Battle Map",
+            "width": 8,
+            "height": 5,
+            "tilesize": 8,
+            "layers": [
+                {
+                    "name": "Tile Layer 1",
+                    "data": [
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1]
+                ]
+                }, {
+                    "name": "collision",
+                    "data": [
+                    [157, 158, 158, 158, 158, 158, 158, 159],
+                    [181, 0, 0, 0, 0, 0, 0, 183],
+                    [181, 0, 0, 0, 0, 0, 0, 183],
+                    [181, 0, 0, 0, 0, 0, 0, 183],
+                    [205, 206, 206, 206, 206, 206, 206, 207]
+                ]
+                }, {
+                    "name": "sprites",
+                    "data": [
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 2225, 0, 0, 2221, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0]
+                ]
+                }
+            ],
+        }
+        self.map.load_map(battle_map_data)
+        self.time = 0
+        self.entity_manager.clear_entities()
+        spriteData = self.map.get_layer_ids('sprites')
+        for sprite in spriteData:
+            if sprite[0] == 2225:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2221:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2572:
+                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])

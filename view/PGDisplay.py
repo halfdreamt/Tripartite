@@ -23,7 +23,6 @@ class PGDisplay:
 
         self.viewMode = "menu"
     
-        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = mapData['tilesize'], mapData['width'], mapData['height']
         self.tilesets, self.tileset_firstgids = [], []
 
         # Camera settings
@@ -59,16 +58,16 @@ class PGDisplay:
 
     # adjusts x and y values based on camera position, zoom level and tile size
     def return_map_pos(self, x, y):
-        tile_x = (x // self.zoom_level + self.camera_x) // self.TILESIZE
-        tile_y = (y // self.zoom_level + self.camera_y) // self.TILESIZE
+        tile_x = (x // self.zoom_level + self.camera_x) // self.world.map.TILESIZE
+        tile_y = (y // self.zoom_level + self.camera_y) // self.world.map.TILESIZE
         return tile_x, tile_y
     
         # Calculate the map tile coordinates of the visible screen area
     def calculate_visible_tiles(self, screen_width, screen_height):
-        visible_tile_left = max(0, int(self.camera_x / self.TILESIZE))
-        visible_tile_top = max(0, int(self.camera_y / self.TILESIZE))
-        visible_tile_right = min(self.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.TILESIZE * self.zoom_level)))
-        visible_tile_bottom = min(self.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.TILESIZE * self.zoom_level)))
+        visible_tile_left = max(0, int(self.camera_x / self.world.map.TILESIZE))
+        visible_tile_top = max(0, int(self.camera_y / self.world.map.TILESIZE))
+        visible_tile_right = min(self.world.map.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.world.map.TILESIZE * self.zoom_level)))
+        visible_tile_bottom = min(self.world.map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.map.TILESIZE * self.zoom_level)))
         return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
 
     def draw_screen(self):

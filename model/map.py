@@ -13,12 +13,17 @@ class Map:
         #set map data
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilesize'], map_data['width'], map_data['height']
 
-        # Load the layers from the map data
+         # Load the layers from the map data
         for layer in map_data['layers']:
             layer_data = layer['data']
-            # Convert the 1D array into a 2D array
-            layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
-            self.layers[layer['name']] = layer_data_2D
+            # Check if layer data is 1D or 2D
+            if isinstance(layer_data[0], int):
+                # Convert the 1D array into a 2D array
+                layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
+                self.layers[layer['name']] = layer_data_2D
+            else:
+                # Layer data is already 2D
+                self.layers[layer['name']] = layer_data
 
     def load_map(self, map_data):
         #set map data
@@ -29,9 +34,14 @@ class Map:
         # Load the layers from the map data
         for layer in map_data['layers']:
             layer_data = layer['data']
-            # Convert the 1D array into a 2D array
-            layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
-            self.layers[layer['name']] = layer_data_2D
+            # Check if layer data is 1D or 2D
+            if isinstance(layer_data[0], int):
+                # Convert the 1D array into a 2D array
+                layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
+                self.layers[layer['name']] = layer_data_2D
+            else:
+                # Layer data is already 2D
+                self.layers[layer['name']] = layer_data
 
     def reset_map(self):
         self.load_map(self.map_master_data)

@@ -10,13 +10,13 @@ class PGEvents:
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:  # Move camera up
-                self.pgdisplay.camera_y -= self.pgdisplay.TILESIZE
+                self.pgdisplay.camera_y -= self.pgdisplay.world.map.TILESIZE
             elif event.key == pygame.K_s:  # Move camera down
-                self.pgdisplay.camera_y += self.pgdisplay.TILESIZE
+                self.pgdisplay.camera_y += self.pgdisplay.world.map.TILESIZE
             elif event.key == pygame.K_a:  # Move camera left
-                self.pgdisplay.camera_x -= self.pgdisplay.TILESIZE
+                self.pgdisplay.camera_x -= self.pgdisplay.world.map.TILESIZE
             elif event.key == pygame.K_d:  # Move camera right
-                self.pgdisplay.camera_x += self.pgdisplay.TILESIZE
+                self.pgdisplay.camera_x += self.pgdisplay.world.map.TILESIZE
             elif event.key == pygame.K_q:  # Zoom out
                 self.zoom_level = max(self.pgdisplay.zoom_level - 0.1, 0.1)  # Prevent zoom level from getting too small
             elif event.key == pygame.K_e:  # Zoom in
@@ -74,6 +74,8 @@ class PGEvents:
                 self.quit = True
             elif self.pgdisplay.menu.new_town_button.collidepoint(x, y):
                 self.reset_game()
+            elif self.pgdisplay.menu.battle_button.collidepoint(x, y):
+                self.pgdisplay.world.initialize_battle_map()
         elif self.pgdisplay.viewMode == "local":
             self.pgdisplay.handle_entity_info_display(new_x, new_y)
 

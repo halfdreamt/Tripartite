@@ -11,7 +11,7 @@ class LocalView:
         self.tileImages = self.pgdisplay.tileImages
 
     def draw_tiles(self):
-        TILESIZE = self.pgdisplay.TILESIZE
+        TILESIZE = self.pgdisplay.world.map.TILESIZE
         ZOOMLEVEL = self.pgdisplay.zoom_level
         camera_x = self.pgdisplay.camera_x
         camera_y = self.pgdisplay.camera_y

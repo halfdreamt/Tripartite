@@ -70,7 +70,7 @@ class PGEvents:
                 self.game_paused = False
                 self.pgdisplay.draw_screen()
             elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
-                self.pgdisplay.running = False
+                self.quit = True
             elif self.pgdisplay.menu.new_town_button.collidepoint(x, y):
                 self.reset_game()
         elif self.pgdisplay.viewMode == "local":

@@ -30,12 +30,12 @@ pgdisplay = PGDisplay(masterData['map_master'], world, data_factory.get_tile_ima
 clock = pygame.time.Clock()
 
 # Main game loop
-while pgdisplay.running:
+while not pgdisplay.pgevents.quit:
     
     # Event processing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pgdisplay.running = False
+            pgdisplay.pgevents.quit = True
         else:
             pgdisplay.pgevents.handle_event(event)
 

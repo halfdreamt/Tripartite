@@ -33,7 +33,6 @@ class PGDisplay:
         # Time settings
         self.tick_rate = 60  # Update every x frames
         self.subTick = 0  # Counting frames until next tick
-        self.game_paused = True  # Game paused flag
         self.panning = False
         self.curFrame = 0
 
@@ -56,7 +55,6 @@ class PGDisplay:
     def reset_display(self):
         self.camera_x, self.camera_y = 0, 0
         self.zoom_level = 3
-        self.game_paused = True
         self.displayInfo = False
         self.tick_rate = 60
         self.viewMode = "local"

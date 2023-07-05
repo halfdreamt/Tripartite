@@ -3,6 +3,8 @@ import pygame
 class PGEvents:
     def __init__(self, pgdisplay):
         self.pgdisplay = pgdisplay
+        self.game_paused = True
+        self.quit = False
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -27,14 +29,14 @@ class PGEvents:
             elif event.key == pygame.K_4:  # Set game speed to x100
                 self.pgdisplay.tick_rate = 1
             elif event.key == pygame.K_SPACE: # Toggle pause
-                self.pgdisplay.game_paused = not self.pgdisplay.game_paused
+                self.game_paused = not self.game_paused
             elif event.key == pygame.K_ESCAPE: # Toggle menu
                 if self.pgdisplay.viewMode == "menu":
                     self.pgdisplay.viewMode = "local"
-                    self.pgdisplay.game_paused = False
+                    self.game_paused = False
                 elif self.pgdisplay.viewMode == "local":
                     self.pgdisplay.viewMode = "menu"
-                    self.pgdisplay.game_paused = True
+                    self.game_paused = True
                 self.pgdisplay.draw_screen()
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -65,7 +67,7 @@ class PGEvents:
         if self.pgdisplay.viewMode == "menu":
             if self.pgdisplay.menu.continue_button.collidepoint(x, y):
                 self.pgdisplay.viewMode = "local"
-                self.pgdisplay.game_paused = False
+                self.game_paused = False
                 self.pgdisplay.draw_screen()
             elif self.pgdisplay.menu.quit_button.collidepoint(x, y):
                 self.pgdisplay.running = False
@@ -75,5 +77,6 @@ class PGEvents:
             self.pgdisplay.handle_entity_info_display(new_x, new_y)
 
     def reset_game(self):
+        self.game_paused = True
         self.pgdisplay.world.reset_world()
         self.pgdisplay.reset_display()

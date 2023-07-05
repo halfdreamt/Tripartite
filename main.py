@@ -40,7 +40,7 @@ while pgdisplay.running:
             pgdisplay.pgevents.handle_event(event)
 
     # Game time
-    if not pgdisplay.game_paused:
+    if not pgdisplay.pgevents.game_paused:
         pgdisplay.subTick += 1
         if pgdisplay.subTick >= pgdisplay.tick_rate:
             pgdisplay.subTick = 0

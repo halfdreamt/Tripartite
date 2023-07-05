@@ -18,6 +18,11 @@ class LocalViewUI:
         time_text = self.font.render(f"Days: {days} Hours: {hours} Minutes: {minutes}", True, (255, 255, 255))
         self.screen.blit(time_text, (10, 10))
 
+        #Draw map name on the right side of the screen
+        map_name = self.pgdisplay.world.map.name
+        map_name_text = self.font.render(f'Map: {map_name}', True, (255, 255, 255))
+        self.screen.blit(map_name_text, (self.screen.get_width() - map_name_text.get_width() - 10, 10))
+
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
         tile_x, tile_y = self.pgdisplay.return_map_pos(mouse_x, mouse_y)

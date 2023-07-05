@@ -7,6 +7,8 @@ class Map:
         # Initialize the map layers
         self.layers = {}
 
+        self.name = map_data['name']
+
         #set map data
         self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilesize'], map_data['width'], map_data['height']
 

@@ -152,3 +152,10 @@ model/entity/__pycache__/entityManager.cpython-311.pyc
 model/system/__pycache__/systemManager.cpython-311.pyc
 model/system/systems/__pycache__/ageSystem.cpython-311.pyc
 model/system/systems/__pycache__/nameSystem.cpython-311.pyc
+model/__pycache__/map.cpython-311.pyc
+model/component/__pycache__/componentManager.cpython-311.pyc
+model/entity/__pycache__/entityManager.cpython-311.pyc
+model/system/__pycache__/systemManager.cpython-311.pyc
+model/system/systems/__pycache__/ageSystem.cpython-311.pyc
+model/system/systems/__pycache__/nameSystem.cpython-311.pyc
+view/__pycache__/PGDisplay.cpython-311.pyc

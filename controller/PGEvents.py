@@ -22,11 +22,11 @@ class PGEvents:
                 self.pgdisplay.zoom_level += 0.1
             elif event.key == pygame.K_1:  # Set game speed to default
                 self.pgdisplay.tick_rate = 60
-            elif event.key == pygame.K_2:  # Set game speed to x5
+            elif event.key == pygame.K_2:  # Set game speed to x2
                 self.pgdisplay.tick_rate = 30
             elif event.key == pygame.K_3:  # Set game speed to x10
-                self.pgdisplay.tick_rate = 10
-            elif event.key == pygame.K_4:  # Set game speed to x100
+                self.pgdisplay.tick_rate = 6
+            elif event.key == pygame.K_4:  # Set game speed to x60
                 self.pgdisplay.tick_rate = 1
             elif event.key == pygame.K_SPACE: # Toggle pause
                 self.game_paused = not self.game_paused

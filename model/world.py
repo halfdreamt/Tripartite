@@ -20,9 +20,9 @@ class World:
                     "name": "Tile Layer 1",
                     "data": [
                     [1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 283, 283, 283, 289, 289, 289, 1],
+                    [1, 283, 283, 283, 289, 289, 289, 1],
+                    [1, 283, 283, 283, 289, 289, 289, 1],
                     [1, 1, 1, 1, 1, 1, 1, 1]
                 ]
                 }, {
@@ -70,6 +70,7 @@ class World:
     def reset_world(self):
         self.initialize_default_map(self.default_map_data)
         self.time = 0
+        self.system_manager.reset_systems()
         self.entity_manager.clear_entities()
         spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
@@ -99,12 +100,13 @@ class World:
     def initialize_battle_map(self):
         self.map.load_map(self.battle_map_data)
         self.time = 0
+        self.system_manager.reset_systems()
         self.entity_manager.clear_entities()
         spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
             if sprite[0] == 2225:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2])
             elif sprite[0] == 2221:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2])
             elif sprite[0] == 2572:
                 self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])

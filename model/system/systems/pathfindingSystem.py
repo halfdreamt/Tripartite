@@ -55,3 +55,6 @@ class pathfindingSystem:
                     self.next_move(entity)
                 else:
                     self.clear_path(entity)
+
+    def reset_system(self):
+        self.entities = []

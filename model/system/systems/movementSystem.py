@@ -35,3 +35,6 @@ class movementSystem:
         self.system_manager.get_system("position").set_position(entity, position[0] + entity.get_component_data("movement", "xVel"), position[1] + entity.get_component_data("movement", "yVel"))
         entity.update_component_data("movement", "xVel", 0)
         entity.update_component_data("movement", "yVel", 0)
+
+    def reset_system(self):
+        self.entities = []

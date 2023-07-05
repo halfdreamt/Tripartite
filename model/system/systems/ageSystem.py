@@ -26,3 +26,6 @@ class ageSystem:
 
     def age(self, entity):
         self.set_age(entity, self.get_age(entity) + 1)
+
+    def reset_system(self):
+        self.entities = []

@@ -34,11 +34,12 @@ class thirstSystem:
 
     def thirst(self, entity):
         if entity.get_component_data("thirst", "current") > 0:
-            entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "current") - 1)
-            if entity.get_component_data("thirst", "current") < self.threshhold:
-                if entity.get_component_data("thirst", "state") != "thirsty":
-                    entity.update_component_data("thirst", "state", "thirsty")
-                    self.system_manager.get_system("needs").add_need(entity, "thirst", 1)
+            if entity.get_component_data("thirst", "thirsting"):
+                entity.update_component_data("thirst", "current", entity.get_component_data("thirst", "current") - 1)
+                if entity.get_component_data("thirst", "current") < self.threshhold:
+                    if entity.get_component_data("thirst", "state") != "thirsty":
+                        entity.update_component_data("thirst", "state", "thirsty")
+                        self.system_manager.get_system("needs").add_need(entity, "thirst", 1)
         else:
             system = self.system_manager.get_system("health")
             system.damage(entity, 1, self.name, "thirst")
@@ -49,3 +50,6 @@ class thirstSystem:
             entity.update_component_data("thirst", "state", "hydrated")
             if self.system_manager.get_system("needs").has_need(entity, "thirst"):
                 self.system_manager.get_system("needs").remove_need(entity, "thirst")
+
+    def reset_system(self):
+        self.entities = []

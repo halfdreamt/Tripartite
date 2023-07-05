@@ -28,3 +28,6 @@ class wanderSystem:
         validMove = entity.world.map.get_random_valid_move(position[0], position[1])
         if validMove != (0, 0):
             self.system_manager.get_system("movement").set_movement(entity, validMove[0], validMove[1], "wanderSystem")
+            
+    def reset_system(self):
+        self.entities = []

@@ -17,7 +17,9 @@
                     "name": "thirst",
                     "data": {
                         "current": 100,
-                        "max": 100
+                        "max": 100,
+                        "state": "hydrated",
+                        "thirsting": true
                     }
                 },
                 {
@@ -79,7 +81,8 @@
                     "data": {
                         "current": 100,
                         "max": 100,
-                        "state": "hydrated"
+                        "state": "hydrated",
+                        "thirsting": true
                     }
                 },
                 {
@@ -194,6 +197,100 @@
                     "name": "collision",
                     "data": {
                         "colliding": true
+                    }
+                },
+                {
+                    "id": "C012",
+                    "name": "age",
+                    "data": {
+                        "age": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "E004",
+            "name": "Fighter1",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "health",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C002",
+                    "name": "thirst",
+                    "data": {
+                        "current": 100,
+                        "max": 100,
+                        "state": "hydrated",
+                        "thirsting": false
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "data": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "data": {
+                        "spriteID": 0,
+                        "renderLayer": "sprite"
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "data": {
+                        "name": "Farmer"
+                    }
+                },
+                {
+                    "id": "C006",
+                    "name": "movement",
+                    "data": {
+                        "xVel": 0,
+                        "yVel": 0
+                    }
+                },
+                {
+                    "id": "C007",
+                    "name": "wander",
+                    "data": {
+                        "active": true
+                    }
+                },
+                {
+                    "id": "C009",
+                    "name": "pathfinding",
+                    "data": {
+                        "directions": [],
+                        "path": [],
+                        "destinationX": -1,
+                        "destinationY": -1,
+                        "reason": "none"
+                    }
+                },
+                {
+                    "id": "C010",
+                    "name": "collision",
+                    "data": {
+                        "colliding": true
+                    }
+                },
+                {
+                    "id": "C011",
+                    "name": "needs",
+                    "data": {
+                        "needs": []
                     }
                 },
                 {

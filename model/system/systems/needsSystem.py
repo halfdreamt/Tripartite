@@ -45,3 +45,6 @@ class needsSystem:
                     waterPosition = self.system_manager.get_system("position").get_position(nearestWater)
                     spotNextToWater = entity.world.map.get_random_valid_move(waterPosition[0], waterPosition[1])
                     self.system_manager.get_system("pathfinding").set_path(entity, "thirst", spotNextToWater[0] + waterPosition[0], spotNextToWater[1] + waterPosition[1])
+
+    def reset_system(self):
+        self.entities = []

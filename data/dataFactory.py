@@ -88,6 +88,8 @@ class dataFactory:
         for layer in layers:
             if layer['name'] == 'Tile Layer 1':
                 ground = json.dumps(layer['data'])
+            elif layer['name'] == 'ground':
+                ground = json.dumps(layer['data'])
             elif layer['name'] == 'collision':
                 collision = json.dumps(layer['data'])
             elif layer['name'] == 'sprites':

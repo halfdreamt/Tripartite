@@ -5,6 +5,7 @@ class PGEvents:
         self.pgdisplay = pgdisplay
         self.game_paused = True
         self.quit = False
+        self.tick_rate = 60
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -21,13 +22,13 @@ class PGEvents:
             elif event.key == pygame.K_e:  # Zoom in
                 self.pgdisplay.zoom_level += 0.1
             elif event.key == pygame.K_1:  # Set game speed to default
-                self.pgdisplay.tick_rate = 60
+                self.tick_rate = 60
             elif event.key == pygame.K_2:  # Set game speed to x2
-                self.pgdisplay.tick_rate = 30
+                self.tick_rate = 30
             elif event.key == pygame.K_3:  # Set game speed to x10
-                self.pgdisplay.tick_rate = 6
+                self.tick_rate = 6
             elif event.key == pygame.K_4:  # Set game speed to x60
-                self.pgdisplay.tick_rate = 1
+                self.tick_rate = 1
             elif event.key == pygame.K_SPACE: # Toggle pause
                 self.game_paused = not self.game_paused
             elif event.key == pygame.K_ESCAPE: # Toggle menu
@@ -78,5 +79,6 @@ class PGEvents:
 
     def reset_game(self):
         self.game_paused = True
+        self.tick_rate = 60
         self.pgdisplay.world.reset_world()
         self.pgdisplay.reset_display()

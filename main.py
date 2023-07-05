@@ -42,7 +42,7 @@ while not pgdisplay.pgevents.quit:
     # Game time
     if not pgdisplay.pgevents.game_paused:
         pgdisplay.subTick += 1
-        if pgdisplay.subTick >= pgdisplay.tick_rate:
+        if pgdisplay.subTick >= pgdisplay.pgevents.tick_rate:
             pgdisplay.subTick = 0
             world.tick()
             

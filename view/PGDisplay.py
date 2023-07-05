@@ -30,7 +30,6 @@ class PGDisplay:
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
 
         # Time settings
-        self.tick_rate = 60  # Update every x frames
         self.subTick = 0  # Counting frames until next tick
         self.panning = False
         self.curFrame = 0
@@ -55,7 +54,6 @@ class PGDisplay:
         self.camera_x, self.camera_y = 0, 0
         self.zoom_level = 3
         self.displayInfo = False
-        self.tick_rate = 60
         self.viewMode = "local"
         self.draw_screen()
 

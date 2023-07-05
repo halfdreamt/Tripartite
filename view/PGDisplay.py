@@ -53,6 +53,15 @@ class PGDisplay:
             self.displayInfo = False
             self.draw_screen()
 
+    def reset_display(self):
+        self.camera_x, self.camera_y = 0, 0
+        self.zoom_level = 3
+        self.game_paused = True
+        self.displayInfo = False
+        self.tick_rate = 60
+        self.viewMode = "local"
+        self.draw_screen()
+
     # adjusts x and y values based on camera position, zoom level and tile size
     def return_map_pos(self, x, y):
         tile_x = (x // self.zoom_level + self.camera_x) // self.TILESIZE

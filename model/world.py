@@ -37,6 +37,19 @@ class World:
         self.system_manager.update_systems()
         self.map.update_map(self.entity_manager.return_entities())
 
+    def reset_world(self):
+        self.map.reset_map()
+        self.time = 0
+        self.entity_manager.clear_entities()
+        spriteData = self.map.get_layer_ids('sprites')
+        for sprite in spriteData:
+            if sprite[0] == 2225:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2221:
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+            elif sprite[0] == 2572:
+                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])
+
     # Increments the time
     def increment_time(self):
         self.time += 1

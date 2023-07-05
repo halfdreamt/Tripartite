@@ -6,6 +6,7 @@ class Map:
     def __init__(self, map_data):
         # Initialize the map layers
         self.layers = {}
+        self.map_master_data = map_data
 
         self.name = map_data['name']
 
@@ -18,6 +19,22 @@ class Map:
             # Convert the 1D array into a 2D array
             layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
             self.layers[layer['name']] = layer_data_2D
+
+    def load_map(self, map_data):
+        #set map data
+        self.TILESIZE, self.MAPWIDTH, self.MAPHEIGHT = map_data['tilesize'], map_data['width'], map_data['height']
+
+        self.name = map_data['name']
+
+        # Load the layers from the map data
+        for layer in map_data['layers']:
+            layer_data = layer['data']
+            # Convert the 1D array into a 2D array
+            layer_data_2D = [layer_data[i*self.MAPWIDTH:(i+1)*self.MAPWIDTH] for i in range(self.MAPHEIGHT)]
+            self.layers[layer['name']] = layer_data_2D
+
+    def reset_map(self):
+        self.load_map(self.map_master_data)
 
     #returns all non-zero tile ids in the given layer, along with their locations
     def get_layer_ids(self, layerName):

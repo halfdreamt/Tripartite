@@ -77,6 +77,9 @@ class EntityManager:
             if entity.get_component_data('position', 'x') == x and entity.get_component_data('position', 'y') == y:
                 return entity
         return False
+    
+    def clear_entities(self):
+        self.entities = []
 
     def get_entity(self, index):
         return self.entities[index]

@@ -75,7 +75,7 @@ class PGEvents:
             elif self.pgdisplay.menu.new_town_button.collidepoint(x, y):
                 self.reset_game()
             elif self.pgdisplay.menu.battle_button.collidepoint(x, y):
-                self.pgdisplay.world.initialize_battle_map()
+                self.load_battle_map()
         elif self.pgdisplay.viewMode == "local":
             self.pgdisplay.handle_entity_info_display(new_x, new_y)
 
@@ -83,4 +83,10 @@ class PGEvents:
         self.game_paused = True
         self.tick_rate = 60
         self.pgdisplay.world.reset_world()
+        self.pgdisplay.reset_display()
+
+    def load_battle_map(self):
+        self.game_paused = True
+        self.tick_rate = 60
+        self.pgdisplay.world.initialize_battle_map()
         self.pgdisplay.reset_display()

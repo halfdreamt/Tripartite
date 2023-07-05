@@ -23,6 +23,11 @@ class LocalViewUI:
         map_name_text = self.font.render(f'Map: {map_name}', True, (255, 255, 255))
         self.screen.blit(map_name_text, (self.screen.get_width() - map_name_text.get_width() - 10, 10))
 
+        #Draw a paused indicator under map name if game is paused
+        if self.pgdisplay.pgevents.game_paused:
+            paused_text = self.font.render(f'PAUSED', True, (255, 255, 255))
+            self.screen.blit(paused_text, (self.screen.get_width() - paused_text.get_width() - 10, 40))
+
         #draw cursor position at the screen's bottom
         mouse_x, mouse_y = pygame.mouse.get_pos()
         tile_x, tile_y = self.pgdisplay.return_map_pos(mouse_x, mouse_y)

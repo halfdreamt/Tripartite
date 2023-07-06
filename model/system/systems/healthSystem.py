@@ -18,7 +18,7 @@ class healthSystem:
         pass
 
     def damage(self, entity, amount, source, type):
-        entity.update_component_data("health", "current", entity.get_component_data("health", "current") - amount)
+        entity.update_component_data("health", "physical_current", entity.get_component_data("health", "physical_current") - amount)
 
     def reset_system(self):
         self.entities = []

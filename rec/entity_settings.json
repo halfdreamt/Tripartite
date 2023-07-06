@@ -8,8 +8,10 @@
                     "id": "C001",
                     "name": "health",
                     "data": {
-                        "current": 100,
-                        "max": 100
+                        "physical_current": 100,
+                        "physical_max": 100,
+                        "mental_current": 100,
+                        "mental_max": 100
                     }
                 },
                 {
@@ -71,8 +73,10 @@
                     "id": "C001",
                     "name": "health",
                     "data": {
-                        "current": 100,
-                        "max": 100
+                        "physical_current": 100,
+                        "physical_max": 100,
+                        "mental_current": 100,
+                        "mental_max": 100
                     }
                 },
                 {
@@ -216,23 +220,16 @@
                     "id": "C001",
                     "name": "health",
                     "data": {
-                        "current": 100,
-                        "max": 100
-                    }
-                },
-                {
-                    "id": "C002",
-                    "name": "thirst",
-                    "data": {
-                        "current": 100,
-                        "max": 100,
-                        "state": "hydrated",
-                        "thirsting": false
+                        "physical_current": 100,
+                        "physical_max": 100,
+                        "mental_current": 100,
+                        "mental_max": 100
                     }
                 },
                 {
                     "id": "C003",
                     "name": "position",
+                    "description": "The position of the entity",
                     "data": {
                         "x": 0,
                         "y": 0
@@ -241,6 +238,7 @@
                 {
                     "id": "C004",
                     "name": "render",
+                    "description": "Renders the entity",
                     "data": {
                         "spriteID": 0,
                         "renderLayer": "sprite"
@@ -249,55 +247,58 @@
                 {
                     "id": "C005",
                     "name": "name",
+                    "description": "The name of the entity",
                     "data": {
-                        "name": "Farmer"
+                        "name": "Fighter1"
                     }
                 },
                 {
-                    "id": "C006",
-                    "name": "movement",
+                    "id": "C013",
+                    "name": "core_stats",
+                    "description": "The core stats of the entity, from 0 to 100",
                     "data": {
-                        "xVel": 0,
-                        "yVel": 0
+                        "strength": 0,
+                        "dexterity": 0,
+                        "charisma": 0,
+                        "intelligence": 0,
+                        "wisdom": 0,
+                        "luck": 0
                     }
                 },
                 {
-                    "id": "C007",
-                    "name": "wander",
+                    "id": "C014",
+                    "name": "passive_abilities",
+                    "description": "The passive abilities of the entity",
                     "data": {
-                        "active": true
+                        "abilities": []
                     }
                 },
                 {
-                    "id": "C009",
-                    "name": "pathfinding",
+                    "id": "C015",
+                    "name": "active_abilities",
+                    "description": "The active abilities of the entity",
                     "data": {
-                        "directions": [],
-                        "path": [],
-                        "destinationX": -1,
-                        "destinationY": -1,
-                        "reason": "none"
+                        "abilities": []
                     }
                 },
                 {
-                    "id": "C010",
-                    "name": "collision",
+                    "id": "C016",
+                    "name": "battle_position",
+                    "description": "The position of the entity in battle",
                     "data": {
-                        "colliding": true
+                        "x": 2,
+                        "y": 2,
+                        "side": "left"
                     }
                 },
                 {
-                    "id": "C011",
-                    "name": "needs",
+                    "id": "C017",
+                    "name": "battle_stats",
+                    "description": "The battle stats of the entity",
                     "data": {
-                        "needs": []
-                    }
-                },
-                {
-                    "id": "C012",
-                    "name": "age",
-                    "data": {
-                        "age": 0
+                        "basic_attack_method": "melee",
+                        "basic_attack_range": 1,
+                        "basic_attack_stat": "strength"
                     }
                 }
             ]

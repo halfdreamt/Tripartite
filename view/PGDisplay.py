@@ -3,6 +3,7 @@ import math
 from controller.PGEvents import PGEvents
 from view.displays.menu import Menu
 from view.displays.localView import LocalView
+from view.displays.battleView import BattleView
 
 class PGDisplay:
     def __init__(self, mapData, world, tileImages, displaySettings):
@@ -20,6 +21,7 @@ class PGDisplay:
         self.pgevents = PGEvents(self)
         self.menu = Menu(self)
         self.localView = LocalView(self)
+        self.battleView = BattleView(self)
 
         self.viewMode = "menu"
     
@@ -64,11 +66,18 @@ class PGDisplay:
     
         # Calculate the map tile coordinates of the visible screen area
     def calculate_visible_tiles(self, screen_width, screen_height):
-        visible_tile_left = max(0, int(self.camera_x / self.world.map.TILESIZE))
-        visible_tile_top = max(0, int(self.camera_y / self.world.map.TILESIZE))
-        visible_tile_right = min(self.world.map.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.world.map.TILESIZE * self.zoom_level)))
-        visible_tile_bottom = min(self.world.map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.map.TILESIZE * self.zoom_level)))
-        return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
+        if self.viewMode == "battle":
+            visible_tile_left = max(0, int(self.camera_x / self.world.battle_map.TILESIZE))
+            visible_tile_top = max(0, int(self.camera_y / self.world.battle_map.TILESIZE))
+            visible_tile_right = min(self.world.battle_map.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.world.battle_map.TILESIZE * self.zoom_level)))
+            visible_tile_bottom = min(self.world.battle_map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.battle_map.TILESIZE * self.zoom_level)))
+            return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
+        elif self.viewMode == "local":
+            visible_tile_left = max(0, int(self.camera_x / self.world.map.TILESIZE))
+            visible_tile_top = max(0, int(self.camera_y / self.world.map.TILESIZE))
+            visible_tile_right = min(self.world.map.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.world.map.TILESIZE * self.zoom_level)))
+            visible_tile_bottom = min(self.world.map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.map.TILESIZE * self.zoom_level)))
+            return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
 
     def draw_screen(self):
 
@@ -79,5 +88,7 @@ class PGDisplay:
             self.menu.draw_menu()
         elif self.viewMode == "local":
             self.localView.draw_local_view()
+        elif self.viewMode == "battle":
+            self.battleView.draw_local_view()
     
         pygame.display.flip()

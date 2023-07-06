@@ -75,7 +75,8 @@ class PGEvents:
             elif self.pgdisplay.menu.new_town_button.collidepoint(x, y):
                 self.reset_game()
             elif self.pgdisplay.menu.battle_button.collidepoint(x, y):
-                self.load_battle_map()
+                self.pgdisplay.viewMode = "battle"
+                self.pgdisplay.draw_screen()
         elif self.pgdisplay.viewMode == "local":
             self.pgdisplay.handle_entity_info_display(new_x, new_y)
 

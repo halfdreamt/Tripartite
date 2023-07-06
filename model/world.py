@@ -9,6 +9,8 @@ class World:
         # Initialize the map
         self.map = Map()
 
+        self.battle_map = Map()
+
         self.battle_map_data = {
             "name": "Battle Map",
             "width": 8,
@@ -63,6 +65,7 @@ class World:
         self.entity_manager = EntityManager(masterData['archetype_master'], self.component_manager, self)
 
         self.initialize_default_map()
+        self.initialize_battle_map()
 
     # Iterates through all systems and updates them, equal to one step through the game loop
     def tick(self):
@@ -87,18 +90,7 @@ class World:
             self.initialize_town_map()
 
     def initialize_battle_map(self):
-        self.map.load_map(self.battle_map_data)
-        self.time = 0
-        self.system_manager.reset_systems()
-        self.entity_manager.clear_entities()
-        spriteData = self.map.get_layer_ids('sprites')
-        for sprite in spriteData:
-            if sprite[0] == 2225:
-                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2], 'Battle Map')
-            elif sprite[0] == 2221:
-                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2], 'Battle Map')
-            elif sprite[0] == 2572:
-                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2], 'Battle Map')
+        self.battle_map.load_map(self.battle_map_data)
 
     def initialize_town_map(self):
         self.map.load_map(self.town_map_data)

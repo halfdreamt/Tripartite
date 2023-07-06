@@ -1,0 +1,93 @@
+{
+    "effects": [
+        {
+            "id": "E001",
+            "name": "MalShrineAttack",
+            "description": "25% of max health damage to all enemies on user's side at the start of their turn for 6 turns",
+            "data": {
+                "target_type": "enemy_physical_current_health",
+                "target_area": "user_side",
+                "effect_type": "damage",
+                "activation": "enemy_start_turn",
+                "change_type": "hard_subtract",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 25,
+                "duration": 6,
+                "break_condition": [
+                    "user_damage_taken",
+                    "user_death"
+                ]
+            }
+        },
+        {
+            "id": "E002",
+            "name": "MalShrineBuff",
+            "description": "25% buff to basic attack for 6 turns",
+            "data": {
+                "target_type": "user_basic_attack_power",
+                "target_area": "user_side",
+                "effect_type": "buff",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "basic_attack_power",
+                "value": 25,
+                "duration": 6,
+                "break_condition": [
+                    "user_damage_taken",
+                    "user_death"
+                ]
+            }
+        },
+        {
+            "id": "E003",
+            "name": "TuskPunch",
+            "description": "Tusk ACT4 bypasses all defenses to deliver a devastating blow.",
+            "data": {
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "effect_type": "damage",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 50,
+                "duration": 0
+            }
+        },
+        {
+            "id": "E004",
+            "name": "EvasionBoost",
+            "description": "Boosts Johnny's evasion rate for 3 turns.",
+            "data": {
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "effect_type": "buff",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 30,
+                "duration": 3,
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E005",
+            "name": "EvasionEnhance",
+            "description": "Enhances Gojo's evasion rate when on his own side.",
+            "data": {
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "effect_type": "buff",
+                "activation": "on_own_side",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 20,
+                "duration": "until_off_own_side",
+                "break_condition": "none"
+            }
+        }
+    ]
+}

@@ -2,7 +2,8 @@
     "components": [
         {
             "id": "C001",
-            "name": "health",
+            "name": "physical_health",
+            "description": "Physical health data",
             "data": {
                 "current": 100,
                 "max": 100
@@ -11,30 +12,37 @@
         {
             "id": "C002",
             "name": "thirst",
+            "description": "Thirst data",
             "data": {
                 "current": 100,
                 "max": 100,
-                "state": "hydrated"
+                "state": "hydrated",
+                "thirsting": true
             }
         },
         {
             "id": "C003",
             "name": "position",
+            "description": "Position data",
             "data": {
                 "x": 0,
-                "y": 0
+                "y": 0,
+                "map_name": "test_map"
             }
         },
         {
             "id": "C004",
             "name": "render",
+            "description": "Render data",
             "data": {
-                "spriteID": 0
+                "spriteID": 0,
+                "renderLayer": "ground"
             }
         },
         {
             "id": "C005",
             "name": "name",
+            "description": "Name of the entity",
             "data": {
                 "name": "farmer"
             }
@@ -42,6 +50,7 @@
         {
             "id": "C006",
             "name": "movement",
+            "description": "Movement data",
             "data": {
                 "xVel": 0,
                 "yVel": 0
@@ -50,6 +59,7 @@
         {
             "id": "C007",
             "name": "wander",
+            "description": "If an entity will wander",
             "data": {
                 "active": false
             }
@@ -57,6 +67,7 @@
         {
             "id": "C008",
             "name": "drinkable",
+            "description": "If entity is drinkable",
             "data": {
                 "current": -1,
                 "max": -1
@@ -65,6 +76,7 @@
         {
             "id": "C009",
             "name": "pathfinding",
+            "description": "Pathfinding data",
             "data": {
                 "directions": [],
                 "path": [],
@@ -76,6 +88,7 @@
         {
             "id": "C010",
             "name": "collision",
+            "description": "If entity has collision",
             "data": {
                 "colliding": true
             }
@@ -83,6 +96,7 @@
         {
             "id": "C011",
             "name": "needs",
+            "description": "Needs",
             "data": {
                 "needs": []
             }
@@ -90,8 +104,66 @@
         {
             "id": "C012",
             "name": "age",
+            "description": "Age in minutes",
             "data": {
                 "age": 0
+            }
+        },
+        {
+            "id": "C013",
+            "name": "core_stats",
+            "description": "Core stats, from 0-100",
+            "data": {
+                "strength": 0,
+                "dexterity": 0,
+                "charisma": 0,
+                "intelligence": 0,
+                "wisdom": 0,
+                "luck": 0
+            }
+        },
+        {
+            "id": "C014",
+            "name": "passive_abilities",
+            "description": "Passive abilities",
+            "data": {
+                "abilities": []
+            }
+        },
+        {
+            "id": "C015",
+            "name": "active_abilities",
+            "description": "Active abilities",
+            "data": {
+                "abilities": []
+            }
+        },
+        {
+            "id": "C016",
+            "name": "battle_position",
+            "description": "Position on the battle grid",
+            "data": {
+                "x": 1,
+                "y": 1,
+                "side": "left"
+            }
+        },
+        {
+            "id": "C017",
+            "name": "basic_attack",
+            "description": "Basic attack properties",
+            "data": {
+                "method": "melee",
+                "range": 1,
+                "stat": "strength"
+            }
+        },
+        {
+            "id": "C018",
+            "name": "effects",
+            "description": "Effects",
+            "data": {
+                "effects": []
             }
         }
     ]

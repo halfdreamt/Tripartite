@@ -22,3 +22,6 @@ class nameSystem:
     
     def set_name(self, entity, name):
         entity.update_component_data("name", "name", name)
+
+    def reset_system(self):
+        self.entities = []

@@ -1,4 +1,4 @@
-class healthSystem:
+class battleSystem:
     def __init__(self, ID, name, system_manager):
         self.ID = ID
         self.name = name
@@ -6,7 +6,7 @@ class healthSystem:
         self.entities = []
 
     def component_updated(self, component, updateType, key=None, value=None):
-        if component.get_name() == "physical_health":
+        if component.get_name() == "battle_position":
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
@@ -16,9 +16,6 @@ class healthSystem:
 
     def update(self):
         pass
-
-    def damage(self, entity, amount, source, type):
-        entity.update_component_data("physical_health", "current", entity.get_component_data("physical_health", "current") - amount)
 
     def reset_system(self):
         self.entities = []

@@ -5,7 +5,6 @@ class collisionSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    # TODO: Noticed an issue with collision, possibly isolated to when following a path
     def component_updated(self, component, updateType, key=None, value=None):
         if component.get_name() == "collision":
             if updateType == "create":
@@ -18,7 +17,10 @@ class collisionSystem:
     def check_collision(self, entity):
         world = entity.get_world()
         position = self.system_manager.get_system("position").get_position(entity)
-        return world.map.getValidMoves(position[0], position[1])
+        return world.map.get_valid_moves(position[0], position[1])
 
     def update(self):
         pass
+
+    def reset_system(self):
+        self.entities = []

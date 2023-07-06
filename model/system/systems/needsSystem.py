@@ -43,5 +43,8 @@ class needsSystem:
                 if highestNeed[0] == "thirst" and pathReason != "thirst":
                     nearestWater = self.system_manager.get_system("position").get_nearest_entity(entity, "Water Pot")
                     waterPosition = self.system_manager.get_system("position").get_position(nearestWater)
-                    spotNextToWater = entity.world.map.getRandomValidMove(waterPosition[0], waterPosition[1])
+                    spotNextToWater = entity.world.map.get_random_valid_move(waterPosition[0], waterPosition[1])
                     self.system_manager.get_system("pathfinding").set_path(entity, "thirst", spotNextToWater[0] + waterPosition[0], spotNextToWater[1] + waterPosition[1])
+
+    def reset_system(self):
+        self.entities = []

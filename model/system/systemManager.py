@@ -8,12 +8,21 @@ from model.system.systems.positionSystem import positionSystem
 from model.system.systems.needsSystem import needsSystem
 from model.system.systems.nameSystem import nameSystem
 from model.system.systems.ageSystem import ageSystem
+from model.system.systems.battleSystem import battleSystem
 
 class SystemManager:
     def __init__(self):
         self.systems = []
+        self.load_systems()
+
+    def update_systems(self):
+        for system in self.systems:
+            system.update()
+
+    def load_systems(self):
+        self.systems = []
         self.add_system(thirstSystem(len(self.systems), "thirst", self))
-        self.add_system(healthSystem(len(self.systems), "health", self))
+        self.add_system(healthSystem(len(self.systems), "physical_health", self))
         self.add_system(nameSystem(len(self.systems), "name", self))
         self.add_system(collisionSystem(len(self.systems), "collision", self))
         self.add_system(ageSystem(len(self.systems), "age", self))
@@ -22,10 +31,7 @@ class SystemManager:
         self.add_system(pathfindingSystem(len(self.systems), "pathfinding", self))
         self.add_system(wanderSystem(len(self.systems), "wander", self))
         self.add_system(movementSystem(len(self.systems), "movement", self))
-
-    def update_systems(self):
-        for system in self.systems:
-            system.update()
+        self.add_system(battleSystem(len(self.systems), "battle", self))
 
     def add_system(self, system):
         self.systems.append(system)
@@ -41,3 +47,7 @@ class SystemManager:
     def component_updated(self, component, updateType, key=None, value=None):
         for system in self.systems:
             system.component_updated(component, updateType, key, value)
+
+    def reset_systems(self):
+        for system in self.systems:
+            system.reset_system()

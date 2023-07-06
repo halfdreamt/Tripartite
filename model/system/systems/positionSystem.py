@@ -46,3 +46,6 @@ class positionSystem:
 
     def update(self):
         pass
+
+    def reset_system(self):
+        self.entities = []

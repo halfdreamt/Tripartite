@@ -6,7 +6,7 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
                         "current": 100,
                         "max": 100
@@ -17,7 +17,9 @@
                     "name": "thirst",
                     "data": {
                         "current": 100,
-                        "max": 100
+                        "max": 100,
+                        "state": "hydrated",
+                        "thirsting": true
                     }
                 },
                 {
@@ -25,14 +27,16 @@
                     "name": "position",
                     "data": {
                         "x": 0,
-                        "y": 0
+                        "y": 0,
+                        "map_name": "test_map"
                     }
                 },
                 {
                     "id": "C004",
                     "name": "render",
                     "data": {
-                        "spriteID": 0
+                        "spriteID": 0,
+                        "renderLayer": "sprite"
                     }
                 },
                 {
@@ -66,7 +70,7 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
                         "current": 100,
                         "max": 100
@@ -78,7 +82,8 @@
                     "data": {
                         "current": 100,
                         "max": 100,
-                        "state": "hydrated"
+                        "state": "hydrated",
+                        "thirsting": true
                     }
                 },
                 {
@@ -86,14 +91,16 @@
                     "name": "position",
                     "data": {
                         "x": 0,
-                        "y": 0
+                        "y": 0,
+                        "map_name": "test_map"
                     }
                 },
                 {
                     "id": "C004",
                     "name": "render",
                     "data": {
-                        "spriteID": 0
+                        "spriteID": 0,
+                        "renderLayer": "sprite"
                     }
                 },
                 {
@@ -161,14 +168,16 @@
                     "name": "position",
                     "data": {
                         "x": 0,
-                        "y": 0
+                        "y": 0,
+                        "map_name": "test_map"
                     }
                 },
                 {
                     "id": "C004",
                     "name": "render",
                     "data": {
-                        "spriteID": 0
+                        "spriteID": 0,
+                        "renderLayer": "item"
                     }
                 },
                 {
@@ -198,6 +207,202 @@
                     "name": "age",
                     "data": {
                         "age": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "E004",
+            "name": "Fighter1",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "physical_health",
+                    "data": {
+                        "current": 100,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "description": "The position of the entity",
+                    "data": {
+                        "x": 0,
+                        "y": 0,
+                        "map_name": "test_map"
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "description": "Renders the entity",
+                    "data": {
+                        "spriteID": 0,
+                        "renderLayer": "sprite"
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "description": "The name of the entity",
+                    "data": {
+                        "name": "Fighter1"
+                    }
+                },
+                {
+                    "id": "C013",
+                    "name": "core_stats",
+                    "description": "The core stats of the entity, from 0 to 100",
+                    "data": {
+                        "strength": 0,
+                        "dexterity": 0,
+                        "charisma": 0,
+                        "intelligence": 0,
+                        "wisdom": 0,
+                        "luck": 0
+                    }
+                },
+                {
+                    "id": "C014",
+                    "name": "passive_abilities",
+                    "description": "The passive abilities of the entity",
+                    "data": {
+                        "abilities": []
+                    }
+                },
+                {
+                    "id": "C015",
+                    "name": "active_abilities",
+                    "description": "The active abilities of the entity",
+                    "data": {
+                        "abilities": []
+                    }
+                },
+                {
+                    "id": "C016",
+                    "name": "battle_position",
+                    "description": "The position of the entity in battle",
+                    "data": {
+                        "x": 1,
+                        "y": 1,
+                        "side": "left"
+                    }
+                },
+                {
+                    "id": "C017",
+                    "name": "basic_attack",
+                    "description": "The battle stats of the entity",
+                    "data": {
+                        "method": "melee",
+                        "range": 1,
+                        "stat": "strength"
+                    }
+                },
+                {
+                    "id": "C018",
+                    "name": "effects",
+                    "description": "Effects",
+                    "data": {
+                        "effects": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": "E006",
+            "name": "Orochimaru",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "physical_health",
+                    "data": {
+                        "current": 80,
+                        "max": 80
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "description": "The position of the entity",
+                    "data": {
+                        "x": 1,
+                        "y": 1,
+                        "map_name": "test_map"
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "description": "Renders the entity",
+                    "data": {
+                        "spriteID": 6,
+                        "renderLayer": "sprite"
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "description": "The name of the entity",
+                    "data": {
+                        "name": "Orochimaru"
+                    }
+                },
+                {
+                    "id": "C013",
+                    "name": "core_stats",
+                    "description": "The core stats of the entity, from 0 to 100",
+                    "data": {
+                        "strength": 60,
+                        "dexterity": 80,
+                        "charisma": 70,
+                        "intelligence": 90,
+                        "wisdom": 80,
+                        "luck": 50
+                    }
+                },
+                {
+                    "id": "C014",
+                    "name": "passive_abilities",
+                    "description": "The passive abilities of the entity",
+                    "data": {
+                        "abilities": [
+                            "A004",
+                            "A005"
+                        ]
+                    }
+                },
+                {
+                    "id": "C015",
+                    "name": "active_abilities",
+                    "description": "The active abilities of the entity",
+                    "data": {
+                        "abilities": [
+                            "A008",
+                            "A009",
+                            "A010",
+                            "A011"
+                        ]
+                    }
+                },
+                {
+                    "id": "C016",
+                    "name": "battle_position",
+                    "description": "The position of the entity in battle",
+                    "data": {
+                        "x": 2,
+                        "y": 2,
+                        "side": "left"
+                    }
+                },
+                {
+                    "id": "C017",
+                    "name": "basic_attack",
+                    "description": "The battle stats of the entity",
+                    "data": {
+                        "method": "magic",
+                        "range": 2,
+                        "stat": "intelligence"
                     }
                 }
             ]

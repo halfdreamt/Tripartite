@@ -1,0 +1,269 @@
+{
+    "effects": [
+        {
+            "id": "E001",
+            "name": "MalShrineAttack",
+            "description": "25% of max health damage to all enemies on user's side at the start of their turn for 6 turns",
+            "data": {
+                "type": "physical_damage",
+                "target_type": "enemy_physical_current_health",
+                "target_area": "user_side",
+                "activation": "enemy_start_turn",
+                "change_type": "hard_subtract",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 25,
+                "duration": 6,
+                "attribute": "fallen",
+                "element": "iron",
+                "break_condition": [
+                    "user_damage_taken",
+                    "user_death"
+                ]
+            }
+        },
+        {
+            "id": "E002",
+            "name": "MalShrineBuff",
+            "description": "25% buff to basic attack for 6 turns",
+            "data": {
+                "type": "magic_buff",
+                "target_type": "user_basic_attack_power",
+                "target_area": "user_side",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "basic_attack_power",
+                "value": 25,
+                "duration": 6,
+                "attribute": "elder",
+                "element": "glass",
+                "break_condition": [
+                    "user_damage_taken",
+                    "user_death"
+                ]
+            }
+        },
+        {
+            "id": "E003",
+            "name": "TuskPunch",
+            "description": "Deals 50 damage to the enemy.",
+            "data": {
+                "type": "physical_damage",
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 50,
+                "duration": 0,
+                "attribute": "runic",
+                "element": "sunlight"
+            }
+        },
+        {
+            "id": "E004",
+            "name": "EvasionBoost",
+            "description": "Boosts the user's evasion rate for 3 turns.",
+            "data": {
+                "type": "physical_buff",
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 30,
+                "duration": 3,
+                "attribute": "vital",
+                "element": "sunlight",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E005",
+            "name": "EvasionEnhance",
+            "description": "Enhances the user's evasion rate when on their own side.",
+            "data": {
+                "type": "magic_buff",
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "activation": "on_own_side",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 20,
+                "duration": "until_off_own_side",
+                "attribute": "vital",
+                "element": "sunlight",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E006",
+            "name": "TechniqueNullify",
+            "description": "Nullifies all active buffs and debuffs on the enemy.",
+            "data": {
+                "type": "magic_nullify",
+                "target_type": "enemy_active_effects",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "all",
+                "duration": 1,
+                "attribute": "nascent",
+                "element": "darkness",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E007",
+            "name": "BleedDamage",
+            "description": "Inflicts bleed damage on the enemy over time.",
+            "data": {
+                "type": "physical_damage",
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "activation": "on_successful_attack",
+                "change_type": "soft_subtract",
+                "value_type": "absolute",
+                "value": 5,
+                "duration": 3,
+                "attribute": "fallen",
+                "element": "blood",
+                "break_condition": "healing_received"
+            }
+        },
+        {
+            "id": "E008",
+            "name": "Regeneration",
+            "description": "Sser recovers 10% of max health every turn.",
+            "data": {
+                "type": "health_recovery",
+                "target_type": "user_physical_current_health",
+                "target_area": "self",
+                "activation": "start_turn",
+                "change_type": "soft_add",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 10,
+                "duration": "permanent",
+                "attribute": "vernal",
+                "element": "serpent_skin",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E009",
+            "name": "SnakeBoost",
+            "description": "user's affinity with snakes increases their attack and defense when their health is below 50%.",
+            "data": {
+                "type": "buff",
+                "target_type": "user_attack_defense",
+                "target_area": "self",
+                "activation": "below_half_health",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_attack_defense",
+                "value": 20,
+                "duration": "until_health_above_half",
+                "attribute": "nascent",
+                "element": "serpent_skin",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E010",
+            "name": "SealDebuff",
+            "description": "Reduces an enemy's attack and defense for 3 turns.",
+            "data": {
+                "type": "debuff",
+                "target_type": "enemy_attack_defense",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "percent",
+                "relative_to": "base_attack_defense",
+                "value": 20,
+                "duration": 3,
+                "attribute": "elder",
+                "element": "ink",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E011",
+            "name": "SealStun",
+            "description": "Stuns the target for 1 turn.",
+            "data": {
+                "type": "stun",
+                "target_type": "enemy_turn",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 1,
+                "duration": 1,
+                "attribute": "fallen",
+                "element": "ink",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E012",
+            "name": "ReanimationHeal",
+            "description": "Restores 50% of a fallen ally's max health.",
+            "data": {
+                "type": "health_recovery",
+                "target_type": "ally_physical_current_health",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "soft_add",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 50,
+                "duration": 0,
+                "attribute": "nascent",
+                "element": "serpent_skin",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E013",
+            "name": "EvasionJutsuBoost",
+            "description": "Boosts user's evasion rate for 3 turns.",
+            "data": {
+                "type": "buff",
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 30,
+                "duration": 3,
+                "attribute": "nascent",
+                "element": "shadow",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E014",
+            "name": "SnakeskinStrike",
+            "description": "Deals 60 damage to an enemy.",
+            "data": {
+                "type": "physical_damage",
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 60,
+                "duration": 0,
+                "attribute": "vernal",
+                "element": "iron",
+                "break_condition": "none"
+            }
+        }
+    ]
+}

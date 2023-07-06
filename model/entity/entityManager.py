@@ -46,13 +46,13 @@ class Entity:
 class EntityManager:
     def __init__(self, entity_data, component_manager, world):
         self.entities = []
-        self.archetypes = entity_data['archetypes']
+        self.archetypes = entity_data
         self.component_manager = component_manager
         self.world = world
 
     #TODO: find a better way to overrride, less hardcoded
     # Creates an entity from an archetype
-    def create_entity(self, archetype_name, spriteID, x, y):
+    def create_entity(self, archetype_name, spriteID, x, y, map_name):
         archetype = next((a for a in self.archetypes if a['name'] == archetype_name), None)
         if archetype != None:
             entity = Entity(len(self.entities), self.world)
@@ -62,6 +62,7 @@ class EntityManager:
                 if component_name == 'position':
                     component_data['x'] = x
                     component_data['y'] = y
+                    component_data['map_name'] = map_name
                 elif component_name == 'render':
                     component_data['spriteID'] = spriteID
                 component = self.component_manager.create_component(entity, component_name, component_data)
@@ -77,6 +78,9 @@ class EntityManager:
             if entity.get_component_data('position', 'x') == x and entity.get_component_data('position', 'y') == y:
                 return entity
         return False
+    
+    def clear_entities(self):
+        self.entities = []
 
     def get_entity(self, index):
         return self.entities[index]

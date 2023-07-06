@@ -1,69 +1,55 @@
 import pygame
-import json
 from model.world import World
 from view.PGDisplay import PGDisplay
-
+from data.dataFactory import dataFactory
+from controller.settingsManager import SettingsManager
 
 # Initialize pygame
 pygame.init()
 
-# Read the config file
-file_path = "rec/config.json"
-with open(file_path, "r") as json_file:
-    data = json.load(json_file)
+# Initialize the settings manager with a file path to the config file, which contains the file paths to the master files among other settings
+settings_manager = SettingsManager("rec/config.json")
 
-# Import the config data
-SCREENWIDTH = data["SCREENWIDTH"]
-SCREENHEIGHT = data["SCREENHEIGHT"]
-FRAMERATE = data["FRAMERATE"]
-MAPFILE = data["MAPFILE"]
-ENTITYFILE = data["ENTITYFILE"]
-COMPONENTFILE = data["COMPONENTFILE"]
+# Get the master data file paths and display settings from the settings manager (master data is for first time setup)
+masterFilePaths = settings_manager.get_master_file_paths()
+displaySettings = settings_manager.get_display_settings()
 
-# Load map data
-with open(MAPFILE, 'r') as f:
-    map_data = json.load(f)
+# Initialize data factory with the master file paths, which inserts the master json data into the DB 
+data_factory = dataFactory(masterFilePaths)
 
-# Load entity data
-with open(ENTITYFILE, 'r') as f:
-    entity_data = json.load(f)
+# Load master from SQL database for world
+masterData = data_factory.get_master_data()
 
-# Load component data
-with open(COMPONENTFILE, 'r') as f:
-    component_data = json.load(f)
+# Initialize the world (primarily model data)
+world = World(masterData)
 
-# Initialize world
-world = World(map_data, entity_data, component_data)
+# Initialize the display, which also initializes the event handler
+pgdisplay = PGDisplay(masterData['map_master'], world, data_factory.get_tile_images(), displaySettings)
 
-# Initialize display
-pgdisplay = PGDisplay(map_data, pygame, world, SCREENWIDTH, SCREENHEIGHT)
-
-
-# Initialize clock for FPS control
+# Initialize the clock
 clock = pygame.time.Clock()
 
 # Main game loop
-running = True
-while running:
+while not pgdisplay.pgevents.quit:
     
     # Event processing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pgdisplay.pgevents.quit = True
         else:
             pgdisplay.pgevents.handle_event(event)
 
     # Game time
-    if not pgdisplay.game_paused:
+    if not pgdisplay.pgevents.game_paused:
         pgdisplay.subTick += 1
-        if pgdisplay.subTick >= pgdisplay.tick_rate:
+        if pgdisplay.subTick >= pgdisplay.pgevents.tick_rate:
             pgdisplay.subTick = 0
             world.tick()
             
     # Limit the frame rate
-    clock.tick(FRAMERATE)
+    clock.tick(displaySettings['framerate'])
 
-    # Redraw screen with new camera position/zoom level
+    # Redraw screen
     pgdisplay.draw_screen()  
 
 pygame.quit()

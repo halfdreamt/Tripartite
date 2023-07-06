@@ -27,12 +27,12 @@ class Component:
             
 
 class ComponentManager:
-    def __init__(self, component_data, system_manager):
-        self.component_types = component_data['components']
+    def __init__(self, component_master_data, system_manager):
+        self.component_masters = component_master_data
         self.system_manager = system_manager
         
     def create_component(self, entity, name, data=None):
-        component_type = next((c for c in self.component_types if c['name'] == name), None)
+        component_type = next((c for c in self.component_masters if c['name'] == name), None)
         if component_type != None:
             if data is None:
                 data = component_type['data']

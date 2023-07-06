@@ -21,7 +21,7 @@ class movementSystem:
 
     def set_movement(self, entity, xVel, yVel, source):
         position = self.system_manager.get_system("position").get_position(entity)
-        validMoves = entity.world.map.getValidMoves(position[0], position[1])
+        validMoves = entity.world.map.get_valid_moves(position[0], position[1])
         if (xVel, yVel) in validMoves:
             entity.update_component_data("movement", "xVel", xVel)
             entity.update_component_data("movement", "yVel", yVel)
@@ -35,3 +35,6 @@ class movementSystem:
         self.system_manager.get_system("position").set_position(entity, position[0] + entity.get_component_data("movement", "xVel"), position[1] + entity.get_component_data("movement", "yVel"))
         entity.update_component_data("movement", "xVel", 0)
         entity.update_component_data("movement", "yVel", 0)
+
+    def reset_system(self):
+        self.entities = []

@@ -7,13 +7,14 @@
             "data": {
                 "target_type": "enemy_physical_current_health",
                 "target_area": "user_side",
-                "effect_type": "damage",
+                "effect_type": "physical_damage",
                 "activation": "enemy_start_turn",
                 "change_type": "hard_subtract",
                 "value_type": "percent",
                 "relative_to": "max_health",
                 "value": 25,
                 "duration": 6,
+                "effect_element": "iron",
                 "break_condition": [
                     "user_damage_taken",
                     "user_death"
@@ -27,13 +28,14 @@
             "data": {
                 "target_type": "user_basic_attack_power",
                 "target_area": "user_side",
-                "effect_type": "buff",
+                "effect_type": "magic_buff",
                 "activation": "immediate",
                 "change_type": "soft_increase",
                 "value_type": "percent",
                 "relative_to": "basic_attack_power",
                 "value": 25,
                 "duration": 6,
+                "effect_element": "glass",
                 "break_condition": [
                     "user_damage_taken",
                     "user_death"
@@ -43,22 +45,181 @@
         {
             "id": "E003",
             "name": "TuskPunch",
-            "description": "Tusk ACT4 bypasses all defenses to deliver a devastating blow.",
+            "description": "Deals 50 damage to the enemy.",
             "data": {
                 "target_type": "enemy_physical_current_health",
                 "target_area": "single_target",
-                "effect_type": "damage",
+                "effect_type": "physical_damage",
                 "activation": "immediate",
                 "change_type": "hard_subtract",
                 "value_type": "absolute",
                 "value": 50,
-                "duration": 0
+                "duration": 0,
+                "effect_element": "sunlight"
             }
         },
         {
             "id": "E004",
             "name": "EvasionBoost",
-            "description": "Boosts Johnny's evasion rate for 3 turns.",
+            "description": "Boosts the user's evasion rate for 3 turns.",
+            "data": {
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "effect_type": "physical_buff",
+                "activation": "immediate",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 30,
+                "duration": 3,
+                "effect_element": "sunlight",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E005",
+            "name": "EvasionEnhance",
+            "description": "Enhances the user's evasion rate when on their own side.",
+            "data": {
+                "target_type": "user_evasion_rate",
+                "target_area": "self",
+                "effect_type": "magic_buff",
+                "activation": "on_own_side",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_evasion_rate",
+                "value": 20,
+                "duration": "until_off_own_side",
+                "effect_element": "sunlight",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E006",
+            "name": "TechniqueNullify",
+            "description": "Nullifies all active buffs and debuffs on the enemy.",
+            "data": {
+                "target_type": "enemy_active_effects",
+                "target_area": "single_target",
+                "effect_type": "magic_nullify",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "all",
+                "duration": 1,
+                "effect_element": "darkness",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E007",
+            "name": "BleedDamage",
+            "description": "Inflicts bleed damage on the enemy over time.",
+            "data": {
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "effect_type": "physical_damage",
+                "activation": "on_successful_attack",
+                "change_type": "soft_subtract",
+                "value_type": "absolute",
+                "value": 5,
+                "duration": 3,
+                "effect_element": "blood",
+                "break_condition": "healing_received"
+            }
+        },
+        {
+            "id": "E008",
+            "name": "Regeneration",
+            "description": "Orochimaru recovers 10% of max health every turn.",
+            "data": {
+                "target_type": "user_physical_current_health",
+                "target_area": "self",
+                "effect_type": "health_recovery",
+                "activation": "start_turn",
+                "change_type": "soft_add",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 10,
+                "duration": "permanent",
+                "effect_element": "serpent_skin",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E009",
+            "name": "SnakeBoost",
+            "description": "Orochimaru's affinity with snakes increases his attack and defense when his health is below 50%.",
+            "data": {
+                "target_type": "user_attack_defense",
+                "target_area": "self",
+                "effect_type": "buff",
+                "activation": "below_half_health",
+                "change_type": "soft_increase",
+                "value_type": "percent",
+                "relative_to": "base_attack_defense",
+                "value": 20,
+                "duration": "until_health_above_half",
+                "effect_element": "serpent_scale",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E010",
+            "name": "SealDebuff",
+            "description": "Reduces an enemy's attack and defense for 3 turns.",
+            "data": {
+                "target_type": "enemy_attack_defense",
+                "target_area": "single_target",
+                "effect_type": "debuff",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "percent",
+                "relative_to": "base_attack_defense",
+                "value": 20,
+                "duration": 3,
+                "effect_element": "cursed_seal",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E011",
+            "name": "SealStun",
+            "description": "Stuns the target for 1 turn.",
+            "data": {
+                "target_type": "enemy_turn",
+                "target_area": "single_target",
+                "effect_type": "stun",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 1,
+                "duration": 1,
+                "effect_element": "cursed_seal",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E012",
+            "name": "ReanimationHeal",
+            "description": "Restores 50% of a fallen ally's max health.",
+            "data": {
+                "target_type": "ally_physical_current_health",
+                "target_area": "single_target",
+                "effect_type": "health_recovery",
+                "activation": "immediate",
+                "change_type": "soft_add",
+                "value_type": "percent",
+                "relative_to": "max_health",
+                "value": 50,
+                "duration": 0,
+                "effect_element": "reanimation_soil",
+                "break_condition": "none"
+            }
+        },
+        {
+            "id": "E013",
+            "name": "EvasionJutsuBoost",
+            "description": "Boosts Orochimaru's evasion rate for 3 turns.",
             "data": {
                 "target_type": "user_evasion_rate",
                 "target_area": "self",
@@ -69,23 +230,24 @@
                 "relative_to": "base_evasion_rate",
                 "value": 30,
                 "duration": 3,
+                "effect_element": "shadow",
                 "break_condition": "none"
             }
         },
         {
-            "id": "E005",
-            "name": "EvasionEnhance",
-            "description": "Enhances Gojo's evasion rate when on his own side.",
+            "id": "E014",
+            "name": "KusanagiStrike",
+            "description": "Deals 60 damage to an enemy.",
             "data": {
-                "target_type": "user_evasion_rate",
-                "target_area": "self",
-                "effect_type": "buff",
-                "activation": "on_own_side",
-                "change_type": "soft_increase",
-                "value_type": "percent",
-                "relative_to": "base_evasion_rate",
-                "value": 20,
-                "duration": "until_off_own_side",
+                "target_type": "enemy_physical_current_health",
+                "target_area": "single_target",
+                "effect_type": "physical_damage",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 60,
+                "duration": 0,
+                "effect_element": "steel",
                 "break_condition": "none"
             }
         }

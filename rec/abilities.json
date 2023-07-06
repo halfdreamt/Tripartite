@@ -4,6 +4,10 @@
             "id": "A001",
             "name": "Malevolent Shrine",
             "type": "active_ability",
+            "attributes": [
+                "fallen",
+                "elder"
+            ],
             "description": "While activated any enemy starting their turn on the user's side will take 25% of their maximum health as damage. User also gains 25% buff to basic attack.",
             "effects": [
                 "E001",
@@ -16,36 +20,191 @@
                 "change_type": "hard_subtract",
                 "value_type": "absolute",
                 "value": 75,
-                "cooldown": 10 
+                "cooldown": 10
             }
         },
         {
             "id": "A002",
             "name": "Tusk ACT4",
             "type": "active_ability",
-            "description": "Johnny's Stand, Tusk ACT4, materializes to deliver a devastating blow, bypassing all defenses. Also, Johnny's evasion rate increases for 3 turns.",
-            "data": [
+            "attributes": [
+                "runic",
+                "vital"
+            ],
+            "description": "The user materializes their ability to deliver a devastating blow, bypassing all defenses. Also, the user's evasion rate increases for 3 turns.",
+            "effects": [
                 "E003",
                 "E004"
             ],
             "cost": {
-                    "target_type": "user_current_mana",
-                    "effect_type": "ability_cost",
-                    "activation": "immediate",
-                    "change_type": "hard_subtract",
-                    "value_type": "absolute",
-                    "value": 75,
-                    "cooldown": 10 
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 75,
+                "cooldown": 10
             }
         },
         {
             "id": "A003",
             "name": "Limitless",
             "type": "passive_ability",
+            "attributes": [
+                "righteous",
+                "vital"
+            ],
             "description": "Gojo's unique Limitless Cursed Technique enhances his evasive abilities while he's on his side.",
             "effects": [
                 "E005"
             ]
+        },
+        {
+            "id": "A004",
+            "name": "Nullify",
+            "type": "active_ability",
+            "description": "The user completely nullifies an opponent's technique for a brief moment, rendering them helpless.",
+            "attributes": [
+                "elder",
+                "nascent"
+            ],
+            "cost": {
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 50,
+                "cooldown": 8
+            }
+        },
+        {
+            "id": "A005",
+            "name": "Slaughter Demon",
+            "type": "passive_ability",
+            "attributes": [
+                "fallen",
+                "vernal"
+            ],
+            "description": "Each successful attack by the user inflicts bleed damage on the enemy over time.",
+            "effects": [
+                "E007"
+            ]
+        },
+        {
+            "id": "A006",
+            "name": "Regenerative Power",
+            "type": "passive_ability",
+            "attributes": [
+                "nascent",
+                "vernal"
+            ],
+            "description": "Orochimaru's unique regenerative power allows him to recover 10% of max health every turn.",
+            "effects": [
+                "E008"
+            ]
+        },
+        {
+            "id": "A007",
+            "name": "Snake Summon",
+            "type": "passive_ability",
+            "attributes": [
+                "fallen",
+                "runic"
+            ],
+            "description": "At the start of battle, Orochimaru summons a giant snake to aid him, increasing his basic attack.",
+            "effects": [
+                "E009"
+            ]
+        },
+        {
+            "id": "A008",
+            "name": "Five Pronged Seal",
+            "type": "active_ability",
+            "attributes": [
+                "elder",
+                "runic"
+            ],
+            "description": "Orochimaru places a seal on an enemy, reducing their attack and defense for 3 turns.",
+            "effects": [
+                "E010",
+                "E011"
+            ],
+            "cost": {
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 60,
+                "cooldown": 8
+            }
+        },
+        {
+            "id": "A009",
+            "name": "Reanimation Jutsu",
+            "type": "active_ability",
+            "attributes": [
+                "elder",
+                "vital"
+            ],
+            "description": "Orochimaru revives a fallen ally, restoring 50% of their max health.",
+            "effects": [
+                "E012"
+            ],
+            "cost": {
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 80,
+                "cooldown": 10
+            }
+        },
+        {
+            "id": "A010",
+            "name": "Evasion Jutsu",
+            "type": "active_ability",
+            "attributes": [
+                "runic",
+                "nascent"
+            ],
+            "description": "Orochimaru increases his evasion rate for 3 turns.",
+            "effects": [
+                "E013"
+            ],
+            "cost": {
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 50,
+                "cooldown": 6
+            }
+        },
+        {
+            "id": "A011",
+            "name": "Sword of Kusanagi",
+            "type": "active_ability",
+            "attributes": [
+                "fallen",
+                "vital"
+            ],
+            "description": "Orochimaru strikes with his signature weapon, dealing heavy damage to an enemy.",
+            "effects": [
+                "E014"
+            ],
+            "cost": {
+                "target_type": "user_current_mana",
+                "effect_type": "ability_cost",
+                "activation": "immediate",
+                "change_type": "hard_subtract",
+                "value_type": "absolute",
+                "value": 70,
+                "cooldown": 7
+            }
         }
     ]
 }

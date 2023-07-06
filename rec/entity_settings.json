@@ -302,6 +302,105 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "E006",
+            "name": "Orochimaru",
+            "components": [
+                {
+                    "id": "C001",
+                    "name": "health",
+                    "data": {
+                        "physical_current": 80,
+                        "physical_max": 80,
+                        "mental_current": 100,
+                        "mental_max": 100
+                    }
+                },
+                {
+                    "id": "C003",
+                    "name": "position",
+                    "description": "The position of the entity",
+                    "data": {
+                        "x": 1,
+                        "y": 1
+                    }
+                },
+                {
+                    "id": "C004",
+                    "name": "render",
+                    "description": "Renders the entity",
+                    "data": {
+                        "spriteID": 6,
+                        "renderLayer": "sprite"
+                    }
+                },
+                {
+                    "id": "C005",
+                    "name": "name",
+                    "description": "The name of the entity",
+                    "data": {
+                        "name": "Orochimaru"
+                    }
+                },
+                {
+                    "id": "C013",
+                    "name": "core_stats",
+                    "description": "The core stats of the entity, from 0 to 100",
+                    "data": {
+                        "strength": 60,
+                        "dexterity": 80,
+                        "charisma": 70,
+                        "intelligence": 90,
+                        "wisdom": 80,
+                        "luck": 50
+                    }
+                },
+                {
+                    "id": "C014",
+                    "name": "passive_abilities",
+                    "description": "The passive abilities of the entity",
+                    "data": {
+                        "abilities": [
+                            "A004",
+                            "A005"
+                        ]
+                    }
+                },
+                {
+                    "id": "C015",
+                    "name": "active_abilities",
+                    "description": "The active abilities of the entity",
+                    "data": {
+                        "abilities": [
+                            "A006",
+                            "A007",
+                            "A008",
+                            "A009"
+                        ]
+                    }
+                },
+                {
+                    "id": "C016",
+                    "name": "battle_position",
+                    "description": "The position of the entity in battle",
+                    "data": {
+                        "x": 2,
+                        "y": 2,
+                        "side": "left"
+                    }
+                },
+                {
+                    "id": "C017",
+                    "name": "battle_stats",
+                    "description": "The battle stats of the entity",
+                    "data": {
+                        "basic_attack_method": "magic",
+                        "basic_attack_range": 2,
+                        "basic_attack_stat": "intelligence"
+                    }
+                }
+            ]
         }
     ]
 }

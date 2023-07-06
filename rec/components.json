@@ -26,7 +26,8 @@
             "description": "Position data",
             "data": {
                 "x": 0,
-                "y": 0
+                "y": 0,
+                "map_name": "test_map"
             }
         },
         {
@@ -155,6 +156,14 @@
                 "method": "melee",
                 "range": 1,
                 "stat": "strength"
+            }
+        },
+        {
+            "id": "C018",
+            "name": "effects",
+            "description": "Effects",
+            "data": {
+                "effects": []
             }
         }
     ]

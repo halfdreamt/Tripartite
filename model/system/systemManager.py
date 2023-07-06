@@ -8,6 +8,7 @@ from model.system.systems.positionSystem import positionSystem
 from model.system.systems.needsSystem import needsSystem
 from model.system.systems.nameSystem import nameSystem
 from model.system.systems.ageSystem import ageSystem
+from model.system.systems.battleSystem import battleSystem
 
 class SystemManager:
     def __init__(self):
@@ -30,6 +31,7 @@ class SystemManager:
         self.add_system(pathfindingSystem(len(self.systems), "pathfinding", self))
         self.add_system(wanderSystem(len(self.systems), "wander", self))
         self.add_system(movementSystem(len(self.systems), "movement", self))
+        self.add_system(battleSystem(len(self.systems), "battle", self))
 
     def add_system(self, system):
         self.systems.append(system)

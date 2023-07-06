@@ -94,11 +94,11 @@ class World:
         spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
             if sprite[0] == 2225:
-                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2], 'Battle Map')
             elif sprite[0] == 2221:
-                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Fighter1',  sprite[0], sprite[1], sprite[2], 'Battle Map')
             elif sprite[0] == 2572:
-                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2], 'Battle Map')
 
     def initialize_town_map(self):
         self.map.load_map(self.town_map_data)
@@ -106,8 +106,8 @@ class World:
         spriteData = self.map.get_layer_ids('sprites')
         for sprite in spriteData:
             if sprite[0] == 2225:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2], 'defaultMap')
             elif sprite[0] == 2221:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2], 'defaultMap')
             elif sprite[0] == 2572:
-                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2])
+                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2], 'defaultMap')

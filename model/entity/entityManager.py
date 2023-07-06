@@ -52,7 +52,7 @@ class EntityManager:
 
     #TODO: find a better way to overrride, less hardcoded
     # Creates an entity from an archetype
-    def create_entity(self, archetype_name, spriteID, x, y):
+    def create_entity(self, archetype_name, spriteID, x, y, map_name):
         archetype = next((a for a in self.archetypes if a['name'] == archetype_name), None)
         if archetype != None:
             entity = Entity(len(self.entities), self.world)
@@ -62,6 +62,7 @@ class EntityManager:
                 if component_name == 'position':
                     component_data['x'] = x
                     component_data['y'] = y
+                    component_data['map_name'] = map_name
                 elif component_name == 'render':
                     component_data['spriteID'] = spriteID
                 component = self.component_manager.create_component(entity, component_name, component_data)

@@ -172,3 +172,5 @@ view/__pycache__/PGDisplay.cpython-311.pyc
 view/displays/__pycache__/localView.cpython-311.pyc
 view/displays/__pycache__/localViewUI.cpython-311.pyc
 view/displays/__pycache__/menu.cpython-311.pyc
+model/__pycache__/map.cpython-311.pyc
+view/__pycache__/PGDisplay.cpython-311.pyc

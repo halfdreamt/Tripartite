@@ -6,12 +6,10 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
-                        "physical_current": 100,
-                        "physical_max": 100,
-                        "mental_current": 100,
-                        "mental_max": 100
+                        "current": 100,
+                        "max": 100
                     }
                 },
                 {
@@ -71,12 +69,10 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
-                        "physical_current": 100,
-                        "physical_max": 100,
-                        "mental_current": 100,
-                        "mental_max": 100
+                        "current": 100,
+                        "max": 100
                     }
                 },
                 {
@@ -218,12 +214,10 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
-                        "physical_current": 100,
-                        "physical_max": 100,
-                        "mental_current": 100,
-                        "mental_max": 100
+                        "current": 100,
+                        "max": 100
                     }
                 },
                 {
@@ -293,12 +287,12 @@
                 },
                 {
                     "id": "C017",
-                    "name": "battle_stats",
+                    "name": "basic_attack",
                     "description": "The battle stats of the entity",
                     "data": {
-                        "basic_attack_method": "melee",
-                        "basic_attack_range": 1,
-                        "basic_attack_stat": "strength"
+                        "method": "melee",
+                        "range": 1,
+                        "stat": "strength"
                     }
                 }
             ]
@@ -309,12 +303,10 @@
             "components": [
                 {
                     "id": "C001",
-                    "name": "health",
+                    "name": "physical_health",
                     "data": {
-                        "physical_current": 80,
-                        "physical_max": 80,
-                        "mental_current": 100,
-                        "mental_max": 100
+                        "current": 80,
+                        "max": 80
                     }
                 },
                 {
@@ -392,12 +384,12 @@
                 },
                 {
                     "id": "C017",
-                    "name": "battle_stats",
+                    "name": "basic_attack",
                     "description": "The battle stats of the entity",
                     "data": {
-                        "basic_attack_method": "magic",
-                        "basic_attack_range": 2,
-                        "basic_attack_stat": "intelligence"
+                        "method": "magic",
+                        "range": 2,
+                        "stat": "intelligence"
                     }
                 }
             ]

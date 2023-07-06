@@ -55,9 +55,9 @@ class LocalViewUI:
         for componentDataKey in componentData:
 
             # Draw health and thirst bars if entity has health and thirst components
-            if componentDataKey == "health":
-                current_health = componentData[componentDataKey]["physical_current"]
-                max_health = componentData[componentDataKey]["physical_max"]
+            if componentDataKey == "physical_health":
+                current_health = componentData[componentDataKey]["current"]
+                max_health = componentData[componentDataKey]["max"]
                 health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200, 20)
                 pygame.draw.rect(self.screen, (255, 0, 0), health_bar)
                 health_bar = pygame.Rect(10, 50 + 30 * list(componentData.keys()).index(componentDataKey) + 20, 200 * (current_health / max_health), 20)

@@ -6,7 +6,7 @@ class healthSystem:
         self.entities = []
 
     def component_updated(self, component, updateType, key=None, value=None):
-        if component.get_name() == "health":
+        if component.get_name() == "physical_health":
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
@@ -18,7 +18,7 @@ class healthSystem:
         pass
 
     def damage(self, entity, amount, source, type):
-        entity.update_component_data("health", "physical_current", entity.get_component_data("health", "physical_current") - amount)
+        entity.update_component_data("physical_health", "current", entity.get_component_data("physical_health", "current") - amount)
 
     def reset_system(self):
         self.entities = []

@@ -21,7 +21,7 @@ class SystemManager:
     def load_systems(self):
         self.systems = []
         self.add_system(thirstSystem(len(self.systems), "thirst", self))
-        self.add_system(healthSystem(len(self.systems), "health", self))
+        self.add_system(healthSystem(len(self.systems), "physical_health", self))
         self.add_system(nameSystem(len(self.systems), "name", self))
         self.add_system(collisionSystem(len(self.systems), "collision", self))
         self.add_system(ageSystem(len(self.systems), "age", self))

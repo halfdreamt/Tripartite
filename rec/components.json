@@ -2,13 +2,11 @@
     "components": [
         {
             "id": "C001",
-            "name": "health",
-            "description": "Health data",
+            "name": "physical_health",
+            "description": "Physical health data",
             "data": {
-                "physical_current": 100,
-                "physical_max": 100,
-                "mental_current": 100,
-                "mental_max": 100
+                "current": 100,
+                "max": 100
             }
         },
         {
@@ -154,9 +152,9 @@
             "name": "basic_attack",
             "description": "Basic attack properties",
             "data": {
-                "basic_attack_method": "melee",
-                "basic_attack_range": 1,
-                "basic_attack_stat": "strength"
+                "method": "melee",
+                "range": 1,
+                "stat": "strength"
             }
         }
     ]

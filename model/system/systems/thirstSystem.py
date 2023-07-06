@@ -41,7 +41,7 @@ class thirstSystem:
                         entity.update_component_data("thirst", "state", "thirsty")
                         self.system_manager.get_system("needs").add_need(entity, "thirst", 1)
         else:
-            system = self.system_manager.get_system("health")
+            system = self.system_manager.get_system("physical_health")
             system.damage(entity, 1, self.name, "thirst")
 
     def hydrate(self, entity):

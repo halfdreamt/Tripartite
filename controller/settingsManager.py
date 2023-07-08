@@ -17,6 +17,8 @@ class SettingsManager:
         self.entityFile = data["ENTITYFILE"]
         self.componentFile = data["COMPONENTFILE"]
         self.dbFile = data["DBFILE"]
+        self.effectFile = data["EFFECTFILE"]
+        self.abilityFile = data["ABILITYFILE"]
 
     def get_display_settings(self):
         displayData = {
@@ -34,7 +36,9 @@ class SettingsManager:
             "MAPFILE": self.mapFile,
             "ENTITYFILE": self.entityFile,
             "COMPONENTFILE": self.componentFile,
-            "DBFILE": self.dbFile
+            "DBFILE": self.dbFile,
+            "EFFECTFILE": self.effectFile,
+            "ABILITYFILE": self.abilityFile
         }
 
     

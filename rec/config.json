@@ -6,6 +6,8 @@
     "MAPFILE": "./rec/mapfiles/map.json",
     "ENTITYFILE": "./rec/entity_settings.json",
     "COMPONENTFILE": "./rec/components.json",
-    "DBFILE": "./data/gameData.sqlite"
+    "DBFILE": "./data/gameData.sqlite",
+    "EFFECTFILE": "./rec/effects.json",
+    "ABILITYFILE": "./rec/abilities.json"
 }
   

@@ -52,6 +52,9 @@
             "name": "Nullify",
             "type": "active_ability",
             "description": "The user completely nullifies an opponent's technique for a brief moment, rendering them helpless.",
+            "effects": [
+                "E006"
+            ],
             "cost": {
                 "target_type": "user_current_mana",
                 "effect_type": "ability_cost",

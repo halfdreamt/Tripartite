@@ -110,17 +110,10 @@ class dataFactory:
         name = map_master_data['name']
         width = map_master_data['width']
         height = map_master_data['height']
-        layers = map_master_data['layers']
-        tilesize = map_master_data['tilewidth']
-        for layer in layers:
-            if layer['name'] == 'Tile Layer 1':
-                ground = json.dumps(layer['data'])
-            elif layer['name'] == 'ground':
-                ground = json.dumps(layer['data'])
-            elif layer['name'] == 'collision':
-                collision = json.dumps(layer['data'])
-            elif layer['name'] == 'sprites':
-                entities = json.dumps(layer['data'])
+        tilesize = map_master_data['tilesize']
+        ground = map_master_data['ground']
+        collision = map_master_data['collision']
+        entities = map_master_data['sprites']
         self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
         self.save_table_to_file("map_master", "./rec/mapfiles/map_master.json")
         self.conn.commit()
@@ -230,14 +223,16 @@ class dataFactory:
             effect_data = json.load(f)
         with open(self.master_file_paths['ABILITYFILE'], 'r') as f:
             ability_data = json.load(f)
+        with open(self.master_file_paths['MAPMASTER'], 'r') as f:
+            map_master = json.load(f)
 
         self.master_json_data = {
             "tile_master": map_data,
             "component_master": component_data,
             "archetype_master": archetype_data,
-            "map_master": map_data,
+            "map_master": map_master,
             "effect_master": effect_data,
-            "ability_master": ability_data
+            "ability_master": ability_data,
         }
 
         self.insert_master_json_data(self.master_json_data)
@@ -261,5 +256,8 @@ class dataFactory:
         column_names = [description[0] for description in self.cursor.description]
         data = self.cursor.fetchall()
         data_with_columns = [dict(zip(column_names, row)) for row in data]
+        if len(data_with_columns) == 1:
+            data_with_columns = data_with_columns[0]
         with open(file_path, 'w') as f:
             json.dump(data_with_columns, f)
+

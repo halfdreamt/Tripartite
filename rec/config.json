@@ -3,9 +3,12 @@
     "SCREENHEIGHT": 800,
     "FRAMERATE": 60,
     "DEFAULT_MODE": "battle",
-    "MAPFILE": "./rec/mapfiles/map.json",
     "ENTITYFILE": "./rec/entity_settings.json",
     "COMPONENTFILE": "./rec/components.json",
-    "DBFILE": "./data/gameData.sqlite"
+    "DBFILE": "./data/gameData.sqlite",
+    "EFFECTFILE": "./rec/effects.json",
+    "ABILITYFILE": "./rec/abilities.json",
+    "MAPMASTER": "./rec/mapfiles/map_master.json",
+    "TILEMASTER": "./rec/mapfiles/tile_master.json"
 }
   

@@ -13,10 +13,13 @@ class SettingsManager:
         self.screenWidth = data["SCREENWIDTH"]
         self.screenHeight = data["SCREENHEIGHT"]
         self.framerate = data["FRAMERATE"]
-        self.mapFile = data["MAPFILE"]
         self.entityFile = data["ENTITYFILE"]
         self.componentFile = data["COMPONENTFILE"]
         self.dbFile = data["DBFILE"]
+        self.effectFile = data["EFFECTFILE"]
+        self.abilityFile = data["ABILITYFILE"]
+        self.mapMaster = data["MAPMASTER"]
+        self.tileMaster = data["TILEMASTER"]
 
     def get_display_settings(self):
         displayData = {
@@ -31,10 +34,16 @@ class SettingsManager:
     
     def get_master_file_paths(self):
         return {
-            "MAPFILE": self.mapFile,
             "ENTITYFILE": self.entityFile,
             "COMPONENTFILE": self.componentFile,
-            "DBFILE": self.dbFile
+            "DBFILE": self.dbFile,
+            "EFFECTFILE": self.effectFile,
+            "ABILITYFILE": self.abilityFile,
+            "MAPMASTER": self.mapMaster,
+            "TILEMASTER": self.tileMaster
         }
+    
+    def get_frame_rate(self):
+        return self.framerate
 
     

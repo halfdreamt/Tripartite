@@ -4,6 +4,7 @@ import os
 import pygame
 import json
 import io
+import base64
 from PIL import Image
 
 #This class will be used to manage the database containing game data
@@ -16,6 +17,8 @@ from PIL import Image
 #The component_master table will contain the following columns: id (Primary ID), name, data
 #The archetype_master table will contain the following columns: id (Primary ID), name, components
 #The map_master table will contain the following columns: id (Primary ID), name, width, height, ground, tilesize, collision, sprites
+#The effect_master table will contain the following columns: id (Primary ID), name, description, data
+#The ability_master table will contain the following columns: id (Primary ID), name, type, description, effects, cost
 
 class dataFactory:
     #initializes the database connection
@@ -44,6 +47,10 @@ class dataFactory:
                         (id INTEGER PRIMARY KEY, name TEXT, components TEXT)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS map_master
                         (id INTEGER PRIMARY KEY, name TEXT, width INTEGER, height INTEGER, ground TEXT, tilesize INTEGER, collision TEXT, sprites TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS effect_master
+                        (id INTEGER PRIMARY KEY, name TEXT, description TEXT, data TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS ability_master
+                        (id INTEGER PRIMARY KEY, name TEXT, type TEXT, description TEXT, effects TEXT, cost INTEGER)''')
         
     #Create a new map in the database
     def create_map(self, name, width, height):
@@ -79,52 +86,48 @@ class dataFactory:
             self.cursor.execute("INSERT INTO archetype_master (name, components) VALUES (?, ?)", (name, json_data))
         self.conn.commit()
 
+    def insert_effect_master_data(self, effect_master_data):
+        for effect in effect_master_data['effects']:
+            name = effect['name']
+            description = effect['description']
+            json_data = json.dumps(effect['data'])
+            self.cursor.execute("INSERT INTO effect_master (name, description, data) VALUES (?, ?, ?)", (name, description, json_data))
+        self.conn.commit()
+
+    def insert_ability_master_data(self, ability_master_data):
+        for ability in ability_master_data['abilities']:
+            name = ability['name']
+            type = ability['type']
+            description = ability['description']
+            effects = json.dumps(ability['effects'])
+            if 'cost' in ability:
+                cost = json.dumps(ability['cost'])
+            else:
+                cost = -1
+            self.cursor.execute("INSERT INTO ability_master (name, type, description, effects, cost) VALUES (?, ?, ?, ?, ?)", (name, type, description, effects, cost))
+        self.conn.commit()
+
     def insert_map_master_data(self, map_master_data):
         name = map_master_data['name']
         width = map_master_data['width']
         height = map_master_data['height']
-        layers = map_master_data['layers']
-        tilesize = map_master_data['tilewidth']
-        for layer in layers:
-            if layer['name'] == 'Tile Layer 1':
-                ground = json.dumps(layer['data'])
-            elif layer['name'] == 'ground':
-                ground = json.dumps(layer['data'])
-            elif layer['name'] == 'collision':
-                collision = json.dumps(layer['data'])
-            elif layer['name'] == 'sprites':
-                entities = json.dumps(layer['data'])
+        tilesize = map_master_data['tilesize']
+        ground = map_master_data['ground']
+        collision = map_master_data['collision']
+        entities = map_master_data['sprites']
         self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
         self.conn.commit()
-        
-    #takes the map_data object and uses it to insert individual tile images into the tile_master table
-    def insert_tile_master_data(self, map_data):
-        tilewidth, tileheight = map_data['tilewidth'], map_data['tileheight']
 
-        # Load tilesets
-        for tileset in map_data['tilesets']:
-            tsx_path = "./rec/mapfiles/" + tileset['source']
-            tsx_root = ET.parse(tsx_path).getroot()
-            image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
-            full_image = Image.open(image_path)
+    def insert_tile_master_data(self, tile_data):
+            # Insert the data into the tile_master table
+        for item in tile_data:
+            name = item['name']
+            image_data_base64 = item['image_data']
+            # Decode the base64 string back into bytes
+            image_data_bytes = base64.b64decode(image_data_base64)
 
-            tilesetwidth, tilesetheight = full_image.size[0] // tilewidth, full_image.size[1] // tileheight
-
-            # Split the tileset into individual tiles
-            for tile_y in range(tilesetheight):
-                for tile_x in range(tilesetwidth):
-                    # Extract individual tile
-                    box = (tile_x*tilewidth, tile_y*tileheight, (tile_x+1)*tilewidth, (tile_y+1)*tileheight)
-                    tile_image = full_image.crop(box)
-
-                    # Convert the Pillow Image object to bytes
-                    byte_arr = io.BytesIO()
-                    tile_image.save(byte_arr, format='PNG')
-                    image_bytes = byte_arr.getvalue()
-
-                    name = f'{tileset["source"].split("/")[-1].split(".")[0]}_{tile_y}_{tile_x}'
-                    self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_bytes))
-                    self.conn.commit()
+            self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_data_bytes))
+            self.conn.commit()
 
     #returns the image data for the tile with the given id
     def get_tile_image(self, tile_id):
@@ -145,6 +148,10 @@ class dataFactory:
                     self.insert_archetype_master_data(master_data[table])
                 elif table == "map_master":
                     self.insert_map_master_data(master_data[table])
+                elif table == "effect_master":
+                    self.insert_effect_master_data(master_data[table])
+                elif table == "ability_master":
+                    self.insert_ability_master_data(master_data[table])
 
     def get_archetypes(self):
         self.cursor.execute("SELECT * FROM archetype_master")
@@ -188,18 +195,26 @@ class dataFactory:
     
     def load_master_json_data(self):
         # Load data files
-        with open(self.master_file_paths['MAPFILE'], 'r') as f:
-            map_data = json.load(f)
         with open(self.master_file_paths['ENTITYFILE'], 'r') as f:
             archetype_data = json.load(f)
         with open(self.master_file_paths['COMPONENTFILE'], 'r') as f:
             component_data = json.load(f)
+        with open(self.master_file_paths['EFFECTFILE'], 'r') as f:
+            effect_data = json.load(f)
+        with open(self.master_file_paths['ABILITYFILE'], 'r') as f:
+            ability_data = json.load(f)
+        with open(self.master_file_paths['MAPMASTER'], 'r') as f:
+            map_master = json.load(f)
+        with open(self.master_file_paths['TILEMASTER'], 'r') as f:
+            tile_master = json.load(f)
 
         self.master_json_data = {
-            "tile_master": map_data,
+            "tile_master": tile_master,
             "component_master": component_data,
             "archetype_master": archetype_data,
-            "map_master": map_data
+            "map_master": map_master,
+            "effect_master": effect_data,
+            "ability_master": ability_data,
         }
 
         self.insert_master_json_data(self.master_json_data)
@@ -214,5 +229,28 @@ class dataFactory:
         return {
             "component_master": component_master_data,
             "archetype_master": archetype_master_data,
-            "map_master": map_master_data
+            "map_master": map_master_data,
+
         }
+
+    def save_table_to_file(self, table_name, file_path):
+        self.cursor.execute("SELECT * FROM " + table_name)
+        column_names = [description[0] for description in self.cursor.description]
+        data = self.cursor.fetchall()
+
+        data_with_columns = []
+        for row in data:
+            data_row = {}
+            for idx, val in enumerate(row):
+                if isinstance(val, bytes):
+                    # Encode to base64 if it's a bytes object
+                    data_row[column_names[idx]] = base64.b64encode(val).decode()
+                else:
+                    data_row[column_names[idx]] = val
+            data_with_columns.append(data_row)
+
+        if len(data_with_columns) == 1:
+            data_with_columns = data_with_columns[0]
+
+        with open(file_path, 'w') as f:
+            json.dump(data_with_columns, f)

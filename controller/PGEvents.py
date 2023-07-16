@@ -38,6 +38,9 @@ class PGEvents:
                 elif self.pgdisplay.viewMode == "local":
                     self.pgdisplay.viewMode = "menu"
                     self.game_paused = True
+                elif self.pgdisplay.viewMode == "battle":
+                    self.pgdisplay.viewMode = "menu"
+                    self.game_paused = True
                 self.pgdisplay.draw_screen()
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:

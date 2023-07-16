@@ -4,6 +4,7 @@ import os
 import pygame
 import json
 import io
+import base64
 from PIL import Image
 
 #This class will be used to manage the database containing game data
@@ -116,6 +117,7 @@ class dataFactory:
         entities = map_master_data['sprites']
         self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
         self.save_table_to_file("map_master", "./rec/mapfiles/map_master.json")
+        self.save_table_to_file("tile_master", "./rec/mapfiles/tile_master.json")
         self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_master table
@@ -147,6 +149,17 @@ class dataFactory:
                     self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_bytes))
                     self.conn.commit()
 
+    def insert_tile_master_data_V2(self, tile_data):
+            # Insert the data into the tile_master table
+        for item in tile_data:
+            name = item['name']
+            image_data_base64 = item['image_data']
+            # Decode the base64 string back into bytes
+            image_data_bytes = base64.b64decode(image_data_base64)
+
+            self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_data_bytes))
+            self.conn.commit()
+
     #returns the image data for the tile with the given id
     def get_tile_image(self, tile_id):
         self.cursor.execute("SELECT image_data FROM tile_master WHERE id = ?", (tile_id,))
@@ -159,7 +172,7 @@ class dataFactory:
             self.cursor.execute("SELECT * FROM " + table)
             if len(self.cursor.fetchall()) == 0:
                 if table == "tile_master":
-                    self.insert_tile_master_data(master_data[table])
+                    self.insert_tile_master_data_V2(master_data[table])
                 elif table == "component_master":
                     self.insert_component_master_data(master_data[table])
                 elif table == "archetype_master":
@@ -225,9 +238,11 @@ class dataFactory:
             ability_data = json.load(f)
         with open(self.master_file_paths['MAPMASTER'], 'r') as f:
             map_master = json.load(f)
+        with open(self.master_file_paths['TILEMASTER'], 'r') as f:
+            tile_master = json.load(f)
 
         self.master_json_data = {
-            "tile_master": map_data,
+            "tile_master": tile_master,
             "component_master": component_data,
             "archetype_master": archetype_data,
             "map_master": map_master,
@@ -250,14 +265,27 @@ class dataFactory:
             "map_master": map_master_data,
 
         }
-    
+
     def save_table_to_file(self, table_name, file_path):
         self.cursor.execute("SELECT * FROM " + table_name)
         column_names = [description[0] for description in self.cursor.description]
         data = self.cursor.fetchall()
-        data_with_columns = [dict(zip(column_names, row)) for row in data]
+
+        data_with_columns = []
+        for row in data:
+            data_row = {}
+            for idx, val in enumerate(row):
+                if isinstance(val, bytes):
+                    # Encode to base64 if it's a bytes object
+                    data_row[column_names[idx]] = base64.b64encode(val).decode()
+                else:
+                    data_row[column_names[idx]] = val
+            data_with_columns.append(data_row)
+
         if len(data_with_columns) == 1:
             data_with_columns = data_with_columns[0]
+
         with open(file_path, 'w') as f:
             json.dump(data_with_columns, f)
+
 

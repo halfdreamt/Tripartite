@@ -20,6 +20,7 @@ class SettingsManager:
         self.effectFile = data["EFFECTFILE"]
         self.abilityFile = data["ABILITYFILE"]
         self.mapMaster = data["MAPMASTER"]
+        self.tileMaster = data["TILEMASTER"]
 
     def get_display_settings(self):
         displayData = {
@@ -40,7 +41,8 @@ class SettingsManager:
             "DBFILE": self.dbFile,
             "EFFECTFILE": self.effectFile,
             "ABILITYFILE": self.abilityFile,
-            "MAPMASTER": self.mapMaster
+            "MAPMASTER": self.mapMaster,
+            "TILEMASTER": self.tileMaster
         }
     
     def get_map_master_file_path(self):

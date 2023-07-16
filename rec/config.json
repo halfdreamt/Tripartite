@@ -9,6 +9,7 @@
     "DBFILE": "./data/gameData.sqlite",
     "EFFECTFILE": "./rec/effects.json",
     "ABILITYFILE": "./rec/abilities.json",
-    "MAPMASTER": "./rec/mapfiles/map_master.json"
+    "MAPMASTER": "./rec/mapfiles/map_master.json",
+    "TILEMASTER": "./rec/mapfiles/tile_master.json"
 }
   

@@ -2,7 +2,7 @@
     "SCREENWIDTH": 1200,
     "SCREENHEIGHT": 800,
     "FRAMERATE": 60,
-    "DEFAULT_MODE": "battle",
+    "DEFAULT_MODE": "menu",
     "ENTITYFILE": "./rec/entity_settings.json",
     "COMPONENTFILE": "./rec/components.json",
     "DBFILE": "./data/gameData.sqlite",

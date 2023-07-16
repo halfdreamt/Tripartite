@@ -4,15 +4,26 @@ from controller.PGEvents import PGEvents
 from view.displays.menu import Menu
 from view.displays.localView import LocalView
 from view.displays.battleView import BattleView
+from model.world import World
+from data.dataFactory import dataFactory
 
 class PGDisplay:
-    def __init__(self, mapData, world, tileImages, displaySettings):
+    def __init__(self, settings_manager):
 
-        self.world = world
-        self.screen = pygame.display.set_mode((displaySettings['screenWidth'], displaySettings['screenHeight']), pygame.RESIZABLE)
+        self.settings_manager = settings_manager
+
+        # Initialize data factory with the master file paths (inserts the master json data into the DB if needed)
+        self.data_factory = dataFactory(settings_manager.get_master_file_paths())
+
+        self.displaySettings = settings_manager.get_display_settings()
+
+        # Initialize the world with master data (primarily model data)
+        self.world = World(self.data_factory.get_master_data())
+
+        self.screen = pygame.display.set_mode((self.displaySettings['screenWidth'], self.displaySettings['screenHeight']), pygame.RESIZABLE)
 
         #load tile images from SQL database
-        self.tileImages = tileImages
+        self.tileImages = self.data_factory.get_tile_images()
 
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)

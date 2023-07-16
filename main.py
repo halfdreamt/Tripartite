@@ -7,24 +7,17 @@ from controller.settingsManager import SettingsManager
 # Initialize pygame
 pygame.init()
 
-# Initialize the settings manager with a file path to the config file, which contains the file paths to the master files among other settings
+# Initialize the settings manager with a file path to the config file (contains the file paths to the master files among other settings)
 settings_manager = SettingsManager("rec/config.json")
 
-# Get the master data file paths and display settings from the settings manager (master data is for first time setup)
-masterFilePaths = settings_manager.get_master_file_paths()
-displaySettings = settings_manager.get_display_settings()
+# Initialize data factory with the master file paths (inserts the master json data into the DB if needed)
+data_factory = dataFactory(settings_manager.get_master_file_paths())
 
-# Initialize data factory with the master file paths, which inserts the master json data into the DB 
-data_factory = dataFactory(masterFilePaths)
+# Initialize the world with master data (primarily model data)
+world = World(data_factory.get_master_data())
 
-# Load master from SQL database for world
-masterData = data_factory.get_master_data()
-
-# Initialize the world (primarily model data)
-world = World(masterData)
-
-# Initialize the display, which also initializes the event handler
-pgdisplay = PGDisplay(masterData['map_master'], world, data_factory.get_tile_images(), displaySettings)
+# Initialize the display with map data, reference to world, tile data, display settings (also initializes the event handler)
+pgdisplay = PGDisplay(data_factory.get_map_master(), world, data_factory.get_tile_images(), settings_manager.get_display_settings())
 
 # Initialize the clock
 clock = pygame.time.Clock()
@@ -47,7 +40,7 @@ while not pgdisplay.pgevents.quit:
             world.tick()
             
     # Limit the frame rate
-    clock.tick(displaySettings['framerate'])
+    clock.tick(settings_manager.get_frame_rate())
 
     # Redraw screen
     pgdisplay.draw_screen()  

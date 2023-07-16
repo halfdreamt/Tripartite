@@ -116,40 +116,9 @@ class dataFactory:
         collision = map_master_data['collision']
         entities = map_master_data['sprites']
         self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
-        self.save_table_to_file("map_master", "./rec/mapfiles/map_master.json")
-        self.save_table_to_file("tile_master", "./rec/mapfiles/tile_master.json")
         self.conn.commit()
-        
-    #takes the map_data object and uses it to insert individual tile images into the tile_master table
-    def insert_tile_master_data(self, map_data):
-        tilewidth, tileheight = map_data['tilewidth'], map_data['tileheight']
 
-        # Load tilesets
-        for tileset in map_data['tilesets']:
-            tsx_path = "./rec/mapfiles/" + tileset['source']
-            tsx_root = ET.parse(tsx_path).getroot()
-            image_path = os.path.join(os.path.dirname(tsx_path), tsx_root.find('image').get('source'))
-            full_image = Image.open(image_path)
-
-            tilesetwidth, tilesetheight = full_image.size[0] // tilewidth, full_image.size[1] // tileheight
-
-            # Split the tileset into individual tiles
-            for tile_y in range(tilesetheight):
-                for tile_x in range(tilesetwidth):
-                    # Extract individual tile
-                    box = (tile_x*tilewidth, tile_y*tileheight, (tile_x+1)*tilewidth, (tile_y+1)*tileheight)
-                    tile_image = full_image.crop(box)
-
-                    # Convert the Pillow Image object to bytes
-                    byte_arr = io.BytesIO()
-                    tile_image.save(byte_arr, format='PNG')
-                    image_bytes = byte_arr.getvalue()
-
-                    name = f'{tileset["source"].split("/")[-1].split(".")[0]}_{tile_y}_{tile_x}'
-                    self.cursor.execute("INSERT INTO tile_master (name, image_data) VALUES (?, ?)", (name, image_bytes))
-                    self.conn.commit()
-
-    def insert_tile_master_data_V2(self, tile_data):
+    def insert_tile_master_data(self, tile_data):
             # Insert the data into the tile_master table
         for item in tile_data:
             name = item['name']
@@ -172,7 +141,7 @@ class dataFactory:
             self.cursor.execute("SELECT * FROM " + table)
             if len(self.cursor.fetchall()) == 0:
                 if table == "tile_master":
-                    self.insert_tile_master_data_V2(master_data[table])
+                    self.insert_tile_master_data(master_data[table])
                 elif table == "component_master":
                     self.insert_component_master_data(master_data[table])
                 elif table == "archetype_master":
@@ -285,5 +254,3 @@ class dataFactory:
 
         with open(file_path, 'w') as f:
             json.dump(data_with_columns, f)
-
-

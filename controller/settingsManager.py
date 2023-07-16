@@ -43,9 +43,6 @@ class SettingsManager:
             "TILEMASTER": self.tileMaster
         }
     
-    def get_map_master_file_path(self):
-        return self.mapFile
-    
     def get_frame_rate(self):
         return self.framerate
 

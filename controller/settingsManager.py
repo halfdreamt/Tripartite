@@ -20,12 +20,14 @@ class SettingsManager:
         self.abilityFile = data["ABILITYFILE"]
         self.mapMaster = data["MAPMASTER"]
         self.tileMaster = data["TILEMASTER"]
+        self.defaultMode = data["DEFAULT_MODE"]
 
     def get_display_settings(self):
         displayData = {
             "screenWidth": self.screenWidth,
             "screenHeight": self.screenHeight,
-            "framerate": self.framerate
+            "framerate": self.framerate,
+            "defaultMode": self.defaultMode
         }
         return displayData
     

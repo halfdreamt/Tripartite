@@ -1,7 +1,5 @@
 import pygame
-from model.world import World
 from view.PGDisplay import PGDisplay
-from data.dataFactory import dataFactory
 from controller.settingsManager import SettingsManager
 
 # Initialize pygame

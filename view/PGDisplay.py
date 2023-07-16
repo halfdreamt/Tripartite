@@ -17,6 +17,8 @@ class PGDisplay:
 
         self.displaySettings = settings_manager.get_display_settings()
 
+        self.viewMode = self.displaySettings['defaultMode']
+
         # Initialize the world with master data (primarily model data)
         self.world = World(self.data_factory.get_master_data())
 
@@ -33,8 +35,6 @@ class PGDisplay:
         self.menu = Menu(self)
         self.localView = LocalView(self)
         self.battleView = BattleView(self)
-
-        self.viewMode = "menu"
     
         self.tilesets, self.tileset_firstgids = [], []
 

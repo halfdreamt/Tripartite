@@ -13,7 +13,6 @@ class SettingsManager:
         self.screenWidth = data["SCREENWIDTH"]
         self.screenHeight = data["SCREENHEIGHT"]
         self.framerate = data["FRAMERATE"]
-        self.mapFile = data["MAPFILE"]
         self.entityFile = data["ENTITYFILE"]
         self.componentFile = data["COMPONENTFILE"]
         self.dbFile = data["DBFILE"]
@@ -35,7 +34,6 @@ class SettingsManager:
     
     def get_master_file_paths(self):
         return {
-            "MAPFILE": self.mapFile,
             "ENTITYFILE": self.entityFile,
             "COMPONENTFILE": self.componentFile,
             "DBFILE": self.dbFile,

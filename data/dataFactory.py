@@ -226,8 +226,6 @@ class dataFactory:
     
     def load_master_json_data(self):
         # Load data files
-        with open(self.master_file_paths['MAPFILE'], 'r') as f:
-            map_data = json.load(f)
         with open(self.master_file_paths['ENTITYFILE'], 'r') as f:
             archetype_data = json.load(f)
         with open(self.master_file_paths['COMPONENTFILE'], 'r') as f:

@@ -122,6 +122,7 @@ class dataFactory:
             elif layer['name'] == 'sprites':
                 entities = json.dumps(layer['data'])
         self.cursor.execute("INSERT INTO map_master (name, width, height, ground, tilesize, collision, sprites) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, width, height, ground, tilesize, collision, entities))
+        self.save_table_to_file("map_master", "./rec/mapfiles/map_master.json")
         self.conn.commit()
         
     #takes the map_data object and uses it to insert individual tile images into the tile_master table
@@ -254,3 +255,11 @@ class dataFactory:
             "map_master": map_master_data,
 
         }
+    
+    def save_table_to_file(self, table_name, file_path):
+        self.cursor.execute("SELECT * FROM " + table_name)
+        column_names = [description[0] for description in self.cursor.description]
+        data = self.cursor.fetchall()
+        data_with_columns = [dict(zip(column_names, row)) for row in data]
+        with open(file_path, 'w') as f:
+            json.dump(data_with_columns, f)

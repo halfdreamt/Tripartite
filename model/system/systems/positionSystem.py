@@ -13,6 +13,7 @@ class positionSystem:
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
+                #should change this to update the render component upon position change, which should update the map entity with the change
                 pass
             elif updateType == "delete":
                 self.entities.remove(component.entity)

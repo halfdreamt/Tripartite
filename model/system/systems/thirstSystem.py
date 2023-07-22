@@ -6,7 +6,7 @@ class thirstSystem:
         self.entities = []
         self.threshhold = 50
 
-    def component_updated(self, component, updateType, key=None, value=None):
+    def component_updated(self, component, updateType, key=None, oldValue=None, newValue=None):
         if component.get_name() == "thirst" or component.get_name() == "drinkable":
             if updateType == "create":
                 self.entities.append(component.entity)

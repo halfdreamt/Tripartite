@@ -8,12 +8,13 @@ class positionSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType, key=None, value=None):
+    def component_updated(self, component, updateType, key=None, oldValue=None, newValue=None):
         if component.get_name() == "position":
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":
-                #should change this to update the render component upon position change, which should update the map entity with the change
+                map = component.entity.world.map
+                map.set_layer_id('sprites', component.entity.get_component_data('position', 'x'), component.entity.get_component_data('position', 'y'), component.entity.get_component_data('render', 'spriteID'))
                 pass
             elif updateType == "delete":
                 self.entities.remove(component.entity)

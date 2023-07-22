@@ -10,7 +10,7 @@ class mapSystem:
         self.entities = []
         self.layers = []
 
-    def component_updated(self, component, updateType, key=None, value=None):
+    def component_updated(self, component, updateType, key=None, oldValue=None, newValue=None):
         if component.get_name() == "map_container":
             if updateType == "create":
                 self.entities.append(component.entity)
@@ -133,6 +133,7 @@ class mapSystem:
         for y in range(self.MAPHEIGHT):
             for x in range(self.MAPWIDTH):
                 self.set_layer_id(layerName, x, y, 0)
-        for entity in entities:
-            if entity.has_component('position') and entity.has_component('render'):
-                self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))
+        # for entity in entities:
+        #     if entity.has_component('position') and entity.has_component('render'):
+        #         self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))
+ 

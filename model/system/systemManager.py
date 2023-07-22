@@ -48,9 +48,9 @@ class SystemManager:
             if system.name == name:
                 return system
     
-    def component_updated(self, component, updateType, key=None, value=None):
+    def component_updated(self, component, updateType, key=None, oldValue=None, newValue=None):
         for system in self.systems:
-            system.component_updated(component, updateType, key, value)
+            system.component_updated(component, updateType, key, oldValue, newValue)
 
     def reset_systems(self):
         for system in self.systems:

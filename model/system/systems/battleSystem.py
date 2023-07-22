@@ -5,7 +5,7 @@ class battleSystem:
         self.system_manager = system_manager
         self.entities = []
 
-    def component_updated(self, component, updateType, key=None, value=None):
+    def component_updated(self, component, updateType, key=None, oldValue=None, newValue=None):
         if component.get_name() == "battle_position":
             if updateType == "create":
                 self.entities.append(component.entity)

@@ -444,7 +444,7 @@
                                 "id": "C019",
                                 "name": "map",
                                 "description": "Holds map data",
-                                "data":                             {
+                                "data": {
                                     "name": "Battle Map",
                                     "width": 8,
                                     "height": 5,

@@ -21,7 +21,7 @@ class mapSystem:
 
     def update(self):
         for entity in self.entities:
-            self.age(entity)
+            pass
 
     def reset_system(self):
         self.entities = []
@@ -127,11 +127,12 @@ class mapSystem:
     def update_map(self, entities):
         self.update_layer("sprites", entities)
 
-    # updates the given layer with the given values and positions
+   # updates the given layer with the given values and positions
     def update_layer(self, layerName, entities):
         #clear layer
         for y in range(self.MAPHEIGHT):
             for x in range(self.MAPWIDTH):
                 self.set_layer_id(layerName, x, y, 0)
         for entity in entities:
-            self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))
+            if entity.has_component('position') and entity.has_component('render'):
+                self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))

@@ -9,6 +9,7 @@ from model.system.systems.needsSystem import needsSystem
 from model.system.systems.nameSystem import nameSystem
 from model.system.systems.ageSystem import ageSystem
 from model.system.systems.battleSystem import battleSystem
+from model.system.systems.mapSystem import mapSystem
 
 class SystemManager:
     def __init__(self):
@@ -32,6 +33,7 @@ class SystemManager:
         self.add_system(wanderSystem(len(self.systems), "wander", self))
         self.add_system(movementSystem(len(self.systems), "movement", self))
         self.add_system(battleSystem(len(self.systems), "battle", self))
+        self.add_system(mapSystem(len(self.systems), "map", self))
 
     def add_system(self, system):
         self.systems.append(system)

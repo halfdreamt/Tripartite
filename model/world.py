@@ -103,3 +103,5 @@ class World:
                 self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2], 'defaultMap')
             elif sprite[0] == 2572:
                 self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2], 'defaultMap')
+
+            self.entity_manager.create_entity('Map Entity',  0, 0, 0, 'dfghdfg')

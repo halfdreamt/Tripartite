@@ -110,10 +110,11 @@ class Map:
 
     # updates the given layer with the given values and positions
     def update_layer(self, layerName, entities):
+        pass
         #clear layer
-        for y in range(self.MAPHEIGHT):
-            for x in range(self.MAPWIDTH):
-                self.set_layer_id(layerName, x, y, 0)
-        for entity in entities:
-            if entity.has_component('position') and entity.has_component('render'):
-                self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))
+        # for y in range(self.MAPHEIGHT):
+        #     for x in range(self.MAPWIDTH):
+        #         self.set_layer_id(layerName, x, y, 0)
+        # for entity in entities:
+        #     if entity.has_component('position') and entity.has_component('render'):
+        #         self.set_layer_id('sprites', entity.get_component_data('position', 'x'), entity.get_component_data('position', 'y'), entity.get_component_data('render', 'spriteID'))

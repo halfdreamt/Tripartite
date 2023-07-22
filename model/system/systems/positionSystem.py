@@ -14,7 +14,12 @@ class positionSystem:
                 self.entities.append(component.entity)
             elif updateType == "update":
                 map = component.entity.world.map
-                map.set_layer_id('sprites', component.entity.get_component_data('position', 'x'), component.entity.get_component_data('position', 'y'), component.entity.get_component_data('render', 'spriteID'))
+                if key == "x":
+                    map.set_layer_id('sprites', oldValue, component.entity.get_component_data('position', 'y'), 0)
+                    map.set_layer_id('sprites', newValue, component.entity.get_component_data('position', 'y'), component.entity.get_component_data('render', 'spriteID'))
+                elif key == "y":
+                    map.set_layer_id('sprites', component.entity.get_component_data('position', 'x'), oldValue, 0)
+                    map.set_layer_id('sprites', component.entity.get_component_data('position', 'x'), newValue, component.entity.get_component_data('render', 'spriteID'))
                 pass
             elif updateType == "delete":
                 self.entities.remove(component.entity)

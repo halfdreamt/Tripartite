@@ -11,7 +11,7 @@ class mapSystem:
         self.layers = []
 
     def component_updated(self, component, updateType, key=None, value=None):
-        if component.get_name() == "map_layers":
+        if component.get_name() == "map_container":
             if updateType == "create":
                 self.entities.append(component.entity)
             elif updateType == "update":

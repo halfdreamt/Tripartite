@@ -168,7 +168,7 @@
         },
         {
             "id": "C019",
-            "name": "map_layers",
+            "name": "map",
             "description": "Holds map data",
             "data": {
                 "name": "",
@@ -180,6 +180,14 @@
                     "collision": [],
                     "sprites": []
                 }
+            }
+        },
+        {
+            "id": "C020",
+            "name": "map_container",
+            "description": "contains multiple maps",
+            "data": {
+                "maps": []
             }
         }
     ]

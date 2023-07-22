@@ -165,6 +165,22 @@
             "data": {
                 "effects": []
             }
+        },
+        {
+            "id": "C019",
+            "name": "map_layers",
+            "description": "Holds map data",
+            "data": {
+                "name": "",
+                "width": 0,
+                "tilesize": 0,
+                "height": 0,
+                "layers": {
+                    "ground": [],
+                    "collision": [],
+                    "sprites": []
+                }
+            }
         }
     ]
 }

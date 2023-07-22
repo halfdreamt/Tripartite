@@ -71,7 +71,6 @@ class World:
     def tick(self):
         self.increment_time()
         self.system_manager.update_systems()
-        self.map.update_map(self.entity_manager.return_entities())
 
     def reset_world(self):
         self.time = 0

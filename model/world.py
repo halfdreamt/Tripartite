@@ -3,50 +3,13 @@ from model.entity.entityManager import EntityManager
 from model.component.componentManager import ComponentManager
 from model.system.systemManager import SystemManager
 
-# The World class is another name for gamestate. It contains the map, the time, and the entities.
+# The World class contains time and the entities, including the map entity
 class World:
     def __init__(self, masterData):
         # Initialize the map
         self.map = Map()
 
         self.battle_map = Map()
-
-        self.battle_map_data = {
-            "name": "Battle Map",
-            "width": 8,
-            "height": 5,
-            "tilesize": 8,
-            "layers": [
-                {
-                    "name": "Tile Layer 1",
-                    "data": [
-                    [1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 283, 283, 283, 289, 289, 289, 1],
-                    [1, 283, 283, 283, 289, 289, 289, 1],
-                    [1, 283, 283, 283, 289, 289, 289, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1]
-                ]
-                }, {
-                    "name": "collision",
-                    "data": [
-                    [157, 158, 158, 158, 158, 158, 158, 159],
-                    [181, 0, 0, 0, 0, 0, 0, 183],
-                    [181, 0, 0, 0, 0, 0, 0, 183],
-                    [181, 0, 0, 0, 0, 0, 0, 183],
-                    [205, 206, 206, 206, 206, 206, 206, 207]
-                ]
-                }, {
-                    "name": "sprites",
-                    "data": [
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 2225, 0, 0, 2221, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0]
-                ]
-                }
-            ],
-        }
 
         self.town_map_data = masterData['map_master']
 
@@ -63,6 +26,14 @@ class World:
 
         # Initialize the entity manager
         self.entity_manager = EntityManager(masterData['archetype_master'], self.component_manager, self)
+
+        self.entity_manager.create_entity('Map Entity',  0, 0, 0, 'dfghdfg')
+
+        map_entity = self.entity_manager.get_entities_by_name('Map Entity')
+
+        map_container = map_entity[0].get_component('map_container')
+
+        self.map_data = map_container.get_all_data()
 
         self.initialize_default_map()
         self.initialize_battle_map()
@@ -89,18 +60,17 @@ class World:
             self.initialize_town_map()
 
     def initialize_battle_map(self):
-        self.battle_map.load_map(self.battle_map_data)
+        for map_component in self.map_data['maps']:
+            if map_component['data']['name'] == 'Battle Map':
+                self.battle_map.load_map(map_component['data'])
+                break
 
     def initialize_town_map(self):
-        self.map.load_map(self.town_map_data)
-         # Initialize the entities from map data
-        spriteData = self.map.get_layer_ids('sprites')
-        for sprite in spriteData:
-            if sprite[0] == 2225:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2], 'defaultMap')
-            elif sprite[0] == 2221:
-                self.entity_manager.create_entity('Farmer',  sprite[0], sprite[1], sprite[2], 'defaultMap')
-            elif sprite[0] == 2572:
-                self.entity_manager.create_entity('Water Pot',  sprite[0], sprite[1], sprite[2], 'defaultMap')
+        for map_component in self.map_data['maps']:
+            if map_component['data']['name'] == 'Town Map':
+                self.map.load_map(map_component['data'])
+                break
 
-        self.entity_manager.create_entity('Map Entity',  0, 0, 0, 'dfghdfg')
+        self.entity_manager.create_entity('Farmer',  2225, 9, 8, 'defaultMap')
+        self.entity_manager.create_entity('Farmer',  2225, 15, 15, 'defaultMap')
+        self.entity_manager.create_entity('Water Pot',  2572, 5, 7, 'defaultMap')

@@ -27,6 +27,12 @@ class Entity:
         else:
             return False
         
+    def get_component(self, component_name):
+        if component_name in self.components:
+            return self.components[component_name]
+        else:
+            return None
+        
     def get_component_names(self):
         return self.components.keys()
         

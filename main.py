@@ -1,5 +1,6 @@
 import pygame
 from view.PGDisplay import PGDisplay
+from controller.PGEvents import PGEvents
 from controller.settingsManager import SettingsManager
 
 # Initialize pygame
@@ -9,32 +10,34 @@ pygame.init()
 settings_manager = SettingsManager("rec/config.json")
 
 # Initialize the display
-pgdisplay = PGDisplay(settings_manager)
+viewManager = PGDisplay(settings_manager)
+
+controlManager = PGEvents(viewManager)
 
 # Initialize the clock
 clock = pygame.time.Clock()
 
 # Main game loop
-while not pgdisplay.pgevents.quit:
+while not controlManager.quit:
     
     # Event processing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pgdisplay.pgevents.quit = True
+            controlManager.quit = True
         else:
-            pgdisplay.pgevents.handle_event(event)
+            controlManager.handle_event(event)
 
     # Game time
-    if not pgdisplay.pgevents.game_paused:
-        pgdisplay.subTick += 1
-        if pgdisplay.subTick >= pgdisplay.pgevents.tick_rate:
-            pgdisplay.subTick = 0
-            pgdisplay.world.tick()
+    if not controlManager.game_paused:
+        viewManager.subTick += 1
+        if viewManager.subTick >= controlManager.tick_rate:
+            viewManager.subTick = 0
+            viewManager.world.tick()
             
     # Limit the frame rate
     clock.tick(settings_manager.get_frame_rate())
 
     # Redraw screen
-    pgdisplay.draw_screen()  
+    viewManager.draw_screen()  
 
 pygame.quit()

@@ -1,6 +1,5 @@
 import pygame
 import math
-from controller.PGEvents import PGEvents
 from view.displays.menu import Menu
 from view.displays.localView import LocalView
 from view.displays.battleView import BattleView
@@ -31,7 +30,6 @@ class PGDisplay:
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
 
         # Initialize event handler and view classes
-        self.pgevents = PGEvents(self)
         self.menu = Menu(self)
         self.localView = LocalView(self)
         self.battleView = BattleView(self)

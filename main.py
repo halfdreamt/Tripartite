@@ -20,12 +20,12 @@ clock = pygame.time.Clock()
 # Main game loop
 while not controlManager.quit:
     
-    # Event processing
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    # Input processing
+    for input in pygame.event.get():
+        if input.type == pygame.QUIT:
             controlManager.quit = True
         else:
-            controlManager.handle_event(event)
+            controlManager.handle_input(input)
 
     # Game time
     if not controlManager.game_paused:

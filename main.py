@@ -2,6 +2,7 @@ import pygame
 from view.PGDisplay import PGDisplay
 from controller.PGEvents import PGEvents
 from controller.settingsManager import SettingsManager
+from model.modelManager import modelManager
 
 # Initialize pygame
 pygame.init()
@@ -9,9 +10,13 @@ pygame.init()
 # Initialize the settings manager with a file path to the config file (contains the file paths to the master files among other settings)
 settings_manager = SettingsManager("rec/config.json")
 
+# Initialize the model
+ModelManager = modelManager(settings_manager)
+
 # Initialize the display
 viewManager = PGDisplay(settings_manager)
 
+# Initialize the event handler
 controlManager = PGEvents(viewManager)
 
 # Initialize the clock

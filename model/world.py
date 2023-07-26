@@ -11,10 +11,6 @@ class World:
 
         self.battle_map = Map()
 
-        self.town_map_data = masterData['map_master']
-
-        self.default_map_data = self.town_map_data
-
         # Initialize the time
         self.time = 0
 
@@ -35,7 +31,7 @@ class World:
 
         self.map_data = map_container.get_all_data()
 
-        self.initialize_default_map()
+        self.initialize_town_map()
         self.initialize_battle_map()
 
     # Iterates through all systems and updates them, equal to one step through the game loop
@@ -52,12 +48,6 @@ class World:
     # Increments the time
     def increment_time(self):
         self.time += 1
-
-    def initialize_default_map(self):
-        if self.default_map_data['name'] == 'Battle Map':
-            self.initialize_battle_map()
-        elif self.default_map_data['name'] == 'defaultMap':
-            self.initialize_town_map()
 
     def initialize_battle_map(self):
         for map_component in self.map_data['maps']:

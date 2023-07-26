@@ -11,7 +11,7 @@ class LocalView:
         self.tileImages = self.pgdisplay.tileImages
 
     def draw_tiles(self):
-        TILESIZE = self.pgdisplay.world.map.TILESIZE
+        TILESIZE = self.pgdisplay.curMap.TILESIZE
         ZOOMLEVEL = self.pgdisplay.zoom_level
         camera_x = self.pgdisplay.camera_x
         camera_y = self.pgdisplay.camera_y
@@ -21,7 +21,7 @@ class LocalView:
 
         visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom = self.pgdisplay.calculate_visible_tiles(screen_width, screen_height)
 
-        for layer_name, tile_data in self.pgdisplay.world.map.layers.items(): 
+        for layer_name, tile_data in self.pgdisplay.curMap.layers.items(): 
             for y in range(visible_tile_top, visible_tile_bottom):
                 for x in range(visible_tile_left, visible_tile_right):
                     tile_id = tile_data[y][x] - 1 

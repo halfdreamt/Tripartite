@@ -11,3 +11,6 @@ class modelManager:
 
         # Initialize the world with master data (primarily model data)
         self.world = World(self.data_factory.get_master_data())
+
+    def get_map(self):
+        return self.world.map

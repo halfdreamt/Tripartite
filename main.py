@@ -14,7 +14,7 @@ settings_manager = SettingsManager("rec/config.json")
 ModelManager = modelManager(settings_manager)
 
 # Initialize the display
-viewManager = PGDisplay(settings_manager)
+viewManager = PGDisplay(settings_manager, ModelManager)
 
 # Initialize the event handler
 controlManager = PGEvents(viewManager)

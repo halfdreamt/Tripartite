@@ -10,13 +10,13 @@ class PGEvents:
     def handle_input(self, input):
         if input.type == pygame.KEYDOWN:
             if input.key == pygame.K_w:  # Move camera up
-                self.pgdisplay.camera_y -= self.pgdisplay.world.map.TILESIZE
+                self.pgdisplay.camera_y -= self.pgdisplay.curMap.TILESIZE
             elif input.key == pygame.K_s:  # Move camera down
-                self.pgdisplay.camera_y += self.pgdisplay.world.map.TILESIZE
+                self.pgdisplay.camera_y += self.pgdisplay.curMap.TILESIZE
             elif input.key == pygame.K_a:  # Move camera left
-                self.pgdisplay.camera_x -= self.pgdisplay.world.map.TILESIZE
+                self.pgdisplay.camera_x -= self.pgdisplay.curMap.TILESIZE
             elif input.key == pygame.K_d:  # Move camera right
-                self.pgdisplay.camera_x += self.pgdisplay.world.map.TILESIZE
+                self.pgdisplay.camera_x += self.pgdisplay.curMap.TILESIZE
             elif input.key == pygame.K_q:  # Zoom out
                 self.zoom_level = max(self.pgdisplay.zoom_level - 0.1, 0.1)  # Prinput zoom level from getting too small
             elif input.key == pygame.K_e:  # Zoom in

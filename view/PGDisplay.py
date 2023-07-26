@@ -7,9 +7,11 @@ from model.world import World
 from data.dataFactory import dataFactory
 
 class PGDisplay:
-    def __init__(self, settings_manager):
+    def __init__(self, settings_manager, ModelManager):
 
         self.settings_manager = settings_manager
+        
+        self.ModelManager = ModelManager
 
         # Initialize data factory with the master file paths (inserts the master json data into the DB if needed)
         self.data_factory = dataFactory(settings_manager.get_master_file_paths())
@@ -20,6 +22,10 @@ class PGDisplay:
 
         # Initialize the world with master data (primarily model data)
         self.world = World(self.data_factory.get_master_data())
+
+        # self.curMap = self.ModelManager.get_map()
+
+        self.curMap = self.world.map
 
         self.screen = pygame.display.set_mode((self.displaySettings['screenWidth'], self.displaySettings['screenHeight']), pygame.RESIZABLE)
 
@@ -69,8 +75,8 @@ class PGDisplay:
 
     # adjusts x and y values based on camera position, zoom level and tile size
     def return_map_pos(self, x, y):
-        tile_x = (x // self.zoom_level + self.camera_x) // self.world.map.TILESIZE
-        tile_y = (y // self.zoom_level + self.camera_y) // self.world.map.TILESIZE
+        tile_x = (x // self.zoom_level + self.camera_x) // self.curMap.TILESIZE
+        tile_y = (y // self.zoom_level + self.camera_y) // self.curMap.TILESIZE
         return tile_x, tile_y
     
         # Calculate the map tile coordinates of the visible screen area
@@ -82,10 +88,10 @@ class PGDisplay:
             visible_tile_bottom = min(self.world.battle_map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.battle_map.TILESIZE * self.zoom_level)))
             return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
         elif self.viewMode == "local":
-            visible_tile_left = max(0, int(self.camera_x / self.world.map.TILESIZE))
-            visible_tile_top = max(0, int(self.camera_y / self.world.map.TILESIZE))
-            visible_tile_right = min(self.world.map.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.world.map.TILESIZE * self.zoom_level)))
-            visible_tile_bottom = min(self.world.map.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.world.map.TILESIZE * self.zoom_level)))
+            visible_tile_left = max(0, int(self.camera_x / self.curMap.TILESIZE))
+            visible_tile_top = max(0, int(self.camera_y / self.curMap.TILESIZE))
+            visible_tile_right = min(self.curMap.MAPWIDTH, visible_tile_left + math.ceil(screen_width / (self.curMap.TILESIZE * self.zoom_level)))
+            visible_tile_bottom = min(self.curMap.MAPHEIGHT, visible_tile_top + math.ceil(screen_height / (self.curMap.TILESIZE * self.zoom_level)))
             return visible_tile_left, visible_tile_top, visible_tile_right, visible_tile_bottom
 
     def draw_screen(self):

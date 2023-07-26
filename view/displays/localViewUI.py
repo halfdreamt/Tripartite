@@ -19,7 +19,7 @@ class LocalViewUI:
         self.screen.blit(time_text, (10, 10))
 
         #Draw map name on the right side of the screen
-        map_name = self.pgdisplay.world.map.name
+        map_name = self.pgdisplay.curMap.name
         map_name_text = self.font.render(f'Map: {map_name}', True, (255, 255, 255))
         self.screen.blit(map_name_text, (self.screen.get_width() - map_name_text.get_width() - 10, 10))
 
@@ -39,7 +39,7 @@ class LocalViewUI:
         self.screen.blit(mouse_pos, (10, self.screen.get_height() - 40))
 
         #draw tile ID at the screen's bottom
-        tile_id = self.pgdisplay.world.map.get_layer_tile('collision', tile_x, tile_y)
+        tile_id = self.pgdisplay.curMap.get_layer_tile('collision', tile_x, tile_y)
         tile_id_text = self.font.render(f'Tile ID: {tile_id}', True, (255, 255, 255))
         self.screen.blit(tile_id_text, (10, self.screen.get_height() - 70))
 
@@ -81,10 +81,10 @@ class LocalViewUI:
         path = self.pgdisplay.entityInfo.get_component_data("pathfinding", "path")
         if path:
             for i in range(len(path) - 1):
-                pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i][1] * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level / 2), ((path[i + 1][0] * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i + 1][1] * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level / 2), 5)
+                pygame.draw.line(self.screen, (255, 0, 0), ((path[i][0] * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i][1] * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level / 2), ((path[i + 1][0] * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level + self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level / 2, (path[i + 1][1] * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level + self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level / 2), 5)
 
         #Highlight the entity
-        entity_rect = pygame.Rect((self.entityInfo.get_component_data("position", "x") * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level, (self.entityInfo.get_component_data("position", "y") * self.pgdisplay.world.map.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level, self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level, self.pgdisplay.world.map.TILESIZE * self.pgdisplay.zoom_level)
+        entity_rect = pygame.Rect((self.entityInfo.get_component_data("position", "x") * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_x) * self.pgdisplay.zoom_level, (self.entityInfo.get_component_data("position", "y") * self.pgdisplay.curMap.TILESIZE - self.pgdisplay.camera_y) * self.pgdisplay.zoom_level, self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level, self.pgdisplay.curMap.TILESIZE * self.pgdisplay.zoom_level)
         pygame.draw.rect(self.screen, (255, 0, 0), entity_rect, 5)
 
     def draw_UI(self):

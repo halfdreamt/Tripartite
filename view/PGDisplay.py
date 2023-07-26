@@ -6,15 +6,11 @@ from view.displays.battleView import BattleView
 from model.world import World
 
 class PGDisplay:
-    def __init__(self, tile_data, display_settings, initial_map, initial_time):
+    def __init__(self, tile_data, display_settings):
 
         self.displaySettings = display_settings
 
         self.viewMode = self.displaySettings['defaultMode']
-
-        self.curMap = initial_map
-
-        self.time = initial_time
 
         self.screen = pygame.display.set_mode((self.displaySettings['screenWidth'], self.displaySettings['screenHeight']), pygame.RESIZABLE)
 
@@ -28,8 +24,6 @@ class PGDisplay:
         self.menu = Menu(self)
         self.localView = LocalView(self)
         self.battleView = BattleView(self)
-    
-        self.tilesets, self.tileset_firstgids = [], []
 
         # Camera settings
         self.camera_x, self.camera_y, self.zoom_level = 0, 0, 3
@@ -40,9 +34,6 @@ class PGDisplay:
         self.curFrame = 0
 
         self.displayInfo = False
-       
-        # Draw initial screen
-        self.draw_screen()
 
     # Enables and draws an entity information panel
     def handle_entity_info_display(self, entity):

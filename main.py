@@ -19,13 +19,13 @@ data_factory = dataFactory(master_file_paths)
 master_data = data_factory.get_master_data()
 tile_data = data_factory.get_tile_images()
 
-# Initialize the model, get the initial map and time
+# Initialize the model manager with the master data
 ModelManager = modelManager(master_data)
-initial_map = ModelManager.get_map()
-initial_time = ModelManager.get_time()
 
-# Initialize the view manager with the tile data, display settings, initial map, and initial time
-viewManager = PGDisplay(tile_data, display_settings, initial_map, initial_time)
+# Initialize the view manager with the tile data, display settings, then set the map and time
+viewManager = PGDisplay(tile_data, display_settings)
+viewManager.set_time(ModelManager.get_time())
+viewManager.set_map(ModelManager.get_map())
 
 # Initialize the event handler with references to the view manager and model manager
 controlManager = PGEvents(viewManager, ModelManager)

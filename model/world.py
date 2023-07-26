@@ -23,14 +23,13 @@ class World:
         # Initialize the entity manager
         self.entity_manager = EntityManager(masterData['archetype_master'], self.component_manager, self)
 
+        # Initialize the map entity
         self.entity_manager.create_entity('Map Entity',  0, 0, 0, 'dfghdfg')
 
+        # Initialize the map data
         map_entity = self.entity_manager.get_entities_by_name('Map Entity')
-
         map_container = map_entity[0].get_component('map_container')
-
         self.map_data = map_container.get_all_data()
-
         self.initialize_town_map()
         self.initialize_battle_map()
 

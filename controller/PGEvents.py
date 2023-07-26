@@ -1,8 +1,9 @@
 import pygame
 
 class PGEvents:
-    def __init__(self, pgdisplay):
+    def __init__(self, pgdisplay, ModelManager):
         self.pgdisplay = pgdisplay
+        self.ModelManager = ModelManager
         self.game_paused = True
         self.quit = False
         self.tick_rate = 60
@@ -81,7 +82,7 @@ class PGEvents:
                 self.pgdisplay.viewMode = "battle"
                 self.pgdisplay.draw_screen()
         elif self.pgdisplay.viewMode == "local":
-            self.pgdisplay.handle_entity_info_display(new_x, new_y)
+            self.pgdisplay.handle_entity_info_display(self.ModelManager.get_entity_at(new_x, new_y))
 
     def reset_game(self):
         self.game_paused = True

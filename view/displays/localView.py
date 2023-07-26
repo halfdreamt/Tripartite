@@ -39,7 +39,7 @@ class LocalView:
     def draw_darkness(self, screen_height, screen_width):
 
         # Calculate darkness based on time of day
-        time_minutes = self.pgdisplay.world.time + self.pgdisplay.curFrame / 60.0
+        time_minutes = self.pgdisplay.time + self.pgdisplay.curFrame / 60.0
         darkness = 0.5 * (math.cos(math.pi * time_minutes / (12 * 60)) + 1)
 
         # Create a dark overlay with the calculated darkness and apply it to the entire screen

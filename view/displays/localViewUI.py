@@ -11,9 +11,9 @@ class LocalViewUI:
     def draw_basic_UI(self):
 
         # Draw game time as days, hours, and minutes
-        days = int(self.pgdisplay.world.time / (60 * 24))
-        hours = int((self.pgdisplay.world.time / 60) % 24)
-        minutes = int(self.pgdisplay.world.time % 60)
+        days = int(self.pgdisplay.time / (60 * 24))
+        hours = int((self.pgdisplay.time / 60) % 24)
+        minutes = int(self.pgdisplay.time % 60)
 
         time_text = self.font.render(f"Days: {days} Hours: {hours} Minutes: {minutes}", True, (255, 255, 255))
         self.screen.blit(time_text, (10, 10))

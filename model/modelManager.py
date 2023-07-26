@@ -1,16 +1,19 @@
-from data.dataFactory import dataFactory
 from model.world import World
 
 class modelManager:
-    def __init__(self, settings_manager):
-
-        self.settings_manager = settings_manager
-
-        # Initialize data factory with the master file paths (inserts the master json data into the DB if needed)
-        self.data_factory = dataFactory(settings_manager.get_master_file_paths())
+    def __init__(self, master_data):
 
         # Initialize the world with master data (primarily model data)
-        self.world = World(self.data_factory.get_master_data())
+        self.world = World(master_data)
 
     def get_map(self):
-        return self.world.map
+        return self.world.map  
+    
+    def get_time(self):
+        return self.world.time
+    
+    def tick(self):
+        self.world.tick()
+
+    def get_entity_at(self, x, y):
+        return self.world.entity_manager.get_entity_at(x, y)

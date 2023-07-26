@@ -4,33 +4,22 @@ from view.displays.menu import Menu
 from view.displays.localView import LocalView
 from view.displays.battleView import BattleView
 from model.world import World
-from data.dataFactory import dataFactory
 
 class PGDisplay:
-    def __init__(self, settings_manager, ModelManager):
+    def __init__(self, tile_data, display_settings, initial_map, initial_time):
 
-        self.settings_manager = settings_manager
-        
-        self.ModelManager = ModelManager
-
-        # Initialize data factory with the master file paths (inserts the master json data into the DB if needed)
-        self.data_factory = dataFactory(settings_manager.get_master_file_paths())
-
-        self.displaySettings = settings_manager.get_display_settings()
+        self.displaySettings = display_settings
 
         self.viewMode = self.displaySettings['defaultMode']
 
-        # Initialize the world with master data (primarily model data)
-        self.world = World(self.data_factory.get_master_data())
+        self.curMap = initial_map
 
-        # self.curMap = self.ModelManager.get_map()
-
-        self.curMap = self.world.map
+        self.time = initial_time
 
         self.screen = pygame.display.set_mode((self.displaySettings['screenWidth'], self.displaySettings['screenHeight']), pygame.RESIZABLE)
 
         #load tile images from SQL database
-        self.tileImages = self.data_factory.get_tile_images()
+        self.tileImages = tile_data
 
         # Font settings
         self.font = pygame.font.Font('./rec/fonts/computer_pixel-7.ttf', 36)
@@ -56,8 +45,7 @@ class PGDisplay:
         self.draw_screen()
 
     # Enables and draws an entity information panel
-    def handle_entity_info_display(self, x, y):
-        entity = self.world.entity_manager.get_entity_at(x, y)
+    def handle_entity_info_display(self, entity):
         if entity:
             self.displayInfo = True
             self.entityInfo = entity
@@ -72,6 +60,13 @@ class PGDisplay:
         self.displayInfo = False
         self.viewMode = "local"
         self.draw_screen()
+
+    def set_map(self, map):
+        self.curMap = map
+        self.draw_screen()
+
+    def set_time(self, time):
+        self.time = time
 
     # adjusts x and y values based on camera position, zoom level and tile size
     def return_map_pos(self, x, y):

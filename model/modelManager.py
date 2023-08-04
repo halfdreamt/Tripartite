@@ -3,6 +3,8 @@ from model.world import World
 class modelManager:
     def __init__(self, master_data):
 
+        self.master_data = master_data
+
         # Initialize the world with master data (primarily model data)
         self.world = World(master_data)
 

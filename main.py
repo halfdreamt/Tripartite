@@ -52,8 +52,7 @@ while not controlManager.quit:
     # Limit the frame rate
     clock.tick(settings_manager.get_frame_rate())
 
-    # Update the display
-    viewManager.set_time(ModelManager.get_time())
-    viewManager.set_map(ModelManager.get_map())
+    # Update the view
+    viewManager.set_world_data(ModelManager.get_world_info())
 
 pygame.quit()

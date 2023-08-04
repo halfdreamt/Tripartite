@@ -59,6 +59,11 @@ class PGDisplay:
     def set_time(self, time):
         self.time = time
 
+    def set_world_data(self, world_data):
+        self.curMap = world_data["map"]
+        self.time = world_data["time"]
+        self.draw_screen()
+
     # adjusts x and y values based on camera position, zoom level and tile size
     def return_map_pos(self, x, y):
         tile_x = (x // self.zoom_level + self.camera_x) // self.curMap.TILESIZE

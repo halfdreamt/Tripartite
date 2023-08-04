@@ -17,3 +17,10 @@ class modelManager:
 
     def get_entity_at(self, x, y):
         return self.world.entity_manager.get_entity_at(x, y)
+    
+    def get_world_info(self):
+        world_data = {
+            "map": self.world.map,
+            "time": self.world.time
+        }
+        return world_data

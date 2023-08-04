@@ -8,11 +8,10 @@ from data.dataFactory import dataFactory
 # Initialize pygame
 pygame.init()
 
-# Initialize the settings manager with a file path to the config file and get the master file paths, display settings, and frame rate
+# Initialize the settings manager with a file path to the config file and get the master file paths and display settings
 settings_manager = SettingsManager("rec/config.json")
 master_file_paths = settings_manager.get_master_file_paths()
 display_settings = settings_manager.get_display_settings()
-frame_rate = settings_manager.get_frame_rate()
 
 # Initialize data factory with the master file paths (inserts the master json data into the DB if needed), and get the master data and tile data
 data_factory = dataFactory(master_file_paths)
@@ -51,7 +50,7 @@ while not controlManager.quit:
             ModelManager.tick()
             
     # Limit the frame rate
-    clock.tick(frame_rate)
+    clock.tick(settings_manager.get_frame_rate())
 
     # Update the display
     viewManager.set_time(ModelManager.get_time())

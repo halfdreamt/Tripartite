@@ -86,7 +86,9 @@ class PGEvents:
 
     def reset_game(self):
         self.ModelManager.reset_world()
-        # Working, but need to ensure the display and entity info in the display are reset as well, TODO
+        self.pgdisplay.displayInfo = False
+        self.game_paused = True
+        self.pgdisplay.viewMode = "local"
 
     def load_battle_map(self):
         self.game_paused = True

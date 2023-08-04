@@ -85,10 +85,8 @@ class PGEvents:
             self.pgdisplay.handle_entity_info_display(self.ModelManager.get_entity_at(new_x, new_y))
 
     def reset_game(self):
-        self.game_paused = True
-        self.tick_rate = 60
-        self.pgdisplay.world.reset_world()
-        self.pgdisplay.reset_display()
+        self.ModelManager.reset_world()
+        # Working, but need to ensure the display and entity info in the display are reset as well, TODO
 
     def load_battle_map(self):
         self.game_paused = True

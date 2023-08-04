@@ -26,3 +26,6 @@ class modelManager:
             "time": self.world.time
         }
         return world_data
+    
+    def reset_world(self):
+        self.world = World(self.master_data)

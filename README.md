@@ -16,7 +16,7 @@ pip install pygame
 python main.py
 ```
 
-This will start the program. Press Continue to begin the simulation. Clicking on an entity will reveal its component data. Space pauses the simulation. Number keys 1-4 alter the speed. Navigate using middle mouse of WASD. Pressing escape will reveal the menu. Battle features are unfinished. 
+This will start the program. Press Continue to begin the simulation. Clicking on an entity will reveal its component data. Space pauses the simulation. Number keys 1-4 alter the speed. Navigate using middle mouse or WASD. Pressing escape will reveal the menu. Battle features are unfinished (menu button not functional).
 
 The existing initial data will generate two wandering farmer entities, who will occasionally thirst for water and path-find to the spawned water pot entity. A simple example but the engine is designed for flexibility and scale.
 

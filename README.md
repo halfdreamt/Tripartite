@@ -20,6 +20,12 @@ This will start the program. Press Continue to begin the simulation. Clicking on
 
 The existing initial data will generate two wandering farmer entities, who will occasionally thirst for water and path-find to the spawned water pot entity. A simple example but the engine is designed for flexibility and scale.
 
+<img width="1316" alt="Screenshot 2023-08-31 at 11 58 51 AM" src="https://github.com/halfdreamt/Tripartite/assets/31080937/085c5815-91e6-45c1-aef8-b327bdc076e6">
+
+</br>
+
+<img width="1311" alt="Screenshot 2023-08-31 at 11 59 06 AM" src="https://github.com/halfdreamt/Tripartite/assets/31080937/9bda6e5a-785f-4cab-a1b7-ac78f9a5acd8">
+
 ## Contributing
 
 Tripartite is a work in progress and only the fundamental ECS system is currently in place. 
